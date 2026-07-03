@@ -11,6 +11,7 @@ import {
   Chip,
   Container,
   CssBaseline,
+  IconButton,
   Link,
   Paper,
   Slider,
@@ -29,6 +30,8 @@ import CasinoIcon from "@mui/icons-material/Casino";
 import RouteIcon from "@mui/icons-material/Route";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import rawData from "./data/routes.json";
 import type { RoutesData, Shift, ShiftLeg } from "./types";
 import { TURNAROUND_MIN, generateShift } from "./lib/generator";
@@ -124,20 +127,82 @@ function LegCard({ leg, index, startTime }: { leg: ShiftLeg; index: number; star
   );
 }
 
-function ShiftView({ shift, startTime }: { shift: Shift; startTime: string }) {
+function delayLabel(min: number): string {
+  if (min === 0) return "On time";
+  return min > 0 ? `${min} min late` : `${-min} min early`;
+}
+
+function DelayControl({
+  delayMin,
+  onDelayChange,
+}: {
+  delayMin: number;
+  onDelayChange: (v: number) => void;
+}) {
+  const late = delayMin > 0;
+  return (
+    <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+      <Typography variant="body2" color="text.secondary">
+        Running
+      </Typography>
+      <IconButton
+        size="small"
+        aria-label="less delay"
+        onClick={() => onDelayChange(delayMin - 1)}
+      >
+        <RemoveIcon fontSize="small" />
+      </IconButton>
+      <Chip
+        size="small"
+        label={delayLabel(delayMin)}
+        color={late ? "warning" : "default"}
+        variant={delayMin === 0 ? "outlined" : "filled"}
+        onDelete={delayMin !== 0 ? () => onDelayChange(0) : undefined}
+        sx={{ minWidth: 96, fontWeight: 600 }}
+      />
+      <IconButton
+        size="small"
+        aria-label="more delay"
+        onClick={() => onDelayChange(delayMin + 1)}
+      >
+        <AddIcon fontSize="small" />
+      </IconButton>
+    </Stack>
+  );
+}
+
+function ShiftView({
+  shift,
+  startTime,
+  delayMin,
+  onDelayChange,
+}: {
+  shift: Shift;
+  startTime: string;
+  delayMin: number;
+  onDelayChange: (v: number) => void;
+}) {
   const color = operatorColor(shift.operator);
   const first = shift.legs[0];
   const last = shift.legs[shift.legs.length - 1];
   return (
     <Stack spacing={2}>
       <Paper sx={{ p: 3 }}>
-        <Stack direction="row" spacing={1.5} sx={{ alignItems: "center", mb: 1 }}>
+        <Stack
+          direction="row"
+          spacing={1.5}
+          sx={{ alignItems: "center", mb: 1, flexWrap: "wrap", gap: 1 }}
+        >
           <Box sx={{ width: 14, height: 14, borderRadius: "50%", bgcolor: color }} />
-          <Typography variant="h5">{shift.operator} shift</Typography>
+          <Typography variant="h5" sx={{ flexGrow: 1 }}>
+            {shift.operator} shift
+          </Typography>
+          <DelayControl delayMin={delayMin} onDelayChange={onDelayChange} />
         </Stack>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
           {clockAt(startTime, 0)} – {clockAt(startTime, shift.totalMin)} · sign on at{" "}
           <strong>{first.from}</strong>, sign off at <strong>{last.to}</strong>
+          {delayMin !== 0 ? ` · ${delayLabel(delayMin)}` : ""}
         </Typography>
         <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1 }}>
           <Chip label={`${shift.legs.length} legs`} />
@@ -189,13 +254,18 @@ export default function App() {
   const [legsTarget, setLegsTarget] = useState(4);
   const [minutesTarget, setMinutesTarget] = useState(90);
   const [startTime, setStartTime] = useState(defaultStartTime);
+  const [delayMin, setDelayMin] = useState(0);
   const [shift, setShift] = useState<Shift | null>(null);
+
+  // A delay uniformly shifts every clock time, so we just move the base start.
+  const effectiveStart = clockAt(startTime, delayMin);
 
   const onGenerate = () => {
     const op =
       operator === RANDOM_OPERATOR
         ? data.operators[Math.floor(Math.random() * data.operators.length)].name
         : operator;
+    setDelayMin(0);
     setShift(
       generateShift(data, {
         operator: op,
@@ -328,7 +398,12 @@ export default function App() {
           </Paper>
 
           {shift ? (
-            <ShiftView shift={shift} startTime={startTime} />
+            <ShiftView
+              shift={shift}
+              startTime={effectiveStart}
+              delayMin={delayMin}
+              onDelayChange={setDelayMin}
+            />
           ) : (
             <Paper variant="outlined" sx={{ p: 6, textAlign: "center", color: "text.secondary" }}>
               <TrainIcon sx={{ fontSize: 48, mb: 1 }} />
