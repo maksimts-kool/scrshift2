@@ -1,0 +1,5773 @@
+{
+  "scrapedAt": "2026-07-03T20:31:51.791Z",
+  "source": "https://scr.fandom.com/wiki/List_of_Routes",
+  "operators": [
+    {
+      "name": "Stepford Connect",
+      "color": "#0096EE"
+    },
+    {
+      "name": "Metro",
+      "color": "#EE4044"
+    },
+    {
+      "name": "Waterline",
+      "color": "#34495E"
+    },
+    {
+      "name": "AirLink",
+      "color": "#EC7D33"
+    },
+    {
+      "name": "Stepford Express",
+      "color": "#FF0080"
+    }
+  ],
+  "routes": [
+    {
+      "code": "R001",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Stepford Airport Central",
+      "timeMin": 18,
+      "timeMax": 18,
+      "cost": "450 pts",
+      "points": 55,
+      "xp": 10,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 18
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 16
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 4,
+          "fromDestination": 14
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 6,
+          "fromDestination": 12
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 7,
+          "fromDestination": 11
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 9,
+          "fromDestination": 9
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 11,
+          "fromDestination": 7
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 13,
+          "fromDestination": 4
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 14,
+          "fromDestination": 2
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 17,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R003",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Leighton City",
+      "timeMin": 22,
+      "timeMax": 23,
+      "cost": "300 pts",
+      "points": 75,
+      "xp": 14,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 23
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 21
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 4,
+          "fromDestination": 19
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 6,
+          "fromDestination": 17
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 7,
+          "fromDestination": 16
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 9,
+          "fromDestination": 14
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 11,
+          "fromDestination": 12
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 13,
+          "fromDestination": 10
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 14,
+          "fromDestination": 8
+        },
+        {
+          "name": "Upper Staploe",
+          "fromOrigin": 16,
+          "fromDestination": 6
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 18,
+          "fromDestination": 4
+        },
+        {
+          "name": "Rocket Parade",
+          "fromOrigin": 20,
+          "fromDestination": 3
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 22,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 24,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R004",
+      "operator": "Stepford Connect",
+      "origin": "St Helens Bridge",
+      "destination": "Edgemead",
+      "timeMin": 16,
+      "timeMax": 18,
+      "cost": "450 pts (90 xp)",
+      "points": 55,
+      "xp": 10,
+      "calls": [
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 0,
+          "fromDestination": 16
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 2,
+          "fromDestination": 14
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 4,
+          "fromDestination": 12
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 6,
+          "fromDestination": 11
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 8,
+          "fromDestination": 9
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 10,
+          "fromDestination": 8
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 12,
+          "fromDestination": 6
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 14,
+          "fromDestination": 4
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 16,
+          "fromDestination": 2
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 18,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R005",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Victoria",
+      "destination": "Stepford Airport Central",
+      "timeMin": 22,
+      "timeMax": 22,
+      "cost": "Free",
+      "points": 65,
+      "xp": 12,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 22
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 1,
+          "fromDestination": 19
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 3,
+          "fromDestination": 17
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 5,
+          "fromDestination": 15
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 7,
+          "fromDestination": 13
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 12,
+          "fromDestination": 8
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 14,
+          "fromDestination": 6
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 16,
+          "fromDestination": 4
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 17,
+          "fromDestination": 2
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R007",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Hampton Hargate",
+      "timeMin": 14,
+      "timeMax": 14,
+      "cost": "300 pts",
+      "points": 50,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 12
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 10
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 4,
+          "fromDestination": 8
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 6,
+          "fromDestination": 6
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 7,
+          "fromDestination": 5
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 10,
+          "fromDestination": 2
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R009",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Victoria",
+      "destination": "Edgemead",
+      "timeMin": 26,
+      "timeMax": 27,
+      "cost": "300 pts",
+      "points": 75,
+      "xp": 14,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 26
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 2,
+          "fromDestination": 23
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 4,
+          "fromDestination": 21
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 5,
+          "fromDestination": 19
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 7,
+          "fromDestination": 17
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 9,
+          "fromDestination": 15
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 11,
+          "fromDestination": 14
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 14,
+          "fromDestination": 12
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 17,
+          "fromDestination": 10
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 19,
+          "fromDestination": 8
+        },
+        {
+          "name": "Rocket Parade",
+          "fromOrigin": 21,
+          "fromDestination": 6
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 23,
+          "fromDestination": 4
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 25,
+          "fromDestination": 2
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 27,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R020",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Whitefield",
+      "timeMin": 10,
+      "timeMax": 11,
+      "cost": "450 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 9
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 7
+        },
+        {
+          "name": "Stepford United Football Club",
+          "fromOrigin": 5,
+          "fromDestination": 4
+        },
+        {
+          "name": "Woodhead Lane",
+          "fromOrigin": 6,
+          "fromDestination": 3
+        },
+        {
+          "name": "Houghton Rake",
+          "fromOrigin": 7,
+          "fromDestination": 2
+        },
+        {
+          "name": "Whitefield",
+          "fromOrigin": 9,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R022",
+      "operator": "Stepford Connect",
+      "origin": "Beechley",
+      "destination": "Whitefield",
+      "timeMin": 8,
+      "timeMax": 9,
+      "cost": "600 pts",
+      "points": 40,
+      "xp": 7,
+      "calls": [
+        {
+          "name": "Beechley",
+          "fromOrigin": 0,
+          "fromDestination": 7
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 1,
+          "fromDestination": 6
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 3,
+          "fromDestination": 4
+        },
+        {
+          "name": "Stepford United Football Club",
+          "fromOrigin": 5,
+          "fromDestination": 2
+        },
+        {
+          "name": "Woodhead Lane",
+          "fromOrigin": 6,
+          "fromDestination": 1
+        },
+        {
+          "name": "Whitefield",
+          "fromOrigin": 8,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R024",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 43,
+      "timeMax": 44,
+      "cost": "600 pts (60 xp)",
+      "points": 110,
+      "xp": 20,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 43
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 41
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 4,
+          "fromDestination": 39
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 7,
+          "fromDestination": 36
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 9,
+          "fromDestination": 34
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 11,
+          "fromDestination": 32
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 13,
+          "fromDestination": 30
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 15,
+          "fromDestination": 28
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 17,
+          "fromDestination": 26
+        },
+        {
+          "name": "Rocket Parade",
+          "fromOrigin": 20,
+          "fromDestination": 23
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 22,
+          "fromDestination": 20
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 24,
+          "fromDestination": 18
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 26,
+          "fromDestination": 15
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 28,
+          "fromDestination": 13
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 31,
+          "fromDestination": 11
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 33,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 36,
+          "fromDestination": 7
+        },
+        {
+          "name": "Starryloch",
+          "fromOrigin": 38,
+          "fromDestination": 5
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 40,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 44,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R025",
+      "operator": "Stepford Connect",
+      "origin": "St Helens Bridge",
+      "destination": "Westwyvern",
+      "timeMin": 31,
+      "timeMax": 35,
+      "cost": "450 pts",
+      "points": 95,
+      "xp": 18,
+      "calls": [
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 0,
+          "fromDestination": 30
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 2,
+          "fromDestination": 28
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 4,
+          "fromDestination": 26
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 6,
+          "fromDestination": 25
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 9,
+          "fromDestination": 23
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 11,
+          "fromDestination": 21
+        },
+        {
+          "name": "Upper Staploe",
+          "fromOrigin": 13,
+          "fromDestination": 19
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 15,
+          "fromDestination": 17
+        },
+        {
+          "name": "Rocket Parade",
+          "fromOrigin": 17,
+          "fromDestination": 15
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 18,
+          "fromDestination": 14
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 20,
+          "fromDestination": 12
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 22,
+          "fromDestination": 9
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 24,
+          "fromDestination": 7
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 27,
+          "fromDestination": 5
+        },
+        {
+          "name": "Millcastle Racecourse",
+          "fromOrigin": 29,
+          "fromDestination": 3
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 30,
+          "fromDestination": 2
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 34,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R026",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Victoria",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 34,
+      "timeMax": 42,
+      "cost": "450 pts",
+      "points": 90,
+      "xp": 17,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 35
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 3,
+          "fromDestination": 32
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 5,
+          "fromDestination": 30
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 7,
+          "fromDestination": 28
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 10,
+          "fromDestination": 26
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 12,
+          "fromDestination": 24
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 14,
+          "fromDestination": 23
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 18,
+          "fromDestination": 21
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 20,
+          "fromDestination": 19
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 23,
+          "fromDestination": 17
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 25,
+          "fromDestination": 15
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 27,
+          "fromDestination": 13
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 29,
+          "fromDestination": 11
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 32,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 35,
+          "fromDestination": 6
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 38,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 43,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R032",
+      "operator": "Stepford Connect",
+      "origin": "Willowfield",
+      "destination": "Port Benton",
+      "timeMin": 17,
+      "timeMax": 17,
+      "cost": "450 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Willowfield",
+          "fromOrigin": 0,
+          "fromDestination": 16
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 3,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 5,
+          "fromDestination": 11
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 7,
+          "fromDestination": 9
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 9,
+          "fromDestination": 7
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 11,
+          "fromDestination": 5
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 13,
+          "fromDestination": 3
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 15,
+          "fromDestination": 1
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 16,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R033",
+      "operator": "Stepford Connect",
+      "origin": "Beechley",
+      "destination": "Stepford Airport Central",
+      "timeMin": 21,
+      "timeMax": 21,
+      "cost": "450 pts",
+      "points": 65,
+      "xp": 12,
+      "calls": [
+        {
+          "name": "Beechley",
+          "fromOrigin": 0,
+          "fromDestination": 19
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 2,
+          "fromDestination": 16
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 4,
+          "fromDestination": 14
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 6,
+          "fromDestination": 12
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 8,
+          "fromDestination": 10
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 10,
+          "fromDestination": 8
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 12,
+          "fromDestination": 6
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 14,
+          "fromDestination": 4
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 15,
+          "fromDestination": 2
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 18,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R035",
+      "operator": "Stepford Connect",
+      "origin": "Willowfield",
+      "destination": "Westwyvern",
+      "timeMin": 39,
+      "timeMax": 39,
+      "cost": "600 pts",
+      "points": 95,
+      "xp": 18,
+      "calls": [
+        {
+          "name": "Willowfield",
+          "fromOrigin": 0,
+          "fromDestination": 40
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 3,
+          "fromDestination": 37
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 5,
+          "fromDestination": 35
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 7,
+          "fromDestination": 33
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 9,
+          "fromDestination": 31
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 11,
+          "fromDestination": 29
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 13,
+          "fromDestination": 26
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 16,
+          "fromDestination": 24
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 18,
+          "fromDestination": 22
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 20,
+          "fromDestination": 20
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 22,
+          "fromDestination": 18
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 25,
+          "fromDestination": 15
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 27,
+          "fromDestination": 13
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 29,
+          "fromDestination": 11
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 31,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 34,
+          "fromDestination": 6
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 37,
+          "fromDestination": 3
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 41,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R036",
+      "operator": "Stepford Connect",
+      "origin": "Willowfield",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 36,
+      "timeMax": 44,
+      "cost": "600 pts",
+      "points": 95,
+      "xp": 18,
+      "calls": [
+        {
+          "name": "Willowfield",
+          "fromOrigin": 0,
+          "fromDestination": 36
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 3,
+          "fromDestination": 33
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 5,
+          "fromDestination": 31
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 7,
+          "fromDestination": 29
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 9,
+          "fromDestination": 27
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 12,
+          "fromDestination": 25
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 14,
+          "fromDestination": 23
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 16,
+          "fromDestination": 22
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 20,
+          "fromDestination": 20
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 22,
+          "fromDestination": 18
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 25,
+          "fromDestination": 16
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 27,
+          "fromDestination": 14
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 29,
+          "fromDestination": 12
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 32,
+          "fromDestination": 10
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 34,
+          "fromDestination": 8
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 37,
+          "fromDestination": 6
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 40,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 44,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R037",
+      "operator": "Stepford Connect",
+      "origin": "Leighton City",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 16,
+      "timeMax": 18,
+      "cost": "300 pts (60 xp)",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Leighton City",
+          "fromOrigin": 0,
+          "fromDestination": 16
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 2,
+          "fromDestination": 13
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 4,
+          "fromDestination": 11
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 7,
+          "fromDestination": 9
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 9,
+          "fromDestination": 7
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 12,
+          "fromDestination": 5
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 14,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 18,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R038",
+      "operator": "Stepford Connect",
+      "origin": "Leighton City",
+      "destination": "Westwyvern",
+      "timeMin": 12,
+      "timeMax": 14,
+      "cost": "150 pts",
+      "points": 40,
+      "xp": 7,
+      "calls": [
+        {
+          "name": "Leighton City",
+          "fromOrigin": 0,
+          "fromDestination": 12
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 2,
+          "fromDestination": 9
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 4,
+          "fromDestination": 7
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 7,
+          "fromDestination": 5
+        },
+        {
+          "name": "Millcastle Racecourse",
+          "fromOrigin": 9,
+          "fromDestination": 3
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 10,
+          "fromDestination": 2
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 14,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R039",
+      "operator": "Stepford Connect",
+      "origin": "Benton",
+      "destination": "Leighton City",
+      "timeMin": 14,
+      "timeMax": 14,
+      "cost": "300 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Benton",
+          "fromOrigin": 0,
+          "fromDestination": 12
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 10
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 4,
+          "fromDestination": 8
+        },
+        {
+          "name": "Upper Staploe",
+          "fromOrigin": 6,
+          "fromDestination": 6
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 8,
+          "fromDestination": 4
+        },
+        {
+          "name": "Rocket Parade",
+          "fromOrigin": 10,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 11,
+          "fromDestination": 1
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R040",
+      "operator": "Stepford Connect",
+      "origin": "Edgemead",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 17,
+      "timeMax": 20,
+      "cost": "300 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Edgemead",
+          "fromOrigin": 0,
+          "fromDestination": 17
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 2,
+          "fromDestination": 15
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 5,
+          "fromDestination": 13
+        },
+        {
+          "name": "Millcastle Racecourse",
+          "fromOrigin": 7,
+          "fromDestination": 11
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 9,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 12,
+          "fromDestination": 7
+        },
+        {
+          "name": "Starryloch",
+          "fromOrigin": 14,
+          "fromDestination": 5
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 16,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R041",
+      "operator": "Stepford Connect",
+      "origin": "Leighton West",
+      "destination": "Edgemead",
+      "timeMin": 2,
+      "timeMax": 3,
+      "cost": "300 pts",
+      "points": 15,
+      "xp": 2,
+      "calls": [
+        {
+          "name": "Leighton West",
+          "fromOrigin": 0,
+          "fromDestination": 3
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 2,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R042",
+      "operator": "Stepford Connect",
+      "origin": "Leighton West",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 18,
+      "timeMax": 20,
+      "cost": "300 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Leighton West",
+          "fromOrigin": 0,
+          "fromDestination": 18
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 2,
+          "fromDestination": 15
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 4,
+          "fromDestination": 13
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 7,
+          "fromDestination": 11
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 9,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 12,
+          "fromDestination": 7
+        },
+        {
+          "name": "Starryloch",
+          "fromOrigin": 14,
+          "fromDestination": 5
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 16,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R043",
+      "operator": "Stepford Connect",
+      "origin": "Leighton West",
+      "destination": "Leighton City",
+      "timeMin": 2,
+      "timeMax": 3,
+      "cost": "300 pts",
+      "points": 15,
+      "xp": 2,
+      "calls": [
+        {
+          "name": "Leighton West",
+          "fromOrigin": 0,
+          "fromDestination": 3
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 2,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R044",
+      "operator": "Stepford Connect",
+      "origin": "Benton",
+      "destination": "Leighton West",
+      "timeMin": 15,
+      "timeMax": 15,
+      "cost": "300 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Benton",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 13
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 4,
+          "fromDestination": 11
+        },
+        {
+          "name": "Upper Staploe",
+          "fromOrigin": 6,
+          "fromDestination": 9
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 8,
+          "fromDestination": 7
+        },
+        {
+          "name": "Rocket Parade",
+          "fromOrigin": 10,
+          "fromDestination": 5
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 11,
+          "fromDestination": 4
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 12,
+          "fromDestination": 3
+        },
+        {
+          "name": "Leighton West",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R045",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Victoria",
+      "destination": "Leighton City",
+      "timeMin": 25,
+      "timeMax": 26,
+      "cost": "Free",
+      "points": 90,
+      "xp": 17,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 25
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 3,
+          "fromDestination": 22
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 5,
+          "fromDestination": 20
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 7,
+          "fromDestination": 18
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 9,
+          "fromDestination": 16
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 11,
+          "fromDestination": 14
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 13,
+          "fromDestination": 12
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 15,
+          "fromDestination": 10
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 17,
+          "fromDestination": 8
+        },
+        {
+          "name": "Upper Staploe",
+          "fromOrigin": 19,
+          "fromDestination": 6
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 21,
+          "fromDestination": 4
+        },
+        {
+          "name": "Rocket Parade",
+          "fromOrigin": 23,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 24,
+          "fromDestination": 1
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 25,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R046",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Victoria",
+      "destination": "Airport Terminal 2",
+      "timeMin": 24,
+      "timeMax": 24,
+      "cost": "450 pts",
+      "points": 70,
+      "xp": 13,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 23
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 2,
+          "fromDestination": 19
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 3,
+          "fromDestination": 18
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 5,
+          "fromDestination": 16
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 6,
+          "fromDestination": 14
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 9,
+          "fromDestination": 12
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 11,
+          "fromDestination": 10
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 13,
+          "fromDestination": 8
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 15,
+          "fromDestination": 6
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 16,
+          "fromDestination": 4
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 18,
+          "fromDestination": 2
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 22,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R048",
+      "operator": "Stepford Connect",
+      "origin": "St Helens Bridge",
+      "destination": "Airport Terminal 2",
+      "timeMin": 16,
+      "timeMax": 16,
+      "cost": "450 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 2,
+          "fromDestination": 12
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 4,
+          "fromDestination": 10
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 6,
+          "fromDestination": 8
+        },
+        {
+          "name": "Benton Bridge",
+          "fromOrigin": 8,
+          "fromDestination": 5
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 9,
+          "fromDestination": 4
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 11,
+          "fromDestination": 2
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R049",
+      "operator": "Stepford Connect",
+      "origin": "Rayleigh Bay",
+      "destination": "Edgemead",
+      "timeMin": 5,
+      "timeMax": 5,
+      "cost": "750 pts",
+      "points": 25,
+      "xp": 4,
+      "calls": [
+        {
+          "name": "Rayleigh Bay",
+          "fromOrigin": 0,
+          "fromDestination": 4
+        },
+        {
+          "name": "Carnalea Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 2
+        },
+        {
+          "name": "Aslockby",
+          "fromOrigin": 3,
+          "fromDestination": 1
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 4,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R050",
+      "operator": "Stepford Connect",
+      "origin": "Rayleigh Bay",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 21,
+      "timeMax": 21,
+      "cost": "300 pts",
+      "points": 65,
+      "xp": 12,
+      "calls": [
+        {
+          "name": "Rayleigh Bay",
+          "fromOrigin": 0,
+          "fromDestination": 20
+        },
+        {
+          "name": "Carnalea Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 18
+        },
+        {
+          "name": "Aslockby",
+          "fromOrigin": 3,
+          "fromDestination": 17
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 4,
+          "fromDestination": 16
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 6,
+          "fromDestination": 14
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 8,
+          "fromDestination": 12
+        },
+        {
+          "name": "Millcastle Racecourse",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 12,
+          "fromDestination": 8
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 14,
+          "fromDestination": 6
+        },
+        {
+          "name": "Starryloch",
+          "fromOrigin": 16,
+          "fromDestination": 4
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 17,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R100",
+      "operator": "Stepford Connect",
+      "origin": "Rayleigh Bay",
+      "destination": "Leighton West",
+      "timeMin": 7,
+      "timeMax": 7,
+      "cost": "750 pts",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Rayleigh Bay",
+          "fromOrigin": 0,
+          "fromDestination": 6
+        },
+        {
+          "name": "Carnalea Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 4
+        },
+        {
+          "name": "Aslockby",
+          "fromOrigin": 3,
+          "fromDestination": 3
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 4,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton West",
+          "fromOrigin": 6,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R101",
+      "operator": "Stepford Connect",
+      "origin": "Rayleigh Bay",
+      "destination": "Leighton City",
+      "timeMin": 7,
+      "timeMax": 7,
+      "cost": "750 pts",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Rayleigh Bay",
+          "fromOrigin": 0,
+          "fromDestination": 6
+        },
+        {
+          "name": "Carnalea Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 4
+        },
+        {
+          "name": "Aslockby",
+          "fromOrigin": 3,
+          "fromDestination": 3
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 4,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 6,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R102",
+      "operator": "Stepford Connect",
+      "origin": "Rayleigh Bay",
+      "destination": "Westwyvern",
+      "timeMin": 18,
+      "timeMax": 18,
+      "cost": "1,250 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Rayleigh Bay",
+          "fromOrigin": 0,
+          "fromDestination": 17
+        },
+        {
+          "name": "Carnalea Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 15
+        },
+        {
+          "name": "Aslockby",
+          "fromOrigin": 4,
+          "fromDestination": 13
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 6,
+          "fromDestination": 12
+        },
+        {
+          "name": "Faymere",
+          "fromOrigin": 8,
+          "fromDestination": 10
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 10,
+          "fromDestination": 8
+        },
+        {
+          "name": "Millcastle Racecourse",
+          "fromOrigin": 12,
+          "fromDestination": 6
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 14,
+          "fromDestination": 4
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 18,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R103",
+      "operator": "Stepford Connect",
+      "origin": "Willowfield",
+      "destination": "Whitefield",
+      "timeMin": 14,
+      "timeMax": 14,
+      "cost": "600 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Willowfield",
+          "fromOrigin": 0,
+          "fromDestination": 13
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 3,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 4,
+          "fromDestination": 9
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 6,
+          "fromDestination": 7
+        },
+        {
+          "name": "Stepford United Football Club",
+          "fromOrigin": 9,
+          "fromDestination": 4
+        },
+        {
+          "name": "Woodhead Lane",
+          "fromOrigin": 10,
+          "fromDestination": 3
+        },
+        {
+          "name": "Houghton Rake",
+          "fromOrigin": 11,
+          "fromDestination": 2
+        },
+        {
+          "name": "Whitefield",
+          "fromOrigin": 13,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R104",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 34,
+      "timeMax": 34,
+      "cost": "750 pts",
+      "points": 60,
+      "xp": 15,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 33
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 31
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 4,
+          "fromDestination": 29
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 6,
+          "fromDestination": 27
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 8,
+          "fromDestination": 25
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 10,
+          "fromDestination": 23
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 12,
+          "fromDestination": 21
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 15,
+          "fromDestination": 18
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 17,
+          "fromDestination": 15
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 19,
+          "fromDestination": 13
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 21,
+          "fromDestination": 10
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 24,
+          "fromDestination": 7
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 27,
+          "fromDestination": 5
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 29,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 33,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R105",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Westwyvern",
+      "timeMin": 27,
+      "timeMax": 27,
+      "cost": "600 pts",
+      "points": 70,
+      "xp": 13,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 28
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 26
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 4,
+          "fromDestination": 24
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 6,
+          "fromDestination": 22
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 8,
+          "fromDestination": 20
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 10,
+          "fromDestination": 18
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 12,
+          "fromDestination": 16
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 14,
+          "fromDestination": 14
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 16,
+          "fromDestination": 11
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 18,
+          "fromDestination": 9
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 20,
+          "fromDestination": 6
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 22,
+          "fromDestination": 4
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 26,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R106",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Rayleigh Bay",
+      "timeMin": 26,
+      "timeMax": 26,
+      "cost": "750 pts",
+      "points": 70,
+      "xp": 13,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 27
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 25
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 4,
+          "fromDestination": 23
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 6,
+          "fromDestination": 21
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 8,
+          "fromDestination": 19
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 10,
+          "fromDestination": 17
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 12,
+          "fromDestination": 15
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 14,
+          "fromDestination": 12
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 17,
+          "fromDestination": 10
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 19,
+          "fromDestination": 8
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 22,
+          "fromDestination": 5
+        },
+        {
+          "name": "Aslockby",
+          "fromOrigin": 23,
+          "fromDestination": 3
+        },
+        {
+          "name": "Rayleigh Bay",
+          "fromOrigin": 26,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R107",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Central",
+      "destination": "Leighton West",
+      "timeMin": 22,
+      "timeMax": 22,
+      "cost": "Free",
+      "points": 60,
+      "xp": 11,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 20
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 18
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 4,
+          "fromDestination": 16
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 7,
+          "fromDestination": 13
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 9,
+          "fromDestination": 11
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 11,
+          "fromDestination": 9
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 13,
+          "fromDestination": 7
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 15,
+          "fromDestination": 5
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 17,
+          "fromDestination": 3
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 18,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton West",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R108",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Airport Central",
+      "destination": "Westwyvern",
+      "timeMin": 21,
+      "timeMax": 21,
+      "cost": "750 pts",
+      "points": 35,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 0,
+          "fromDestination": 20
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 2,
+          "fromDestination": 18
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 4,
+          "fromDestination": 16
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 7,
+          "fromDestination": 13
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 12,
+          "fromDestination": 8
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 14,
+          "fromDestination": 6
+        },
+        {
+          "name": "Millcastle",
+          "fromOrigin": 17,
+          "fromDestination": 3
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R109",
+      "operator": "Stepford Connect",
+      "origin": "Stepford Airport Central",
+      "destination": "Leighton West",
+      "timeMin": 15,
+      "timeMax": 15,
+      "cost": "600 pts",
+      "points": 40,
+      "xp": 7,
+      "calls": [
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 2,
+          "fromDestination": 13
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 4,
+          "fromDestination": 11
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 7,
+          "fromDestination": 8
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 10,
+          "fromDestination": 5
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 12,
+          "fromDestination": 3
+        },
+        {
+          "name": "Leighton West",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R002",
+      "operator": "Metro",
+      "origin": "Stepford Central",
+      "destination": "Port Benton",
+      "timeMin": 17,
+      "timeMax": 17,
+      "cost": "450 pts",
+      "points": 55,
+      "xp": 10,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 1,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 3,
+          "fromDestination": 12
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 4,
+          "fromDestination": 10
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 6,
+          "fromDestination": 9
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 8,
+          "fromDestination": 7
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 9,
+          "fromDestination": 6
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 11,
+          "fromDestination": 4
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 13,
+          "fromDestination": 2
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 16,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R006",
+      "operator": "Metro",
+      "origin": "Stepford Victoria",
+      "destination": "Port Benton",
+      "timeMin": 21,
+      "timeMax": 21,
+      "cost": "450 pts",
+      "points": 70,
+      "xp": 13,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 22
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 2,
+          "fromDestination": 19
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 4,
+          "fromDestination": 17
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 6,
+          "fromDestination": 15
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 7,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 9,
+          "fromDestination": 12
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 12,
+          "fromDestination": 9
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 13,
+          "fromDestination": 7
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 14,
+          "fromDestination": 6
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 16,
+          "fromDestination": 4
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 18,
+          "fromDestination": 2
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R008",
+      "operator": "Metro",
+      "origin": "Stepford Victoria",
+      "destination": "Berrily",
+      "timeMin": 9,
+      "timeMax": 10,
+      "cost": "450 pts (200 xp)",
+      "points": 65,
+      "xp": 12,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 19
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 2,
+          "fromDestination": 16
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 4,
+          "fromDestination": 14
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 6,
+          "fromDestination": 12
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 7,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": null,
+          "fromDestination": 9
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 10,
+          "fromDestination": 7
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 12,
+          "fromDestination": 6
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": 14,
+          "fromDestination": 4
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": 15,
+          "fromDestination": 3
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 16,
+          "fromDestination": 2
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 18,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R021",
+      "operator": "Metro",
+      "origin": "Stepford Central",
+      "destination": "Stepford United Football Club",
+      "timeMin": 8,
+      "timeMax": 8,
+      "cost": "300 pts",
+      "points": 35,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 8
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 1,
+          "fromDestination": 6
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 3,
+          "fromDestination": 5
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 4,
+          "fromDestination": 3
+        },
+        {
+          "name": "Whitefield Lido",
+          "fromOrigin": 5,
+          "fromDestination": 2
+        },
+        {
+          "name": "Stepford United Football Club",
+          "fromOrigin": 7,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R023",
+      "operator": "Metro",
+      "origin": "Stepford Victoria",
+      "destination": "Stepford United Football Club",
+      "timeMin": 14,
+      "timeMax": 14,
+      "cost": "Free",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 2,
+          "fromDestination": 12
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 4,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 6,
+          "fromDestination": 8
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 7,
+          "fromDestination": 6
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 9,
+          "fromDestination": 5
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 10,
+          "fromDestination": 3
+        },
+        {
+          "name": "Whitefield Lido",
+          "fromOrigin": 11,
+          "fromDestination": 2
+        },
+        {
+          "name": "Stepford United Football Club",
+          "fromOrigin": 13,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R027",
+      "operator": "Metro",
+      "origin": "Stepford Central",
+      "destination": "Berrily",
+      "timeMin": 13,
+      "timeMax": 13,
+      "cost": "450 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 12
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 1,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 3,
+          "fromDestination": 9
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 4,
+          "fromDestination": 7
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 6,
+          "fromDestination": 6
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": 8,
+          "fromDestination": 4
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": 9,
+          "fromDestination": 3
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 10,
+          "fromDestination": 2
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R028",
+      "operator": "Metro",
+      "origin": "Stepford Victoria",
+      "destination": "Willowfield",
+      "timeMin": 8,
+      "timeMax": 8,
+      "cost": "300 pts",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 7
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 1,
+          "fromDestination": 6
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 3,
+          "fromDestination": 4
+        },
+        {
+          "name": "Hemdon Park",
+          "fromOrigin": 5,
+          "fromDestination": 2
+        },
+        {
+          "name": "Willowfield",
+          "fromOrigin": 7,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R029",
+      "operator": "Metro",
+      "origin": "Stepford Victoria",
+      "destination": "Beechley",
+      "timeMin": 4,
+      "timeMax": 4,
+      "cost": "300 pts",
+      "points": 20,
+      "xp": 3,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 3
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 1,
+          "fromDestination": 2
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 3,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R030",
+      "operator": "Metro",
+      "origin": "Willowfield",
+      "destination": "Berrily",
+      "timeMin": 23,
+      "timeMax": 23,
+      "cost": "450 pts",
+      "points": 75,
+      "xp": 14,
+      "calls": [
+        {
+          "name": "Willowfield",
+          "fromOrigin": 0,
+          "fromDestination": 22
+        },
+        {
+          "name": "Hemdon Park",
+          "fromOrigin": 2,
+          "fromDestination": 20
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 4,
+          "fromDestination": 18
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 6,
+          "fromDestination": 16
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 8,
+          "fromDestination": 14
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 10,
+          "fromDestination": 12
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 11,
+          "fromDestination": 11
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 13,
+          "fromDestination": 9
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 14,
+          "fromDestination": 8
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 16,
+          "fromDestination": 6
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 17,
+          "fromDestination": 5
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": 19,
+          "fromDestination": 3
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 20,
+          "fromDestination": 2
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 22,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R031",
+      "operator": "Metro",
+      "origin": "Willowfield",
+      "destination": "Stepford United Football Club",
+      "timeMin": 16,
+      "timeMax": 16,
+      "cost": "450 pts",
+      "points": 55,
+      "xp": 10,
+      "calls": [
+        {
+          "name": "Willowfield",
+          "fromOrigin": 0,
+          "fromDestination": 16
+        },
+        {
+          "name": "Hemdon Park",
+          "fromOrigin": 2,
+          "fromDestination": 14
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 4,
+          "fromDestination": 12
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 6,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 8,
+          "fromDestination": 8
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 9,
+          "fromDestination": 6
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 11,
+          "fromDestination": 5
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 12,
+          "fromDestination": 3
+        },
+        {
+          "name": "Whitefield Lido",
+          "fromOrigin": 13,
+          "fromDestination": 2
+        },
+        {
+          "name": "Stepford United Football Club",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R034",
+      "operator": "Metro",
+      "origin": "Beechley",
+      "destination": "Morganstown",
+      "timeMin": 21,
+      "timeMax": 21,
+      "cost": "450 pts",
+      "points": 75,
+      "xp": 14,
+      "calls": [
+        {
+          "name": "Beechley",
+          "fromOrigin": 0,
+          "fromDestination": 20
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 2,
+          "fromDestination": 18
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 4,
+          "fromDestination": 16
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 5,
+          "fromDestination": 15
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 7,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 8,
+          "fromDestination": 12
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": 11,
+          "fromDestination": 9
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": 12,
+          "fromDestination": 8
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 13,
+          "fromDestination": 7
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 15,
+          "fromDestination": 5
+        },
+        {
+          "name": "East Berrily",
+          "fromOrigin": 16,
+          "fromDestination": 4
+        },
+        {
+          "name": "Beaulieu Park",
+          "fromOrigin": 17,
+          "fromDestination": 3
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R047",
+      "operator": "Metro",
+      "origin": "St Helens Bridge",
+      "destination": "Port Benton",
+      "timeMin": 10,
+      "timeMax": 10,
+      "cost": "600 pts (90 xp)",
+      "points": 35,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 0,
+          "fromDestination": 9
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 2,
+          "fromDestination": 7
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 3,
+          "fromDestination": 6
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 5,
+          "fromDestination": 4
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 7,
+          "fromDestination": 2
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 9,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R130",
+      "operator": "Metro",
+      "origin": "Stepford Central",
+      "destination": "Morganstown",
+      "timeMin": 19,
+      "timeMax": 19,
+      "cost": "450 pts",
+      "points": 70,
+      "xp": 13,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 19
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 2,
+          "fromDestination": 17
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 3,
+          "fromDestination": 15
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 5,
+          "fromDestination": 14
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 6,
+          "fromDestination": 12
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 8,
+          "fromDestination": 10
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 9,
+          "fromDestination": 9
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": 11,
+          "fromDestination": 7
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 12,
+          "fromDestination": 6
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 14,
+          "fromDestination": 4
+        },
+        {
+          "name": "East Berrily",
+          "fromOrigin": 16,
+          "fromDestination": 3
+        },
+        {
+          "name": "Beaulieu Park",
+          "fromOrigin": 17,
+          "fromDestination": 2
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 19,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R131",
+      "operator": "Metro",
+      "origin": "St Helens Bridge",
+      "destination": "Morganstown",
+      "timeMin": 13,
+      "timeMax": 13,
+      "cost": "600 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 0,
+          "fromDestination": 13
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 2,
+          "fromDestination": 11
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 3,
+          "fromDestination": 10
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": 5,
+          "fromDestination": 8
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 6,
+          "fromDestination": 7
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 8,
+          "fromDestination": 5
+        },
+        {
+          "name": "East Berrily",
+          "fromOrigin": 10,
+          "fromDestination": 3
+        },
+        {
+          "name": "Beaulieu Park",
+          "fromOrigin": 11,
+          "fromDestination": 2
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 13,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R132",
+      "operator": "Metro",
+      "origin": "Stepford Central",
+      "destination": "Barton",
+      "timeMin": 13,
+      "timeMax": 13,
+      "cost": "450 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 12
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 1,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 3,
+          "fromDestination": 9
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 4,
+          "fromDestination": 7
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 6,
+          "fromDestination": 6
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": null,
+          "fromDestination": 8
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 2,
+          "fromDestination": 9
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": null,
+          "fromDestination": 11
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": 3,
+          "fromDestination": 4
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": null,
+          "fromDestination": 3
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 2,
+          "fromDestination": 2
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R133",
+      "operator": "Metro",
+      "origin": "Willowfield",
+      "destination": "Barton",
+      "timeMin": 22,
+      "timeMax": 22,
+      "cost": "300 pts",
+      "points": 70,
+      "xp": 13,
+      "calls": [
+        {
+          "name": "Willowfield",
+          "fromOrigin": 0,
+          "fromDestination": 21
+        },
+        {
+          "name": "Hemdon Park",
+          "fromOrigin": 2,
+          "fromDestination": 19
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 5,
+          "fromDestination": 16
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 7,
+          "fromDestination": 14
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 9,
+          "fromDestination": 12
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 12,
+          "fromDestination": 9
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 13,
+          "fromDestination": 7
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 15,
+          "fromDestination": 6
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": null,
+          "fromDestination": 17
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 2,
+          "fromDestination": 18
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": null,
+          "fromDestination": 20
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": 3,
+          "fromDestination": 4
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": null,
+          "fromDestination": 3
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 2,
+          "fromDestination": 2
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 21,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R134",
+      "operator": "Metro",
+      "origin": "St Helens Bridge",
+      "destination": "Barton",
+      "timeMin": 7,
+      "timeMax": 7,
+      "cost": "600 pts",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 0,
+          "fromDestination": 6
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": null,
+          "fromDestination": 2
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 2,
+          "fromDestination": 3
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": null,
+          "fromDestination": 5
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": 3,
+          "fromDestination": 4
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": null,
+          "fromDestination": 3
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 2,
+          "fromDestination": 2
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 6,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R135",
+      "operator": "Metro",
+      "origin": "Beechley",
+      "destination": "Barton",
+      "timeMin": 18,
+      "timeMax": 18,
+      "cost": "450 pts",
+      "points": 60,
+      "xp": 11,
+      "calls": [
+        {
+          "name": "Beechley",
+          "fromOrigin": 0,
+          "fromDestination": 16
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 2,
+          "fromDestination": 14
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 4,
+          "fromDestination": 12
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 5,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 7,
+          "fromDestination": 9
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 8,
+          "fromDestination": 7
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 10,
+          "fromDestination": 6
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": null,
+          "fromDestination": 12
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": null,
+          "fromDestination": 13
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 2,
+          "fromDestination": 14
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 3,
+          "fromDestination": 4
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 2,
+          "fromDestination": 3
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": null,
+          "fromDestination": 1
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 16,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R136",
+      "operator": "Metro",
+      "origin": "Stepford Victoria",
+      "destination": "Barton",
+      "timeMin": 20,
+      "timeMax": 20,
+      "cost": "300 pts",
+      "points": 65,
+      "xp": 12,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 19
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 2,
+          "fromDestination": 16
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 4,
+          "fromDestination": 14
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 6,
+          "fromDestination": 12
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 7,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 9,
+          "fromDestination": 9
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 10,
+          "fromDestination": 7
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 12,
+          "fromDestination": 6
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": null,
+          "fromDestination": 14
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": null,
+          "fromDestination": 15
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 2,
+          "fromDestination": 16
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 3,
+          "fromDestination": 4
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 2,
+          "fromDestination": 3
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": null,
+          "fromDestination": 1
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 18,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R137",
+      "operator": "Metro",
+      "origin": "Stepford Victoria",
+      "destination": "Morganstown",
+      "timeMin": 25,
+      "timeMax": 25,
+      "cost": "600 pts",
+      "points": 80,
+      "xp": 15,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 25
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 3,
+          "fromDestination": 22
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 5,
+          "fromDestination": 20
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 7,
+          "fromDestination": 18
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 9,
+          "fromDestination": 16
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 10,
+          "fromDestination": 15
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 12,
+          "fromDestination": 13
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 13,
+          "fromDestination": 12
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 15,
+          "fromDestination": 10
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 16,
+          "fromDestination": 9
+        },
+        {
+          "name": "Coxly",
+          "fromOrigin": 18,
+          "fromDestination": 7
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 20,
+          "fromDestination": 5
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 22,
+          "fromDestination": 3
+        },
+        {
+          "name": "Morganstown Docks",
+          "fromOrigin": 23,
+          "fromDestination": 2
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 25,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R139",
+      "operator": "Metro",
+      "origin": "Greenslade",
+      "destination": "Stepford Bay",
+      "timeMin": 23,
+      "timeMax": 23,
+      "cost": "750 pts",
+      "points": 80,
+      "xp": 15,
+      "calls": [
+        {
+          "name": "Greenslade",
+          "fromOrigin": 0,
+          "fromDestination": 21
+        },
+        {
+          "name": "Denton Road",
+          "fromOrigin": 2,
+          "fromDestination": 20
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 3,
+          "fromDestination": 19
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 4,
+          "fromDestination": 18
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": 5,
+          "fromDestination": 16
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": 6,
+          "fromDestination": 15
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 8,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 9,
+          "fromDestination": 11
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 12,
+          "fromDestination": 8
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 14,
+          "fromDestination": 7
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 15,
+          "fromDestination": 5
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 17,
+          "fromDestination": 3
+        },
+        {
+          "name": "Cadoxton",
+          "fromOrigin": 20,
+          "fromDestination": 1
+        },
+        {
+          "name": "Stepford Bay",
+          "fromOrigin": 21,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R140",
+      "operator": "Metro",
+      "origin": "Beechley",
+      "destination": "Stepford Bay",
+      "timeMin": 4,
+      "timeMax": 4,
+      "cost": "750 pts",
+      "points": 20,
+      "xp": 3,
+      "calls": [
+        {
+          "name": "Beechley",
+          "fromOrigin": 0,
+          "fromDestination": 4
+        },
+        {
+          "name": "Cadoxton",
+          "fromOrigin": 3,
+          "fromDestination": 1
+        },
+        {
+          "name": "Stepford Bay",
+          "fromOrigin": 4,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R141",
+      "operator": "Metro",
+      "origin": "Willowfield",
+      "destination": "Stepford Bay",
+      "timeMin": 8,
+      "timeMax": 8,
+      "cost": "600 pts",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Willowfield",
+          "fromOrigin": 0,
+          "fromDestination": 8
+        },
+        {
+          "name": "Hemdon Park",
+          "fromOrigin": 2,
+          "fromDestination": 6
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 4,
+          "fromDestination": 4
+        },
+        {
+          "name": "Cadoxton",
+          "fromOrigin": 7,
+          "fromDestination": 1
+        },
+        {
+          "name": "Stepford Bay",
+          "fromOrigin": 8,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R142",
+      "operator": "Metro",
+      "origin": "Whitney Green",
+      "destination": "Stepford Bay",
+      "timeMin": 25,
+      "timeMax": 26,
+      "cost": "750 pts",
+      "points": 95,
+      "xp": 18,
+      "calls": [
+        {
+          "name": "Whitney Green",
+          "fromOrigin": 26,
+          "fromDestination": 0
+        },
+        {
+          "name": "Robinson Way",
+          "fromOrigin": 25,
+          "fromDestination": 1
+        },
+        {
+          "name": "Greenslade",
+          "fromOrigin": 23,
+          "fromDestination": 3
+        },
+        {
+          "name": "Denton Road",
+          "fromOrigin": 22,
+          "fromDestination": 4
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 21,
+          "fromDestination": 5
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 19,
+          "fromDestination": 6
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": 18,
+          "fromDestination": 7
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 16,
+          "fromDestination": 9
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 15,
+          "fromDestination": 10
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 13,
+          "fromDestination": 12
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 11,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 10,
+          "fromDestination": 15
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 8,
+          "fromDestination": 16
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 7,
+          "fromDestination": 18
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 5,
+          "fromDestination": 20
+        },
+        {
+          "name": "Beechley",
+          "fromOrigin": 3,
+          "fromDestination": 22
+        },
+        {
+          "name": "Cadoxton",
+          "fromOrigin": 1,
+          "fromDestination": 24
+        },
+        {
+          "name": "Stepford Bay",
+          "fromOrigin": 0,
+          "fromDestination": 25
+        }
+      ]
+    },
+    {
+      "code": "R143",
+      "operator": "Metro",
+      "origin": "Stepford Central",
+      "destination": "Whitney Green",
+      "timeMin": 18,
+      "timeMax": 18,
+      "cost": "450 pts",
+      "points": 65,
+      "xp": 13,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 16
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 1,
+          "fromDestination": 14
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 3,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 4,
+          "fromDestination": 11
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 6,
+          "fromDestination": 10
+        },
+        {
+          "name": "New Harrow",
+          "fromOrigin": 8,
+          "fromDestination": 8
+        },
+        {
+          "name": "Elsemere Pond",
+          "fromOrigin": 9,
+          "fromDestination": 7
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 10,
+          "fromDestination": 6
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 12,
+          "fromDestination": 4
+        },
+        {
+          "name": "Denton Road",
+          "fromOrigin": 13,
+          "fromDestination": 3
+        },
+        {
+          "name": "Greenslade",
+          "fromOrigin": 14,
+          "fromDestination": 2
+        },
+        {
+          "name": "Robinson Way",
+          "fromOrigin": 15,
+          "fromDestination": 1
+        },
+        {
+          "name": "Whitney Green",
+          "fromOrigin": 16,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R144",
+      "operator": "Metro",
+      "origin": "Stepford Victoria",
+      "destination": "Greenslade",
+      "timeMin": 24,
+      "timeMax": 24,
+      "cost": "600 pts",
+      "points": 80,
+      "xp": 15,
+      "calls": [
+        {
+          "name": "Stepford Victoria",
+          "fromOrigin": 0,
+          "fromDestination": 23
+        },
+        {
+          "name": "Financial Quarter",
+          "fromOrigin": 2,
+          "fromDestination": 21
+        },
+        {
+          "name": "City Hospital",
+          "fromOrigin": 4,
+          "fromDestination": 19
+        },
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 6,
+          "fromDestination": 17
+        },
+        {
+          "name": "Four Ways",
+          "fromOrigin": 7,
+          "fromDestination": 15
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 9,
+          "fromDestination": 14
+        },
+        {
+          "name": "Stepford High Street",
+          "fromOrigin": 10,
+          "fromDestination": 12
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 12,
+          "fromDestination": 11
+        },
+        {
+          "name": "Angel Pass",
+          "fromOrigin": 14,
+          "fromDestination": 9
+        },
+        {
+          "name": "Bodin",
+          "fromOrigin": 15,
+          "fromDestination": 7
+        },
+        {
+          "name": "Coxly Newtown",
+          "fromOrigin": 17,
+          "fromDestination": 5
+        },
+        {
+          "name": "Barton",
+          "fromOrigin": 19,
+          "fromDestination": 4
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": 21,
+          "fromDestination": 2
+        },
+        {
+          "name": "Denton Road",
+          "fromOrigin": 22,
+          "fromDestination": 1
+        },
+        {
+          "name": "Greenslade",
+          "fromOrigin": 23,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R010",
+      "operator": "Waterline",
+      "origin": "Newry",
+      "destination": "Greenslade",
+      "timeMin": 10,
+      "timeMax": 10,
+      "cost": "Free",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Newry",
+          "fromOrigin": 0,
+          "fromDestination": 10
+        },
+        {
+          "name": "Eden Quay",
+          "fromOrigin": 2,
+          "fromDestination": 8
+        },
+        {
+          "name": "Faraday Road",
+          "fromOrigin": 3,
+          "fromDestination": 7
+        },
+        {
+          "name": "West Benton",
+          "fromOrigin": 4,
+          "fromDestination": 6
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 6,
+          "fromDestination": 4
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 7,
+          "fromDestination": 3
+        },
+        {
+          "name": "Morganstown Docks",
+          "fromOrigin": 8,
+          "fromDestination": 2
+        },
+        {
+          "name": "Whitney Green",
+          "fromOrigin": 9,
+          "fromDestination": 1
+        },
+        {
+          "name": "Greenslade",
+          "fromOrigin": 10,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R011",
+      "operator": "Waterline",
+      "origin": "Newry",
+      "destination": "Connolly",
+      "timeMin": 10,
+      "timeMax": 10,
+      "cost": "300 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Newry",
+          "fromOrigin": 0,
+          "fromDestination": 10
+        },
+        {
+          "name": "Eden Quay",
+          "fromOrigin": 2,
+          "fromDestination": 8
+        },
+        {
+          "name": "Faraday Road",
+          "fromOrigin": 3,
+          "fromDestination": 6
+        },
+        {
+          "name": "West Benton",
+          "fromOrigin": 4,
+          "fromDestination": 5
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 6,
+          "fromDestination": 3
+        },
+        {
+          "name": "Cambridge Street Parkway",
+          "fromOrigin": 7,
+          "fromDestination": 2
+        },
+        {
+          "name": "Ashlan Park",
+          "fromOrigin": 8,
+          "fromDestination": 1
+        },
+        {
+          "name": "Connolly",
+          "fromOrigin": 10,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R012",
+      "operator": "Waterline",
+      "origin": "Newry Harbour",
+      "destination": "Connolly",
+      "timeMin": 12,
+      "timeMax": 12,
+      "cost": "150 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Newry Harbour",
+          "fromOrigin": 0,
+          "fromDestination": 12
+        },
+        {
+          "name": "Newry",
+          "fromOrigin": 2,
+          "fromDestination": 10
+        },
+        {
+          "name": "Eden Quay",
+          "fromOrigin": 4,
+          "fromDestination": 8
+        },
+        {
+          "name": "Faraday Road",
+          "fromOrigin": 5,
+          "fromDestination": 6
+        },
+        {
+          "name": "West Benton",
+          "fromOrigin": 6,
+          "fromDestination": 5
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 8,
+          "fromDestination": 3
+        },
+        {
+          "name": "Cambridge Street Parkway",
+          "fromOrigin": 9,
+          "fromDestination": 2
+        },
+        {
+          "name": "Ashlan Park",
+          "fromOrigin": 10,
+          "fromDestination": 1
+        },
+        {
+          "name": "Connolly",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R013",
+      "operator": "Waterline",
+      "origin": "Benton",
+      "destination": "Greenslade",
+      "timeMin": 4,
+      "timeMax": 4,
+      "cost": "225 pts",
+      "points": 25,
+      "xp": 4,
+      "calls": [
+        {
+          "name": "Benton",
+          "fromOrigin": 0,
+          "fromDestination": 4
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 1,
+          "fromDestination": 3
+        },
+        {
+          "name": "Whitney Green",
+          "fromOrigin": 3,
+          "fromDestination": 1
+        },
+        {
+          "name": "Greenslade",
+          "fromOrigin": 4,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R014",
+      "operator": "Waterline",
+      "origin": "Newry",
+      "destination": "Esterfield",
+      "timeMin": 15,
+      "timeMax": 16,
+      "cost": "300 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Newry",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "Eden Quay",
+          "fromOrigin": 1,
+          "fromDestination": 13
+        },
+        {
+          "name": "Faraday Road",
+          "fromOrigin": 3,
+          "fromDestination": 11
+        },
+        {
+          "name": "West Benton",
+          "fromOrigin": 4,
+          "fromDestination": 10
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 6,
+          "fromDestination": 8
+        },
+        {
+          "name": "Cambridge Street Parkway",
+          "fromOrigin": 8,
+          "fromDestination": 7
+        },
+        {
+          "name": "Airport West",
+          "fromOrigin": 9,
+          "fromDestination": 5
+        },
+        {
+          "name": "Farleigh",
+          "fromOrigin": 12,
+          "fromDestination": 2
+        },
+        {
+          "name": "Esterfield",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R015",
+      "operator": "Waterline",
+      "origin": "Benton",
+      "destination": "Morganstown",
+      "timeMin": 4,
+      "timeMax": 4,
+      "cost": "300 pts",
+      "points": 25,
+      "xp": 4,
+      "calls": [
+        {
+          "name": "Benton",
+          "fromOrigin": 0,
+          "fromDestination": 4
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 1,
+          "fromDestination": 3
+        },
+        {
+          "name": "Morganstown Docks",
+          "fromOrigin": 2,
+          "fromDestination": 2
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 4,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R016",
+      "operator": "Waterline",
+      "origin": "Benton",
+      "destination": "Esterfield",
+      "timeMin": 9,
+      "timeMax": 10,
+      "cost": "300 pts",
+      "points": 40,
+      "xp": 7,
+      "calls": [
+        {
+          "name": "Benton",
+          "fromOrigin": 0,
+          "fromDestination": 10
+        },
+        {
+          "name": "Cambridge Street Parkway",
+          "fromOrigin": 1,
+          "fromDestination": 8
+        },
+        {
+          "name": "Airport West",
+          "fromOrigin": 3,
+          "fromDestination": 6
+        },
+        {
+          "name": "James Street",
+          "fromOrigin": 5,
+          "fromDestination": 4
+        },
+        {
+          "name": "Farleigh",
+          "fromOrigin": 6,
+          "fromDestination": 3
+        },
+        {
+          "name": "Rosedale Village",
+          "fromOrigin": 7,
+          "fromDestination": 2
+        },
+        {
+          "name": "Esterfield",
+          "fromOrigin": 9,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R017",
+      "operator": "Waterline",
+      "origin": "Newry",
+      "destination": "Airport Terminal 2",
+      "timeMin": 12,
+      "timeMax": 13,
+      "cost": "300 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Newry",
+          "fromOrigin": 0,
+          "fromDestination": 12
+        },
+        {
+          "name": "Eden Quay",
+          "fromOrigin": 1,
+          "fromDestination": 10
+        },
+        {
+          "name": "Faraday Road",
+          "fromOrigin": 3,
+          "fromDestination": 9
+        },
+        {
+          "name": "West Benton",
+          "fromOrigin": 4,
+          "fromDestination": 7
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 6,
+          "fromDestination": 6
+        },
+        {
+          "name": "Cambridge Street Parkway",
+          "fromOrigin": 8,
+          "fromDestination": 4
+        },
+        {
+          "name": "Airport West",
+          "fromOrigin": 9,
+          "fromDestination": 2
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 13,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R018",
+      "operator": "Waterline",
+      "origin": "Newry Harbour",
+      "destination": "Farleigh",
+      "timeMin": 15,
+      "timeMax": 15,
+      "cost": "225 pts",
+      "points": 55,
+      "xp": 10,
+      "calls": [
+        {
+          "name": "Newry Harbour",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "Newry",
+          "fromOrigin": 2,
+          "fromDestination": 12
+        },
+        {
+          "name": "Eden Quay",
+          "fromOrigin": 3,
+          "fromDestination": 11
+        },
+        {
+          "name": "Faraday Road",
+          "fromOrigin": 5,
+          "fromDestination": 9
+        },
+        {
+          "name": "West Benton",
+          "fromOrigin": 6,
+          "fromDestination": 8
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 8,
+          "fromDestination": 6
+        },
+        {
+          "name": "Cambridge Street Parkway",
+          "fromOrigin": 10,
+          "fromDestination": 5
+        },
+        {
+          "name": "Airport West",
+          "fromOrigin": 11,
+          "fromDestination": 3
+        },
+        {
+          "name": "James Street",
+          "fromOrigin": 13,
+          "fromDestination": 1
+        },
+        {
+          "name": "Farleigh",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R019",
+      "operator": "Waterline",
+      "origin": "Benton",
+      "destination": "Connolly",
+      "timeMin": 5,
+      "timeMax": 5,
+      "cost": "300 pts",
+      "points": 25,
+      "xp": 4,
+      "calls": [
+        {
+          "name": "Benton",
+          "fromOrigin": 0,
+          "fromDestination": 4
+        },
+        {
+          "name": "Cambridge Street Parkway",
+          "fromOrigin": 1,
+          "fromDestination": 3
+        },
+        {
+          "name": "Ashlan Park",
+          "fromOrigin": 2,
+          "fromDestination": 2
+        },
+        {
+          "name": "Connolly",
+          "fromOrigin": 4,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R120",
+      "operator": "Waterline",
+      "origin": "Newry Harbour",
+      "destination": "Morganstown",
+      "timeMin": 13,
+      "timeMax": 13,
+      "cost": "300 pts",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Newry Harbour",
+          "fromOrigin": 0,
+          "fromDestination": 13
+        },
+        {
+          "name": "Newry",
+          "fromOrigin": 2,
+          "fromDestination": 11
+        },
+        {
+          "name": "Eden Quay",
+          "fromOrigin": 4,
+          "fromDestination": 9
+        },
+        {
+          "name": "Faraday Road",
+          "fromOrigin": 6,
+          "fromDestination": 7
+        },
+        {
+          "name": "West Benton",
+          "fromOrigin": 7,
+          "fromDestination": 6
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 8,
+          "fromDestination": 4
+        },
+        {
+          "name": "Port Benton",
+          "fromOrigin": 9,
+          "fromDestination": 3
+        },
+        {
+          "name": "Morganstown Docks",
+          "fromOrigin": 10,
+          "fromDestination": 2
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R051",
+      "operator": "AirLink",
+      "origin": "Stepford Central",
+      "destination": "Stepford Airport Central",
+      "timeMin": 8,
+      "timeMax": 8,
+      "cost": "450 pts",
+      "points": 15,
+      "xp": 2,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 8
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 7,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R052",
+      "operator": "AirLink",
+      "origin": "Stepford Central",
+      "destination": "Airport Terminal 2",
+      "timeMin": 10,
+      "timeMax": 11,
+      "cost": "Free",
+      "points": 25,
+      "xp": 4,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 10
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 7,
+          "fromDestination": 2
+        },
+        {
+          "name": "Airport Terminal 1",
+          "fromOrigin": 3,
+          "fromDestination": 8
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R053",
+      "operator": "AirLink",
+      "origin": "Stepford Central",
+      "destination": "Airport Terminal 2",
+      "timeMin": 11,
+      "timeMax": 12,
+      "cost": "Free",
+      "points": 40,
+      "xp": 7,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 1,
+          "fromDestination": 11
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 4,
+          "fromDestination": 8
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 7,
+          "fromDestination": 5
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 10,
+          "fromDestination": 2
+        },
+        {
+          "name": "Airport Terminal 1",
+          "fromOrigin": 3,
+          "fromDestination": 11
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R054",
+      "operator": "AirLink",
+      "origin": "Stepford Central",
+      "destination": "Stepford Airport Central",
+      "timeMin": 8,
+      "timeMax": 9,
+      "cost": "Free",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 10
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 6
+        },
+        {
+          "name": "Berrily",
+          "fromOrigin": null,
+          "fromDestination": 5
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 8,
+          "fromDestination": 2
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 10,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R055",
+      "operator": "AirLink",
+      "origin": "Stepford Central",
+      "destination": "Airport Terminal 3",
+      "timeMin": 12,
+      "timeMax": 12,
+      "cost": "450 pts",
+      "points": 35,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "Stepford East",
+          "fromOrigin": 2,
+          "fromDestination": 13
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 7,
+          "fromDestination": 7
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 9,
+          "fromDestination": 5
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 12,
+          "fromDestination": 3
+        },
+        {
+          "name": "Airport Terminal 3",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R056",
+      "operator": "AirLink",
+      "origin": "Stepford Airport Central",
+      "destination": "Leighton Stepford Road",
+      "timeMin": 6,
+      "timeMax": 6,
+      "cost": "300 pts",
+      "points": 20,
+      "xp": 3,
+      "calls": [
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 0,
+          "fromDestination": 7
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 1,
+          "fromDestination": 5
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 7,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R057",
+      "operator": "AirLink",
+      "origin": "Airport Terminal 3",
+      "destination": "Leighton Stepford Road",
+      "timeMin": 14,
+      "timeMax": 14,
+      "cost": "450 pts",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Airport Terminal 3",
+          "fromOrigin": 0,
+          "fromDestination": 14
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 3,
+          "fromDestination": 11
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 5,
+          "fromDestination": 7
+        },
+        {
+          "name": "Water Newton",
+          "fromOrigin": 9,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 13,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R058",
+      "operator": "AirLink",
+      "origin": "Stepford Central",
+      "destination": "Airport Terminal 3",
+      "timeMin": 12,
+      "timeMax": 15,
+      "cost": "450 pts",
+      "points": 35,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 15
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 12
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 6,
+          "fromDestination": 8
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 9,
+          "fromDestination": 5
+        },
+        {
+          "name": "Airport Terminal 1",
+          "fromOrigin": null,
+          "fromDestination": 10
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 30,
+          "fromDestination": 3
+        },
+        {
+          "name": "Airport Terminal 3",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R059",
+      "operator": "AirLink",
+      "origin": "Stepford Central",
+      "destination": "Airport Terminal 2",
+      "timeMin": 13,
+      "timeMax": 13,
+      "cost": "450 pts",
+      "points": 35,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 13
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 10
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 4,
+          "fromDestination": 8
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 8,
+          "fromDestination": 4
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 9,
+          "fromDestination": 2
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 13,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R060",
+      "operator": "AirLink",
+      "origin": "Morganstown",
+      "destination": "Airport Terminal 2",
+      "timeMin": 12,
+      "timeMax": 12,
+      "cost": "Free",
+      "points": 30,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "Morganstown",
+          "fromOrigin": 0,
+          "fromDestination": 7
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 2,
+          "fromDestination": 5
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 4,
+          "fromDestination": 3
+        },
+        {
+          "name": "Airport Terminal 1",
+          "fromOrigin": null,
+          "fromDestination": 5
+        },
+        {
+          "name": "Airport Terminal 3",
+          "fromOrigin": null,
+          "fromDestination": 8
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 11,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R063",
+      "operator": "AirLink",
+      "origin": "Hampton Hargate",
+      "destination": "Airport Terminal 2",
+      "timeMin": 13,
+      "timeMax": 13,
+      "cost": "Free",
+      "points": 30,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 0,
+          "fromDestination": 8
+        },
+        {
+          "name": "Stepford Airport Parkway",
+          "fromOrigin": 3,
+          "fromDestination": 5
+        },
+        {
+          "name": "Stepford Airport Central",
+          "fromOrigin": 6,
+          "fromDestination": 3
+        },
+        {
+          "name": "Airport Terminal 1",
+          "fromOrigin": 2,
+          "fromDestination": 7
+        },
+        {
+          "name": "Airport Terminal 3",
+          "fromOrigin": null,
+          "fromDestination": 10
+        },
+        {
+          "name": "Airport Terminal 2",
+          "fromOrigin": 13,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R075",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Benton",
+      "timeMin": 5,
+      "timeMax": 5,
+      "cost": "150 pts",
+      "points": 15,
+      "xp": 2,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 5
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 5,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R076",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Leighton City",
+      "timeMin": 12,
+      "timeMax": 13,
+      "cost": "300 pts",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 13
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 10
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 5,
+          "fromDestination": 7
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 10,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 12,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R077",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 25,
+      "timeMax": 25,
+      "cost": "Free",
+      "points": 50,
+      "xp": 9,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 25
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 22
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 6,
+          "fromDestination": 18
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 11,
+          "fromDestination": 13
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 13,
+          "fromDestination": 11
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 15,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 19,
+          "fromDestination": 5
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 21,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 25,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R078",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 20,
+      "timeMax": 21,
+      "cost": "300 pts",
+      "points": 35,
+      "xp": 6,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 20
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 5,
+          "fromDestination": 15
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 12,
+          "fromDestination": 8
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 16,
+          "fromDestination": 4
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 21,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R079",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Benton",
+      "timeMin": 5,
+      "timeMax": 6,
+      "cost": "150 pts",
+      "points": 20,
+      "xp": 3,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 5
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 3
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 5,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R080",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 19,
+      "timeMax": 21,
+      "cost": "600 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 21
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 18
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 5,
+          "fromDestination": 15
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 9,
+          "fromDestination": 11
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 11,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 15,
+          "fromDestination": 5
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 17,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 19,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R081",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 17,
+      "timeMax": 17,
+      "cost": "750 pts",
+      "points": 20,
+      "xp": 3,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 17
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 9,
+          "fromDestination": 9
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 17,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R082",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Westwyvern",
+      "timeMin": 18,
+      "timeMax": 18,
+      "cost": "600 pts",
+      "points": 40,
+      "xp": 7,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 20
+        },
+        {
+          "name": "Elsemere Junction",
+          "fromOrigin": 4,
+          "fromDestination": 16
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 7,
+          "fromDestination": 13
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 11,
+          "fromDestination": 9
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 13,
+          "fromDestination": 7
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 15,
+          "fromDestination": 5
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 20,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R083",
+      "operator": "Stepford Express",
+      "origin": "Newry",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 23,
+      "timeMax": 23,
+      "cost": "600 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Newry",
+          "fromOrigin": 0,
+          "fromDestination": 23
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 4,
+          "fromDestination": 19
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 8,
+          "fromDestination": 15
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 11,
+          "fromDestination": 12
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 13,
+          "fromDestination": 10
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 16,
+          "fromDestination": 7
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 20,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 23,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R084",
+      "operator": "Stepford Express",
+      "origin": "Newry Harbour",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 26,
+      "timeMax": 26,
+      "cost": "750 pts",
+      "points": 40,
+      "xp": 7,
+      "calls": [
+        {
+          "name": "Newry Harbour",
+          "fromOrigin": 0,
+          "fromDestination": 26
+        },
+        {
+          "name": "Newry",
+          "fromOrigin": 2,
+          "fromDestination": 24
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 7,
+          "fromDestination": 19
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 14,
+          "fromDestination": 11
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 16,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 21,
+          "fromDestination": 5
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 26,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R085",
+      "operator": "Stepford Express",
+      "origin": "Benton",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 19,
+      "timeMax": 20,
+      "cost": "450 pts",
+      "points": 40,
+      "xp": 7,
+      "calls": [
+        {
+          "name": "Benton",
+          "fromOrigin": 0,
+          "fromDestination": 20
+        },
+        {
+          "name": "Morganstown",
+          "fromOrigin": 4,
+          "fromDestination": 16
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 8,
+          "fromDestination": 12
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 10,
+          "fromDestination": 10
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 17,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 19,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R086",
+      "operator": "Stepford Express",
+      "origin": "Newry",
+      "destination": "Leighton City",
+      "timeMin": 13,
+      "timeMax": 13,
+      "cost": "450 pts",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Newry",
+          "fromOrigin": 0,
+          "fromDestination": 13
+        },
+        {
+          "name": "Eden Quay",
+          "fromOrigin": 2,
+          "fromDestination": 11
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 5,
+          "fromDestination": 8
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 11,
+          "fromDestination": 2
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 13,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R087",
+      "operator": "Stepford Express",
+      "origin": "Rayleigh Bay",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 17,
+      "timeMax": 17,
+      "cost": "750 pts (90 xp)",
+      "points": 30,
+      "xp": 5,
+      "calls": [
+        {
+          "name": "Rayleigh Bay",
+          "fromOrigin": 0,
+          "fromDestination": 16
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 4,
+          "fromDestination": 11
+        },
+        {
+          "name": "Westwyvern",
+          "fromOrigin": 9,
+          "fromDestination": 6
+        },
+        {
+          "name": "Northshore",
+          "fromOrigin": 12,
+          "fromDestination": 3
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 15,
+          "fromDestination": 0
+        }
+      ]
+    },
+    {
+      "code": "R088",
+      "operator": "Stepford Express",
+      "origin": "Stepford Central",
+      "destination": "Llyn-by-the-Sea",
+      "timeMin": 24,
+      "timeMax": 24,
+      "cost": "600 pts",
+      "points": 45,
+      "xp": 8,
+      "calls": [
+        {
+          "name": "Stepford Central",
+          "fromOrigin": 0,
+          "fromDestination": 25
+        },
+        {
+          "name": "St Helens Bridge",
+          "fromOrigin": 2,
+          "fromDestination": 22
+        },
+        {
+          "name": "Benton",
+          "fromOrigin": 5,
+          "fromDestination": 19
+        },
+        {
+          "name": "Hampton Hargate",
+          "fromOrigin": 8,
+          "fromDestination": 16
+        },
+        {
+          "name": "Leighton Stepford Road",
+          "fromOrigin": 11,
+          "fromDestination": 13
+        },
+        {
+          "name": "Leighton City",
+          "fromOrigin": 13,
+          "fromDestination": 11
+        },
+        {
+          "name": "Edgemead",
+          "fromOrigin": 15,
+          "fromDestination": 9
+        },
+        {
+          "name": "Westercoast",
+          "fromOrigin": 18,
+          "fromDestination": 6
+        },
+        {
+          "name": "Llyn-by-the-Sea",
+          "fromOrigin": 24,
+          "fromDestination": 0
+        }
+      ]
+    }
+  ]
+}
