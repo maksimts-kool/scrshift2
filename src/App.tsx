@@ -205,7 +205,7 @@ interface LegRt {
   startMin: number;
 }
 
-/** One row of a live (site-fed) timeline: upcoming calls green, passed calls grey. */
+/** One row of a live (site-fed) timeline: green actuals, orange estimates. */
 function LiveCallRow({
   service,
   index,
@@ -219,10 +219,8 @@ function LiveCallRow({
   const isEnd = index === 0 || index === service.calls.length - 1;
   const actual = fmtSite(c.departed ?? c.arrived);
   const shown = actual ?? c.estimated ?? c.scheduled ?? "—";
-  // passed calls are history (grey); everything still to come is live (green),
-  // regardless of whether the time shown is an actual or an estimate.
-  const passed = c.state === "passed";
-  const timeColor = passed ? "text.secondary" : "success.main";
+  const timeColor =
+    actual != null ? "success.main" : c.estimated != null ? "warning.main" : "text.secondary";
   const details: string[] = [];
   if (c.arrived) details.push(`arr ${fmtSite(c.arrived)}`);
   if (c.departed) details.push(`dep ${fmtSite(c.departed)}`);
@@ -233,7 +231,7 @@ function LiveCallRow({
     <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
       <Typography
         variant="body2"
-        sx={{ fontFamily: "monospace", width: 48, color: timeColor, fontWeight: passed ? 400 : 700 }}
+        sx={{ fontFamily: "monospace", width: 48, color: timeColor, fontWeight: actual ? 700 : 400 }}
       >
         {shown}
       </Typography>
@@ -361,15 +359,11 @@ function LegCard({
           <AccordionDetails sx={{ px: 0, pt: 0 }}>
             {live ? (
               <Stack spacing={0.5}>
-                {live.notices
-                  // drop the site's running-late/on-time banner — per-call
-                  // "+N min" already carries the delay; this is just noise.
-                  .filter((n) => !/^this service is running/i.test(n))
-                  .map((n) => (
-                    <Typography key={n} variant="caption" sx={{ color: "warning.main" }}>
-                      {n}
-                    </Typography>
-                  ))}
+                {live.notices.map((n) => (
+                  <Typography key={n} variant="caption" sx={{ color: "warning.main" }}>
+                    {n}
+                  </Typography>
+                ))}
                 {live.calls.map((_, i) => (
                   <LiveCallRow key={i} service={live} index={i} accent={color} />
                 ))}
