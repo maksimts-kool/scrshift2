@@ -17,8 +17,11 @@ Built with React + Vite + TypeScript + Material UI.
 
 - A shift stays within **one operator** (like the real game); pick one or hit Random.
 - Length is a target **duration** or a number of **legs**.
-- Next leg must depart from the terminus where the previous leg ended (4 min turnaround). The same route is only run back when nothing else leaves the station (dead-end termini).
-- Each leg shows every calling point with clock times, taken from the wiki's per-station cumulative timings.
+- Optionally pin the **sign-on station**; otherwise the shift starts anywhere on the operator's network.
+- Next leg must depart from the terminus where the previous leg ended. The same route is only run back when nothing else leaves the station (dead-end termini).
+- **One train for the whole shift**: every leg is restricted to routes the running train is allowed on (parsed from each route's `rolling_stock` — some routes are exclusive to certain classes or bar longer/double variants). The driver signs off if no onward route fits the train.
+- **Turnaround** between legs is an adjustable layover (0–10 min). It's realism flavor, not a game rule — SCR has no enforced turnaround; drivers terminate and take up the next service almost immediately.
+- Each leg shows every calling point with clock times, taken from the wiki's per-station cumulative timings. The start time can be re-timed on the result without regenerating the route.
 
 ## Project layout
 

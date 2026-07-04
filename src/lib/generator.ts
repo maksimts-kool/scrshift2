@@ -1,6 +1,10 @@
 import type { LegCall, Route, RoutesData, Shift, ShiftLeg } from "../types";
 
-/** minutes to change ends / prepare the train between legs */
+/**
+ * Default minutes to change ends / prepare the train between legs. Not a game
+ * rule — SCR has no enforced turnaround (drivers terminate and take up the next
+ * service near-instantly) — so this is realism flavor and is user-configurable.
+ */
 export const TURNAROUND_MIN = 4;
 /** hard cap so a pathological duration target can never loop forever */
 const MAX_LEGS = 40;
@@ -9,10 +13,19 @@ export interface ShiftOptions {
   operator: string;
   mode: "legs" | "minutes";
   target: number;
+  /** layover added to the clock at each terminus; defaults to TURNAROUND_MIN */
+  turnaroundMin?: number;
+  /** force the shift to sign on at this station; null/undefined = anywhere */
+  startStation?: string | null;
 }
 
 function pick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function intersect(set: Set<string>, list: string[]): Set<string> {
+  const other = new Set(list);
+  return new Set([...set].filter((x) => other.has(x)));
 }
 
 /**
@@ -41,19 +54,27 @@ function buildLegCalls(route: Route, reversed: boolean): LegCall[] {
 }
 
 /**
- * Build a shift: start on a random route of the operator, then repeatedly
+ * Build a shift: sign on at a chosen (or random) station, then repeatedly
  * reverse at the terminus and continue with a route that departs from it.
  * A route back the way we came is only chosen when nothing else leaves the
  * station (dead-end termini like Hampton Hargate on Connect).
+ *
+ * A driver keeps ONE train for the whole shift, so every leg is restricted to
+ * routes whose allowed rolling stock still shares a train with the legs so far.
+ * When no connecting route can be run by the running train, the driver signs
+ * off (the shift ends) even if the leg/duration target isn't reached.
  */
 export function generateShift(data: RoutesData, opts: ShiftOptions): Shift | null {
   const pool = data.routes.filter((r) => r.operator === opts.operator);
   if (pool.length === 0) return null;
 
+  const turnaroundMin = opts.turnaroundMin ?? TURNAROUND_MIN;
   const legs: ShiftLeg[] = [];
   let clock = 0;
   let station: string | null = null;
   let prevCode: string | null = null;
+  // Trains still legal on every leg driven so far (running intersection).
+  let trains: Set<string> = new Set();
 
   const done = () =>
     opts.mode === "legs" ? legs.length >= opts.target : clock >= opts.target;
@@ -62,23 +83,38 @@ export function generateShift(data: RoutesData, opts: ShiftOptions): Shift | nul
     let route: Route;
     let reversed: boolean;
     if (station === null) {
-      route = pick(pool);
-      reversed = Math.random() < 0.5;
+      let starters = pool;
+      if (opts.startStation) {
+        starters = pool.filter(
+          (r) => r.origin === opts.startStation || r.destination === opts.startStation,
+        );
+        if (starters.length === 0) return null; // nothing signs on here
+      }
+      route = pick(starters);
+      reversed =
+        route.origin === route.destination || !opts.startStation
+          ? Math.random() < 0.5
+          : route.destination === opts.startStation;
+      trains = new Set(route.allowedTrains);
     } else {
       const here = pool.filter(
         (r) => r.origin === station || r.destination === station,
       );
-      const fresh = here.filter((r) => r.code !== prevCode);
-      route = pick(fresh.length > 0 ? fresh : here);
+      // Keep the running train legal: only routes it can still work.
+      const compat = here.filter((r) => intersect(trains, r.allowedTrains).size > 0);
+      if (compat.length === 0) break; // sign off — no onward route for this train
+      const fresh = compat.filter((r) => r.code !== prevCode);
+      route = pick(fresh.length > 0 ? fresh : compat);
       reversed =
         route.origin === route.destination
           ? Math.random() < 0.5
           : route.destination === station;
+      trains = intersect(trains, route.allowedTrains);
     }
 
     const calls = buildLegCalls(route, reversed);
     const durationMin = calls[calls.length - 1].minutesIntoLeg;
-    if (legs.length > 0) clock += TURNAROUND_MIN;
+    if (legs.length > 0) clock += turnaroundMin;
     legs.push({
       route,
       reversed,
@@ -93,9 +129,14 @@ export function generateShift(data: RoutesData, opts: ShiftOptions): Shift | nul
     prevCode = route.code;
   }
 
+  if (legs.length === 0) return null;
+
   return {
     operator: opts.operator,
+    train: trains.size > 0 ? pick([...trains]) : null,
+    trainOptions: trains.size,
     legs,
+    turnaroundMin,
     totalMin: clock,
     totalPoints: legs.reduce((s, l) => s + l.route.points, 0),
     totalXp: legs.reduce((s, l) => s + l.route.xp, 0),

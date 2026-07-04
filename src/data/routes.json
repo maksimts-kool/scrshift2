@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-07-03T20:31:51.791Z",
+  "scrapedAt": "2026-07-03T21:22:12.410Z",
   "source": "https://scr.fandom.com/wiki/List_of_Routes",
   "operators": [
     {
@@ -21,6 +21,556 @@
     {
       "name": "Stepford Express",
       "color": "#FF0080"
+    }
+  ],
+  "trains": [
+    {
+      "name": "Class 43",
+      "class": "Class 43",
+      "variant": null,
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 68",
+      "class": "Class 68",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 91",
+      "class": "Class 91",
+      "variant": null,
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 143",
+      "class": "Class 143",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 156",
+      "class": "Class 156",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 158",
+      "class": "Class 158",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 165",
+      "class": "Class 165",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 166",
+      "class": "Class 166",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 168",
+      "class": "Class 168",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 170",
+      "class": "Class 170",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 171",
+      "class": "Class 171",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 180 (double)",
+      "class": "Class 180",
+      "variant": "double",
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 180 (single)",
+      "class": "Class 180",
+      "variant": "single",
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 185 (double)",
+      "class": "Class 185",
+      "variant": "double",
+      "operators": [
+        "Stepford Connect",
+        "AirLink"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 185 (single)",
+      "class": "Class 185",
+      "variant": "single",
+      "operators": [
+        "Stepford Connect",
+        "AirLink"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 195",
+      "class": "Class 195",
+      "variant": null,
+      "operators": [
+        "Stepford Connect",
+        "Waterline"
+      ],
+      "traction": "diesel"
+    },
+    {
+      "name": "Class 220 (double)",
+      "class": "Class 220",
+      "variant": "double",
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 220 (single)",
+      "class": "Class 220",
+      "variant": "single",
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 221 (double)",
+      "class": "Class 221",
+      "variant": "double",
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 221 (single)",
+      "class": "Class 221",
+      "variant": "single",
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 313",
+      "class": "Class 313",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 319",
+      "class": "Class 319",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 321",
+      "class": "Class 321",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 323",
+      "class": "Class 323",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 331",
+      "class": "Class 331",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 332",
+      "class": "Class 332",
+      "variant": null,
+      "operators": [
+        "AirLink"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 333",
+      "class": "Class 333",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 345",
+      "class": "Class 345",
+      "variant": null,
+      "operators": [
+        "AirLink"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 350 (double)",
+      "class": "Class 350",
+      "variant": "double",
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 350 (single)",
+      "class": "Class 350",
+      "variant": "single",
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 357",
+      "class": "Class 357",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 360",
+      "class": "Class 360",
+      "variant": null,
+      "operators": [
+        "Stepford Connect",
+        "AirLink"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 365",
+      "class": "Class 365",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 377",
+      "class": "Class 377",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 379",
+      "class": "Class 379",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 380",
+      "class": "Class 380",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 385 (double)",
+      "class": "Class 385",
+      "variant": "double",
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 385 (single)",
+      "class": "Class 385",
+      "variant": "single",
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 387 (double)",
+      "class": "Class 387",
+      "variant": "double",
+      "operators": [
+        "Stepford Connect",
+        "AirLink"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 387 (single)",
+      "class": "Class 387",
+      "variant": "single",
+      "operators": [
+        "Stepford Connect",
+        "AirLink"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 390",
+      "class": "Class 390",
+      "variant": null,
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 397",
+      "class": "Class 397",
+      "variant": null,
+      "operators": [
+        "AirLink",
+        "Stepford Express"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 398",
+      "class": "Class 398",
+      "variant": null,
+      "operators": [
+        "Metro"
+      ],
+      "traction": "bimode"
+    },
+    {
+      "name": "Class 444",
+      "class": "Class 444",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 458",
+      "class": "Class 458",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 508",
+      "class": "Class 508",
+      "variant": null,
+      "operators": [
+        "Waterline"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 555",
+      "class": "Class 555",
+      "variant": null,
+      "operators": [
+        "Metro"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 700",
+      "class": "Class 700",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 707",
+      "class": "Class 707",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 717",
+      "class": "Class 717",
+      "variant": null,
+      "operators": [
+        "Metro"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 720",
+      "class": "Class 720",
+      "variant": null,
+      "operators": [
+        "Stepford Connect"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 730",
+      "class": "Class 730",
+      "variant": null,
+      "operators": [
+        "Stepford Connect",
+        "Waterline"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 745",
+      "class": "Class 745",
+      "variant": null,
+      "operators": [
+        "AirLink"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 755",
+      "class": "Class 755",
+      "variant": null,
+      "operators": [
+        "AirLink"
+      ],
+      "traction": "bimode"
+    },
+    {
+      "name": "Class 756",
+      "class": "Class 756",
+      "variant": null,
+      "operators": [
+        "Metro"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 777",
+      "class": "Class 777",
+      "variant": null,
+      "operators": [
+        "Metro"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 800 (double)",
+      "class": "Class 800",
+      "variant": "double",
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "bimode"
+    },
+    {
+      "name": "Class 800 (single)",
+      "class": "Class 800",
+      "variant": "single",
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "bimode"
+    },
+    {
+      "name": "Class 801",
+      "class": "Class 801",
+      "variant": null,
+      "operators": [
+        "Stepford Express"
+      ],
+      "traction": "electric"
+    },
+    {
+      "name": "Class 802",
+      "class": "Class 802",
+      "variant": null,
+      "operators": [
+        "AirLink"
+      ],
+      "traction": "bimode"
     }
   ],
   "routes": [
@@ -85,6 +635,30 @@
           "fromOrigin": 17,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 68, Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -168,6 +742,31 @@
           "fromOrigin": 24,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -231,6 +830,31 @@
           "fromOrigin": 18,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -299,6 +923,30 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 68, Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -347,6 +995,36 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 350 (double)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 385 (double)",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 444",
+        "Class 458",
+        "Class 700",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -430,6 +1108,32 @@
           "fromOrigin": 27,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156 and the double variants of the Class 185, Class 350/1, Class 385/1 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 700",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -473,6 +1177,14 @@
           "fromOrigin": 9,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Stepford Connect trains except the Class 156 and the double variant of the Class 185",
+      "allowedTrains": [
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195"
       ]
     },
     {
@@ -516,6 +1228,14 @@
           "fromOrigin": 8,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Stepford Connect trains except the Class 156 and the double variant of the Class 185",
+      "allowedTrains": [
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195"
       ]
     },
     {
@@ -629,6 +1349,31 @@
           "fromOrigin": 44,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -727,6 +1472,31 @@
           "fromOrigin": 34,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -825,6 +1595,20 @@
           "fromOrigin": 43,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 68, Class 185, Class 350/1, Class 380, Class 385, Class 387 & Class 730",
+      "allowedTrains": [
+        "Class 68",
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 350 (single)",
+        "Class 350 (double)",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 385 (double)",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 730"
       ]
     },
     {
@@ -883,6 +1667,31 @@
           "fromOrigin": 16,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -946,6 +1755,31 @@
           "fromOrigin": 18,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1049,6 +1883,32 @@
           "fromOrigin": 41,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156 and the double variants of the Class 185, Class 350/1, Class 385/1 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 700",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1152,6 +2012,20 @@
           "fromOrigin": 44,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 68, Class 185, Class 350/1, Class 380, Class 385, Class 387 & Class 730",
+      "allowedTrains": [
+        "Class 68",
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 350 (single)",
+        "Class 350 (double)",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 385 (double)",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 730"
       ]
     },
     {
@@ -1205,6 +2079,32 @@
           "fromOrigin": 18,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1253,6 +2153,32 @@
           "fromOrigin": 14,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1306,6 +2232,32 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1364,6 +2316,32 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1387,6 +2365,33 @@
           "fromOrigin": 2,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 700",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1445,6 +2450,32 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1468,6 +2499,33 @@
           "fromOrigin": 2,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 700",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1526,6 +2584,32 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1609,6 +2693,32 @@
           "fromOrigin": 25,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156 and the double variants of the Class 185, Class 350/1, Class 385/1 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 700",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1682,6 +2792,30 @@
           "fromOrigin": 22,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 68, Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1735,6 +2869,31 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Connect trains except the Class 156, Class 700 and the double variants of the Class 185, Class 350/1, Class 385 and Class 387",
+      "allowedTrains": [
+        "Class 68",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195",
+        "Class 321",
+        "Class 331",
+        "Class 333",
+        "Class 350 (single)",
+        "Class 357",
+        "Class 360",
+        "Class 365",
+        "Class 377",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 387 (single)",
+        "Class 444",
+        "Class 458",
+        "Class 707",
+        "Class 720",
+        "Class 730"
       ]
     },
     {
@@ -1768,6 +2927,15 @@
           "fromOrigin": 4,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Stepford Connect trains except the double variant of the Class 185",
+      "allowedTrains": [
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195"
       ]
     },
     {
@@ -1841,6 +3009,15 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Stepford Connect trains except the double variant of the Class 185",
+      "allowedTrains": [
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195"
       ]
     },
     {
@@ -1879,6 +3056,15 @@
           "fromOrigin": 6,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Stepford Connect trains except the double variant of the Class 185",
+      "allowedTrains": [
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195"
       ]
     },
     {
@@ -1917,6 +3103,15 @@
           "fromOrigin": 6,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Stepford Connect trains except the double variant of the Class 185",
+      "allowedTrains": [
+        "Class 156",
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195"
       ]
     },
     {
@@ -1975,6 +3170,10 @@
           "fromOrigin": 18,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 156",
+      "allowedTrains": [
+        "Class 156"
       ]
     },
     {
@@ -2028,6 +3227,14 @@
           "fromOrigin": 13,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Stepford Connect trains except the Class 156 and the double variant of the Class 185",
+      "allowedTrains": [
+        "Class 158",
+        "Class 168",
+        "Class 170",
+        "Class 185 (single)",
+        "Class 195"
       ]
     },
     {
@@ -2116,6 +3323,21 @@
           "fromOrigin": 33,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 68, Class 185, Class 350/1, Class 380, Class 385, Class 387, Class 700 & Class 730",
+      "allowedTrains": [
+        "Class 68",
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 350 (single)",
+        "Class 350 (double)",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 385 (double)",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 700",
+        "Class 730"
       ]
     },
     {
@@ -2194,6 +3416,21 @@
           "fromOrigin": 26,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 68, Class 185, Class 350/1, Class 380, Class 385, Class 387, Class 700 & Class 730",
+      "allowedTrains": [
+        "Class 68",
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 350 (single)",
+        "Class 350 (double)",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 385 (double)",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 700",
+        "Class 730"
       ]
     },
     {
@@ -2272,6 +3509,12 @@
           "fromOrigin": 26,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 68, Class 185",
+      "allowedTrains": [
+        "Class 68",
+        "Class 185 (single)",
+        "Class 185 (double)"
       ]
     },
     {
@@ -2340,6 +3583,21 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 68, Class 185, Class 350/1, Class 380, Class 385, Class 387, Class 700 & Class 730",
+      "allowedTrains": [
+        "Class 68",
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 350 (single)",
+        "Class 350 (double)",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 385 (double)",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 700",
+        "Class 730"
       ]
     },
     {
@@ -2398,6 +3656,21 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 68, Class 185, Class 350/1, Class 380, Class 385, Class 387, Class 700 & Class 730",
+      "allowedTrains": [
+        "Class 68",
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 350 (single)",
+        "Class 350 (double)",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 385 (double)",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 700",
+        "Class 730"
       ]
     },
     {
@@ -2446,6 +3719,21 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 68, Class 185, Class 350/1, Class 380, Class 385, Class 387,, Class 700 & Class 730",
+      "allowedTrains": [
+        "Class 68",
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 350 (single)",
+        "Class 350 (double)",
+        "Class 380",
+        "Class 385 (single)",
+        "Class 385 (double)",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 700",
+        "Class 730"
       ]
     },
     {
@@ -2509,6 +3797,14 @@
           "fromOrigin": 16,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -2587,6 +3883,14 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -2660,6 +3964,14 @@
           "fromOrigin": 18,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -2703,6 +4015,14 @@
           "fromOrigin": 7,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -2761,6 +4081,14 @@
           "fromOrigin": 13,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -2819,6 +4147,14 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -2857,6 +4193,14 @@
           "fromOrigin": 7,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -2885,6 +4229,14 @@
           "fromOrigin": 3,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -2968,6 +4320,14 @@
           "fromOrigin": 22,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3031,6 +4391,14 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3114,6 +4482,14 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3157,6 +4533,14 @@
           "fromOrigin": 9,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3235,6 +4619,14 @@
           "fromOrigin": 19,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3293,6 +4685,14 @@
           "fromOrigin": 13,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3366,6 +4766,14 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3459,6 +4867,14 @@
           "fromOrigin": 21,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3512,6 +4928,14 @@
           "fromOrigin": 6,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3595,6 +5019,14 @@
           "fromOrigin": 16,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3683,6 +5115,14 @@
           "fromOrigin": 18,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Metro trains",
+      "allowedTrains": [
+        "Class 398",
+        "Class 555",
+        "Class 717",
+        "Class 756",
+        "Class 777"
       ]
     },
     {
@@ -3771,6 +5211,10 @@
           "fromOrigin": 25,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 756",
+      "allowedTrains": [
+        "Class 756"
       ]
     },
     {
@@ -3859,6 +5303,10 @@
           "fromOrigin": 21,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 398",
+      "allowedTrains": [
+        "Class 398"
       ]
     },
     {
@@ -3887,6 +5335,11 @@
           "fromOrigin": 4,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 398, Class 756",
+      "allowedTrains": [
+        "Class 398",
+        "Class 756"
       ]
     },
     {
@@ -3925,6 +5378,11 @@
           "fromOrigin": 8,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 398, Class 756",
+      "allowedTrains": [
+        "Class 398",
+        "Class 756"
       ]
     },
     {
@@ -4028,6 +5486,10 @@
           "fromOrigin": 0,
           "fromDestination": 25
         }
+      ],
+      "rollingStock": "Class 398",
+      "allowedTrains": [
+        "Class 398"
       ]
     },
     {
@@ -4106,6 +5568,10 @@
           "fromOrigin": 16,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 398",
+      "allowedTrains": [
+        "Class 398"
       ]
     },
     {
@@ -4194,6 +5660,10 @@
           "fromOrigin": 23,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 398",
+      "allowedTrains": [
+        "Class 398"
       ]
     },
     {
@@ -4252,6 +5722,20 @@
           "fromOrigin": 10,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 730",
+        "Class 143",
+        "Class 165",
+        "Class 166",
+        "Class 171",
+        "Class 313",
+        "Class 319",
+        "Class 323",
+        "Class 379",
+        "Class 508"
       ]
     },
     {
@@ -4305,6 +5789,20 @@
           "fromOrigin": 10,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 730",
+        "Class 143",
+        "Class 165",
+        "Class 166",
+        "Class 171",
+        "Class 313",
+        "Class 319",
+        "Class 323",
+        "Class 379",
+        "Class 508"
       ]
     },
     {
@@ -4363,6 +5861,13 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 143",
+        "Class 165",
+        "Class 166"
       ]
     },
     {
@@ -4396,6 +5901,20 @@
           "fromOrigin": 4,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 730",
+        "Class 143",
+        "Class 165",
+        "Class 166",
+        "Class 171",
+        "Class 313",
+        "Class 319",
+        "Class 323",
+        "Class 379",
+        "Class 508"
       ]
     },
     {
@@ -4454,6 +5973,20 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 730",
+        "Class 143",
+        "Class 165",
+        "Class 166",
+        "Class 171",
+        "Class 313",
+        "Class 319",
+        "Class 323",
+        "Class 379",
+        "Class 508"
       ]
     },
     {
@@ -4487,6 +6020,13 @@
           "fromOrigin": 4,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 143",
+        "Class 165",
+        "Class 166"
       ]
     },
     {
@@ -4535,6 +6075,20 @@
           "fromOrigin": 9,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 730",
+        "Class 143",
+        "Class 165",
+        "Class 166",
+        "Class 171",
+        "Class 313",
+        "Class 319",
+        "Class 323",
+        "Class 379",
+        "Class 508"
       ]
     },
     {
@@ -4588,6 +6142,20 @@
           "fromOrigin": 13,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 730",
+        "Class 143",
+        "Class 165",
+        "Class 166",
+        "Class 171",
+        "Class 313",
+        "Class 319",
+        "Class 323",
+        "Class 379",
+        "Class 508"
       ]
     },
     {
@@ -4651,6 +6219,13 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 143",
+        "Class 165",
+        "Class 166"
       ]
     },
     {
@@ -4684,6 +6259,20 @@
           "fromOrigin": 4,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 730",
+        "Class 143",
+        "Class 165",
+        "Class 166",
+        "Class 171",
+        "Class 313",
+        "Class 319",
+        "Class 323",
+        "Class 379",
+        "Class 508"
       ]
     },
     {
@@ -4742,6 +6331,13 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel Waterline trains",
+      "allowedTrains": [
+        "Class 195",
+        "Class 143",
+        "Class 165",
+        "Class 166"
       ]
     },
     {
@@ -4765,6 +6361,19 @@
           "fromOrigin": 7,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -4798,6 +6407,19 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -4846,6 +6468,19 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -4884,6 +6519,19 @@
           "fromOrigin": 10,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -4927,6 +6575,19 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -4955,6 +6616,19 @@
           "fromOrigin": 7,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -4993,6 +6667,19 @@
           "fromOrigin": 13,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -5041,6 +6728,19 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -5084,6 +6784,19 @@
           "fromOrigin": 13,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All AirLink trains except the Class 345",
+      "allowedTrains": [
+        "Class 185 (single)",
+        "Class 185 (double)",
+        "Class 360",
+        "Class 387 (single)",
+        "Class 387 (double)",
+        "Class 332",
+        "Class 397",
+        "Class 745",
+        "Class 755",
+        "Class 802"
       ]
     },
     {
@@ -5127,6 +6840,10 @@
           "fromOrigin": 11,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 345",
+      "allowedTrains": [
+        "Class 345"
       ]
     },
     {
@@ -5170,6 +6887,10 @@
           "fromOrigin": 13,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 345",
+      "allowedTrains": [
+        "Class 345"
       ]
     },
     {
@@ -5193,6 +6914,22 @@
           "fromOrigin": 5,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     },
     {
@@ -5231,6 +6968,22 @@
           "fromOrigin": 12,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     },
     {
@@ -5289,6 +7042,22 @@
           "fromOrigin": 25,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     },
     {
@@ -5332,6 +7101,22 @@
           "fromOrigin": 21,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     },
     {
@@ -5360,6 +7145,22 @@
           "fromOrigin": 5,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     },
     {
@@ -5413,6 +7214,22 @@
           "fromOrigin": 19,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     },
     {
@@ -5441,6 +7258,22 @@
           "fromOrigin": 17,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     },
     {
@@ -5489,6 +7322,22 @@
           "fromOrigin": 20,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     },
     {
@@ -5542,6 +7391,14 @@
           "fromOrigin": 23,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel & bi-mode Stepford Express trains",
+      "allowedTrains": [
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 800 (single)",
+        "Class 800 (double)"
       ]
     },
     {
@@ -5590,6 +7447,14 @@
           "fromOrigin": 26,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel & bi-mode Stepford Express trains",
+      "allowedTrains": [
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 800 (single)",
+        "Class 800 (double)"
       ]
     },
     {
@@ -5633,6 +7498,11 @@
           "fromOrigin": 19,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel & bi-mode Stepford Express trains except the 2+8/9 HST, double Class 180, double Class 221 and double Class 800/2",
+      "allowedTrains": [
+        "Class 180 (single)",
+        "Class 800 (single)"
       ]
     },
     {
@@ -5671,6 +7541,12 @@
           "fromOrigin": 13,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Class 220 (single), Class 221 (single), Class 800/2 (single)",
+      "allowedTrains": [
+        "Class 220 (single)",
+        "Class 221 (single)",
+        "Class 800 (single)"
       ]
     },
     {
@@ -5709,6 +7585,14 @@
           "fromOrigin": 15,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "Diesel & bi-mode Stepford Express trains",
+      "allowedTrains": [
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 800 (single)",
+        "Class 800 (double)"
       ]
     },
     {
@@ -5767,6 +7651,22 @@
           "fromOrigin": 24,
           "fromDestination": 0
         }
+      ],
+      "rollingStock": "All Stepford Express trains",
+      "allowedTrains": [
+        "Class 397",
+        "Class 43",
+        "Class 180 (single)",
+        "Class 180 (double)",
+        "Class 220 (single)",
+        "Class 220 (double)",
+        "Class 221 (single)",
+        "Class 221 (double)",
+        "Class 390",
+        "Class 800 (single)",
+        "Class 800 (double)",
+        "Class 801",
+        "Class 91"
       ]
     }
   ]

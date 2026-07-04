@@ -4,6 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   AppBar,
+  Autocomplete,
   Box,
   Button,
   Card,
@@ -39,8 +40,22 @@ import { TURNAROUND_MIN, generateShift } from "./lib/generator";
 const data = rawData as unknown as RoutesData;
 const RANDOM_OPERATOR = "__random__";
 
+const trainByName = new Map(data.trains.map((t) => [t.name, t]));
+
 function operatorColor(name: string): string {
   return data.operators.find((o) => o.name === name)?.color ?? "#888";
+}
+
+/** Stations you can sign on at for an operator (all origins/destinations). */
+function stationsForOperator(operator: string): string[] {
+  const set = new Set<string>();
+  for (const r of data.routes) {
+    if (operator === RANDOM_OPERATOR || r.operator === operator) {
+      set.add(r.origin);
+      set.add(r.destination);
+    }
+  }
+  return [...set].sort();
 }
 
 function defaultStartTime(): string {
@@ -83,6 +98,11 @@ function LegCard({ leg, index, startTime }: { leg: ShiftLeg; index: number; star
           {fmtDuration(leg.durationMin)} · {leg.calls.length} calls · {leg.route.points} pts ·{" "}
           {leg.route.xp} XP{leg.reversed ? " · reverse direction" : ""}
         </Typography>
+        {leg.route.rollingStock && (
+          <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.25 }}>
+            Stock: {leg.route.rollingStock}
+          </Typography>
+        )}
         <Accordion
           disableGutters
           elevation={0}
@@ -174,17 +194,22 @@ function DelayControl({
 function ShiftView({
   shift,
   startTime,
+  onStartTimeChange,
   delayMin,
   onDelayChange,
 }: {
   shift: Shift;
   startTime: string;
+  onStartTimeChange: (v: string) => void;
   delayMin: number;
   onDelayChange: (v: number) => void;
 }) {
   const color = operatorColor(shift.operator);
   const first = shift.legs[0];
   const last = shift.legs[shift.legs.length - 1];
+  // A running delay just shifts every clock time, so retime from a moved base.
+  const effectiveStart = clockAt(startTime, delayMin);
+  const train = shift.train ? trainByName.get(shift.train) : undefined;
   return (
     <Stack spacing={2}>
       <Paper sx={{ p: 3 }}>
@@ -199,11 +224,40 @@ function ShiftView({
           </Typography>
           <DelayControl delayMin={delayMin} onDelayChange={onDelayChange} />
         </Stack>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-          {clockAt(startTime, 0)} – {clockAt(startTime, shift.totalMin)} · sign on at{" "}
-          <strong>{first.from}</strong>, sign off at <strong>{last.to}</strong>
-          {delayMin !== 0 ? ` · ${delayLabel(delayMin)}` : ""}
-        </Typography>
+        {shift.train && (
+          <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1.5, flexWrap: "wrap" }}>
+            <Chip
+              icon={<TrainIcon />}
+              label={train ? `${shift.train} · ${train.traction}` : shift.train}
+              sx={{ bgcolor: color, color: "#fff", fontWeight: 600, "& .MuiChip-icon": { color: "#fff" } }}
+            />
+            <Typography variant="caption" color="text.secondary">
+              {shift.trainOptions > 1
+                ? `one of ${shift.trainOptions} trains that can work every leg`
+                : "the only train that can work every leg"}
+            </Typography>
+          </Stack>
+        )}
+        <Stack
+          direction="row"
+          spacing={1.5}
+          sx={{ alignItems: "center", mb: 2, flexWrap: "wrap", gap: 1 }}
+        >
+          <TextField
+            label="Start"
+            type="time"
+            size="small"
+            value={startTime}
+            onChange={(e) => onStartTimeChange(e.target.value)}
+            slotProps={{ inputLabel: { shrink: true } }}
+            sx={{ width: 130 }}
+          />
+          <Typography variant="body1" color="text.secondary">
+            → {clockAt(effectiveStart, shift.totalMin)} · sign on at <strong>{first.from}</strong>,
+            sign off at <strong>{last.to}</strong>
+            {delayMin !== 0 ? ` · ${delayLabel(delayMin)}` : ""}
+          </Typography>
+        </Stack>
         <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1 }}>
           <Chip label={`${shift.legs.length} legs`} />
           <Chip label={fmtDuration(shift.totalMin)} />
@@ -227,11 +281,12 @@ function ShiftView({
               >
                 <SwapVertIcon fontSize="small" />
                 <Typography variant="body2">
-                  Reverse at {leg.from} · {TURNAROUND_MIN} min turnaround
+                  Reverse at {leg.from}
+                  {shift.turnaroundMin > 0 ? ` · ${shift.turnaroundMin} min turnaround` : ""}
                 </Typography>
               </Box>
             )}
-            <LegCard leg={leg} index={i} startTime={startTime} />
+            <LegCard leg={leg} index={i} startTime={effectiveStart} />
           </Box>
         ))}
       </Stack>
@@ -253,24 +308,28 @@ export default function App() {
   const [mode, setMode] = useState<"legs" | "minutes">("minutes");
   const [legsTarget, setLegsTarget] = useState(4);
   const [minutesTarget, setMinutesTarget] = useState(90);
+  const [turnaroundMin, setTurnaroundMin] = useState(TURNAROUND_MIN);
+  const [startStation, setStartStation] = useState<string | null>(null);
   const [startTime, setStartTime] = useState(defaultStartTime);
   const [delayMin, setDelayMin] = useState(0);
   const [shift, setShift] = useState<Shift | null>(null);
 
-  // A delay uniformly shifts every clock time, so we just move the base start.
-  const effectiveStart = clockAt(startTime, delayMin);
+  const randomOperator = operator === RANDOM_OPERATOR;
+  const stationOptions = useMemo(() => stationsForOperator(operator), [operator]);
 
   const onGenerate = () => {
-    const op =
-      operator === RANDOM_OPERATOR
-        ? data.operators[Math.floor(Math.random() * data.operators.length)].name
-        : operator;
+    const op = randomOperator
+      ? data.operators[Math.floor(Math.random() * data.operators.length)].name
+      : operator;
     setDelayMin(0);
     setShift(
       generateShift(data, {
         operator: op,
         mode,
         target: mode === "legs" ? legsTarget : minutesTarget,
+        turnaroundMin,
+        // A specific sign-on station only makes sense with a specific operator.
+        startStation: randomOperator ? null : startStation,
       }),
     );
   };
@@ -308,7 +367,11 @@ export default function App() {
             <ToggleButtonGroup
               exclusive
               value={operator}
-              onChange={(_, v) => v !== null && setOperator(v)}
+              onChange={(_, v) => {
+                if (v === null) return;
+                setOperator(v);
+                setStartStation(null); // stations differ per operator
+              }}
               sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}
             >
               {data.operators.map((op) => (
@@ -386,6 +449,56 @@ export default function App() {
                 slotProps={{ inputLabel: { shrink: true } }}
               />
             </Stack>
+            <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
+              Turnaround at each terminus
+            </Typography>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{ alignItems: "center", mb: 3 }}
+            >
+              <Box sx={{ flexGrow: 1, px: 1 }}>
+                <Slider
+                  value={turnaroundMin}
+                  onChange={(_, v) => setTurnaroundMin(v as number)}
+                  min={0}
+                  max={10}
+                  step={1}
+                  valueLabelDisplay="auto"
+                  valueLabelFormat={(v) => (v === 0 ? "none" : `${v} min`)}
+                  marks={[
+                    { value: 0, label: "0" },
+                    { value: 4, label: "4" },
+                    { value: 10, label: "10" },
+                  ]}
+                />
+              </Box>
+              <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 220 }}>
+                Layover added when changing ends. SCR has none — it's realism flavor.
+              </Typography>
+            </Stack>
+            <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
+              Sign on at
+            </Typography>
+            <Autocomplete
+              options={stationOptions}
+              value={startStation}
+              onChange={(_, v) => setStartStation(v)}
+              disabled={randomOperator}
+              size="small"
+              sx={{ mb: 3, maxWidth: 360 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder={randomOperator ? "Pick an operator first" : "Any station"}
+                  helperText={
+                    randomOperator
+                      ? "Choose a specific operator to pin the starting station"
+                      : "Leave empty to start anywhere on the network"
+                  }
+                />
+              )}
+            />
             <Button
               variant="contained"
               size="large"
@@ -400,7 +513,8 @@ export default function App() {
           {shift ? (
             <ShiftView
               shift={shift}
-              startTime={effectiveStart}
+              startTime={startTime}
+              onStartTimeChange={setStartTime}
               delayMin={delayMin}
               onDelayChange={setDelayMin}
             />

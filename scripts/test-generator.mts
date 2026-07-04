@@ -16,6 +16,7 @@ const data: RoutesData = JSON.parse(
 let fails = 0;
 let backtracks = 0;
 let legsTotal = 0;
+let signOffs = 0;
 const assert = (cond: boolean, msg: string) => {
   if (!cond) {
     fails++;
@@ -31,11 +32,25 @@ for (let i = 0; i < 1000; i++) {
   assert(s !== null && s.legs.length > 0, `${op} empty shift`);
   if (!s) continue;
   legsTotal += s.legs.length;
+  // A shift may sign off early when no onward route fits the running train, so
+  // it can be shorter than the target — but never longer.
   if (mode === "legs") {
-    assert(s.legs.length === target, `${op} wanted ${target} legs got ${s.legs.length}`);
-  } else {
-    assert(s.totalMin >= target, `${op} wanted >=${target} min got ${s.totalMin}`);
+    assert(s.legs.length <= target, `${op} wanted <=${target} legs got ${s.legs.length}`);
+    if (s.legs.length < target) signOffs++;
+  } else if (s.totalMin < target) {
+    signOffs++;
   }
+  // One train must be legal on every leg of the shift.
+  assert(s.train !== null, `${op} shift has no train`);
+  const common = s.legs.reduce<Set<string> | null>((acc, l) => {
+    const set = new Set(l.route.allowedTrains);
+    return acc === null ? set : new Set([...acc].filter((x) => set.has(x)));
+  }, null)!;
+  assert(common.size === s.trainOptions, `${op} trainOptions ${s.trainOptions} != ${common.size}`);
+  assert(
+    s.train !== null && common.has(s.train),
+    `${op} chosen train ${s.train} not legal on every leg`,
+  );
   let clock = 0;
   for (let j = 0; j < s.legs.length; j++) {
     const leg = s.legs[j];
@@ -64,6 +79,7 @@ for (let i = 0; i < 1000; i++) {
 }
 
 console.log(
-  `1000 shifts, ${legsTotal} legs, ${fails} assertion failures, ${backtracks} same-route-back legs (dead ends)`,
+  `1000 shifts, ${legsTotal} legs, ${fails} assertion failures, ` +
+    `${backtracks} same-route-back legs (dead ends), ${signOffs} early sign-offs (one-train limit)`,
 );
 if (fails > 0) process.exit(1);
