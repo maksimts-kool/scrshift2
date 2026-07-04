@@ -34,7 +34,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import rawData from "./data/routes.json";
-import type { RoutesData, Shift, ShiftLeg } from "./types";
+import type { RoutesData, Shift, ShiftLeg, Train } from "./types";
 import { TURNAROUND_MIN, generateShift } from "./lib/generator";
 
 const data = rawData as unknown as RoutesData;
@@ -75,6 +75,99 @@ function fmtDuration(min: number): string {
   return min < 60 ? `${min} min` : `${Math.floor(min / 60)} h ${min % 60} min`;
 }
 
+/** Colour + label per traction type, used for the roster dots and legend. */
+const TRACTION: Record<Train["traction"], { label: string; color: string }> = {
+  electric: { label: "Electric", color: "#0288d1" },
+  diesel: { label: "Diesel", color: "#ed6c02" },
+  bimode: { label: "Bi-mode", color: "#7b1fa2" },
+};
+
+/** Numeric part of a class name so "Class 43" sorts before "Class 350". */
+function classNum(name: string): number {
+  const m = name.match(/\d+/);
+  return m ? Number(m[0]) : 9999;
+}
+
+/**
+ * Every train legal on all legs of the shift, shown as tappable chips so the
+ * driver can pick which one they'll actually run. This replaces the per-leg
+ * "Stock: …" wiki sentence — the whole-shift roster is the number that matters.
+ */
+function TrainRoster({
+  roster,
+  selected,
+  onSelect,
+  accent,
+}: {
+  roster: Train[];
+  selected: string | null;
+  onSelect: (name: string) => void;
+  accent: string;
+}) {
+  if (roster.length === 0) {
+    return (
+      <Typography variant="body2" color="text.secondary">
+        No single train can legally work every leg — the driver would swap stock, so no
+        one-train roster is possible for this chain.
+      </Typography>
+    );
+  }
+  const tractions = [...new Set(roster.map((t) => t.traction))];
+  return (
+    <Box>
+      <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>
+        <TrainIcon fontSize="small" sx={{ color: "text.secondary" }} />
+        <Typography variant="body2" color="text.secondary">
+          Any of these <strong>{roster.length}</strong> trains can work every leg — tap to
+          pick yours
+        </Typography>
+      </Stack>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
+        {roster.map((t) => {
+          const on = t.name === selected;
+          return (
+            <Chip
+              key={t.name}
+              size="small"
+              label={t.name}
+              onClick={() => onSelect(t.name)}
+              icon={
+                <Box
+                  sx={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    bgcolor: TRACTION[t.traction].color,
+                    ml: "8px !important",
+                  }}
+                />
+              }
+              variant={on ? "filled" : "outlined"}
+              sx={{
+                cursor: "pointer",
+                fontWeight: on ? 700 : 400,
+                ...(on && { bgcolor: accent, color: "#fff" }),
+              }}
+            />
+          );
+        })}
+      </Box>
+      <Stack direction="row" spacing={1.5} sx={{ mt: 1, flexWrap: "wrap" }}>
+        {tractions.map((tr) => (
+          <Stack key={tr} direction="row" spacing={0.5} sx={{ alignItems: "center" }}>
+            <Box
+              sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: TRACTION[tr].color }}
+            />
+            <Typography variant="caption" color="text.secondary">
+              {TRACTION[tr].label}
+            </Typography>
+          </Stack>
+        ))}
+      </Stack>
+    </Box>
+  );
+}
+
 function LegCard({ leg, index, startTime }: { leg: ShiftLeg; index: number; startTime: string }) {
   const color = operatorColor(leg.route.operator);
   const depart = clockAt(startTime, leg.departOffsetMin);
@@ -98,11 +191,6 @@ function LegCard({ leg, index, startTime }: { leg: ShiftLeg; index: number; star
           {fmtDuration(leg.durationMin)} · {leg.calls.length} calls · {leg.route.points} pts ·{" "}
           {leg.route.xp} XP{leg.reversed ? " · reverse direction" : ""}
         </Typography>
-        {leg.route.rollingStock && (
-          <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.25 }}>
-            Stock: {leg.route.rollingStock}
-          </Typography>
-        )}
         <Accordion
           disableGutters
           elevation={0}
@@ -197,19 +285,26 @@ function ShiftView({
   onStartTimeChange,
   delayMin,
   onDelayChange,
+  selectedTrain,
+  onSelectTrain,
 }: {
   shift: Shift;
   startTime: string;
   onStartTimeChange: (v: string) => void;
   delayMin: number;
   onDelayChange: (v: number) => void;
+  selectedTrain: string | null;
+  onSelectTrain: (name: string) => void;
 }) {
   const color = operatorColor(shift.operator);
   const first = shift.legs[0];
   const last = shift.legs[shift.legs.length - 1];
   // A running delay just shifts every clock time, so retime from a moved base.
   const effectiveStart = clockAt(startTime, delayMin);
-  const train = shift.train ? trainByName.get(shift.train) : undefined;
+  const roster = shift.trainRoster
+    .map((n) => trainByName.get(n))
+    .filter((t): t is Train => t != null)
+    .sort((a, b) => classNum(a.name) - classNum(b.name) || a.name.localeCompare(b.name));
   return (
     <Stack spacing={2}>
       <Paper sx={{ p: 3 }}>
@@ -224,20 +319,6 @@ function ShiftView({
           </Typography>
           <DelayControl delayMin={delayMin} onDelayChange={onDelayChange} />
         </Stack>
-        {shift.train && (
-          <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1.5, flexWrap: "wrap" }}>
-            <Chip
-              icon={<TrainIcon />}
-              label={train ? `${shift.train} · ${train.traction}` : shift.train}
-              sx={{ bgcolor: color, color: "#fff", fontWeight: 600, "& .MuiChip-icon": { color: "#fff" } }}
-            />
-            <Typography variant="caption" color="text.secondary">
-              {shift.trainOptions > 1
-                ? `one of ${shift.trainOptions} trains that can work every leg`
-                : "the only train that can work every leg"}
-            </Typography>
-          </Stack>
-        )}
         <Stack
           direction="row"
           spacing={1.5}
@@ -258,12 +339,18 @@ function ShiftView({
             {delayMin !== 0 ? ` · ${delayLabel(delayMin)}` : ""}
           </Typography>
         </Stack>
-        <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1 }}>
+        <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1, mb: 2.5 }}>
           <Chip label={`${shift.legs.length} legs`} />
           <Chip label={fmtDuration(shift.totalMin)} />
           <Chip label={`${shift.totalPoints} points`} />
           <Chip label={`${shift.totalXp} XP`} />
         </Stack>
+        <TrainRoster
+          roster={roster}
+          selected={selectedTrain}
+          onSelect={onSelectTrain}
+          accent={color}
+        />
       </Paper>
       <Stack spacing={0}>
         {shift.legs.map((leg, i) => (
@@ -313,6 +400,7 @@ export default function App() {
   const [startTime, setStartTime] = useState(defaultStartTime);
   const [delayMin, setDelayMin] = useState(0);
   const [shift, setShift] = useState<Shift | null>(null);
+  const [selectedTrain, setSelectedTrain] = useState<string | null>(null);
 
   const randomOperator = operator === RANDOM_OPERATOR;
   const stationOptions = useMemo(() => stationsForOperator(operator), [operator]);
@@ -321,17 +409,17 @@ export default function App() {
     const op = randomOperator
       ? data.operators[Math.floor(Math.random() * data.operators.length)].name
       : operator;
+    const next = generateShift(data, {
+      operator: op,
+      mode,
+      target: mode === "legs" ? legsTarget : minutesTarget,
+      turnaroundMin,
+      // A specific sign-on station only makes sense with a specific operator.
+      startStation: randomOperator ? null : startStation,
+    });
     setDelayMin(0);
-    setShift(
-      generateShift(data, {
-        operator: op,
-        mode,
-        target: mode === "legs" ? legsTarget : minutesTarget,
-        turnaroundMin,
-        // A specific sign-on station only makes sense with a specific operator.
-        startStation: randomOperator ? null : startStation,
-      }),
-    );
+    setSelectedTrain(next?.train ?? null);
+    setShift(next);
   };
 
   const scraped = new Date(data.scrapedAt).toLocaleDateString(undefined, {
@@ -387,14 +475,18 @@ export default function App() {
                 Random
               </ToggleButton>
             </ToggleButtonGroup>
-            <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
-              Shift length
-            </Typography>
             <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={3}
-              sx={{ alignItems: { sm: "center" }, mb: 3 }}
+              direction="row"
+              sx={{
+                alignItems: "center",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                gap: 1,
+              }}
             >
+              <Typography variant="overline" color="text.secondary">
+                Shift length
+              </Typography>
               <ToggleButtonGroup
                 exclusive
                 size="small"
@@ -408,75 +500,61 @@ export default function App() {
                   By legs
                 </ToggleButton>
               </ToggleButtonGroup>
-              <Box sx={{ flexGrow: 1, px: 1 }}>
-                {mode === "minutes" ? (
-                  <Slider
-                    value={minutesTarget}
-                    onChange={(_, v) => setMinutesTarget(v as number)}
-                    min={30}
-                    max={240}
-                    step={15}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={(v) => fmtDuration(v)}
-                    marks={[
-                      { value: 60, label: "1 h" },
-                      { value: 120, label: "2 h" },
-                      { value: 180, label: "3 h" },
-                    ]}
-                  />
-                ) : (
-                  <Slider
-                    value={legsTarget}
-                    onChange={(_, v) => setLegsTarget(v as number)}
-                    min={2}
-                    max={12}
-                    step={1}
-                    valueLabelDisplay="auto"
-                    marks={[
-                      { value: 4, label: "4" },
-                      { value: 8, label: "8" },
-                      { value: 12, label: "12" },
-                    ]}
-                  />
-                )}
-              </Box>
-              <TextField
-                label="Shift starts"
-                type="time"
-                size="small"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                slotProps={{ inputLabel: { shrink: true } }}
-              />
             </Stack>
+            <Box sx={{ px: 1, mb: 3 }}>
+              {mode === "minutes" ? (
+                <Slider
+                  value={minutesTarget}
+                  onChange={(_, v) => setMinutesTarget(v as number)}
+                  min={30}
+                  max={240}
+                  step={15}
+                  valueLabelDisplay="auto"
+                  valueLabelFormat={(v) => fmtDuration(v)}
+                  marks={[
+                    { value: 60, label: "1 h" },
+                    { value: 120, label: "2 h" },
+                    { value: 180, label: "3 h" },
+                  ]}
+                />
+              ) : (
+                <Slider
+                  value={legsTarget}
+                  onChange={(_, v) => setLegsTarget(v as number)}
+                  min={2}
+                  max={12}
+                  step={1}
+                  valueLabelDisplay="auto"
+                  marks={[
+                    { value: 4, label: "4" },
+                    { value: 8, label: "8" },
+                    { value: 12, label: "12" },
+                  ]}
+                />
+              )}
+            </Box>
             <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
               Turnaround at each terminus
             </Typography>
-            <Stack
-              direction="row"
-              spacing={2}
-              sx={{ alignItems: "center", mb: 3 }}
-            >
-              <Box sx={{ flexGrow: 1, px: 1 }}>
-                <Slider
-                  value={turnaroundMin}
-                  onChange={(_, v) => setTurnaroundMin(v as number)}
-                  min={0}
-                  max={10}
-                  step={1}
-                  valueLabelDisplay="auto"
-                  valueLabelFormat={(v) => (v === 0 ? "none" : `${v} min`)}
-                  marks={[
-                    { value: 0, label: "0" },
-                    { value: 4, label: "4" },
-                    { value: 10, label: "10" },
-                  ]}
-                />
-              </Box>
-              <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 220 }}>
-                Layover added when changing ends. SCR has none — it's realism flavor.
-              </Typography>
-            </Stack>
+            <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+              Layover added when changing ends. SCR has none — it's realism flavor.
+            </Typography>
+            <Box sx={{ px: 1, mb: 3 }}>
+              <Slider
+                value={turnaroundMin}
+                onChange={(_, v) => setTurnaroundMin(v as number)}
+                min={0}
+                max={10}
+                step={1}
+                valueLabelDisplay="auto"
+                valueLabelFormat={(v) => (v === 0 ? "none" : `${v} min`)}
+                marks={[
+                  { value: 0, label: "0" },
+                  { value: 4, label: "4" },
+                  { value: 10, label: "10" },
+                ]}
+              />
+            </Box>
             <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
               Sign on at
             </Typography>
@@ -517,6 +595,8 @@ export default function App() {
               onStartTimeChange={setStartTime}
               delayMin={delayMin}
               onDelayChange={setDelayMin}
+              selectedTrain={selectedTrain}
+              onSelectTrain={setSelectedTrain}
             />
           ) : (
             <Paper variant="outlined" sx={{ p: 6, textAlign: "center", color: "text.secondary" }}>

@@ -68,6 +68,8 @@ export interface Shift {
   train: string | null;
   /** how many trains were legal across the whole shift */
   trainOptions: number;
+  /** every train (Train.name) legal on every leg — the driver may pick any one */
+  trainRoster: string[];
   legs: ShiftLeg[];
   /** layover minutes used between legs (shown in the reverse marker) */
   turnaroundMin: number;

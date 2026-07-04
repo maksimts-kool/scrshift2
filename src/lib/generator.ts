@@ -131,10 +131,12 @@ export function generateShift(data: RoutesData, opts: ShiftOptions): Shift | nul
 
   if (legs.length === 0) return null;
 
+  const roster = [...trains];
   return {
     operator: opts.operator,
-    train: trains.size > 0 ? pick([...trains]) : null,
-    trainOptions: trains.size,
+    train: roster.length > 0 ? pick(roster) : null,
+    trainOptions: roster.length,
+    trainRoster: roster,
     legs,
     turnaroundMin,
     totalMin: clock,
