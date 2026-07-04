@@ -71,6 +71,14 @@ export function createScrSession({ profileDir }) {
   /** Click through the silent OAuth steps; true when back on the SCR site. */
   async function clickThroughOAuth() {
     for (let i = 0; i < 6; i++) {
+      // the redirect chain hops through roblox.com interstitials — let it
+      // settle on either the SCR site or the authorize page before judging,
+      // otherwise a mid-redirect URL reads as "needs real login"
+      await page
+        .waitForURL((u) => `${u}`.startsWith(SCR) || `${u}`.includes("authorize.roblox.com"), {
+          timeout: 15_000,
+        })
+        .catch(() => {});
       const url = page.url();
       if (url.startsWith(SCR)) return true;
       if (!url.includes("authorize.roblox.com")) return false; // needs real login
@@ -82,7 +90,8 @@ export function createScrSession({ profileDir }) {
         await btn.waitFor({ state: "visible", timeout: 20_000 });
         await btn.click();
       } catch {
-        return false;
+        // no button showed — the page may have auto-redirected meanwhile
+        return page.url().startsWith(SCR);
       }
       await page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => {});
       await page.waitForTimeout(1500);
@@ -203,6 +212,34 @@ export function createScrSession({ profileDir }) {
       phase = "stopped";
       error = null;
       await close();
+    },
+
+    /**
+     * Forget the saved Roblox + SCR sessions and restart. With the cookies
+     * gone whoami() fails, so doStart() falls into its headed-login flow and
+     * whoever signs in to Roblox next becomes the tracked account.
+     */
+    changeAccount() {
+      if (starting) return starting; // a boot is in flight; let it finish
+      starting = (async () => {
+        phase = "launching";
+        error = null;
+        user = null;
+        trackedId = null;
+        await close();
+        try {
+          await launch(true);
+          await ctx.clearCookies();
+        } catch (e) {
+          phase = "error";
+          error = e?.message ?? String(e);
+          await close().catch(() => {});
+          return;
+        }
+        await close();
+        await doStart();
+      })();
+      return starting;
     },
 
     /**

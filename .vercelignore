@@ -1,0 +1,7 @@
+.git
+node_modules
+dist
+
+# persistent Chrome profile for the real-time companion — locked while Chrome
+# runs (EBUSY on upload) and must never leave this machine anyway
+.scr-session

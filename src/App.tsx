@@ -49,6 +49,7 @@ import {
   initialLiveShift,
   rtActivity,
   rtAvailable,
+  rtChangeAccount,
   rtStart,
   rtStatus,
   ukFormat,
@@ -477,13 +478,20 @@ function RtBanner({
   shift,
   live,
   lastAct,
+  onChangeAccount,
 }: {
   st: RtStatus | null;
   error: string | null;
   shift: Shift | null;
   live: LiveShift | null;
   lastAct: Activity | null;
+  onChangeAccount: () => void;
 }) {
+  const changeBtn = (
+    <Button color="inherit" size="small" onClick={onChangeAccount} sx={{ whiteSpace: "nowrap" }}>
+      Change account
+    </Button>
+  );
   if (error) {
     return (
       <Alert severity="error">
@@ -501,8 +509,9 @@ function RtBanner({
   if (st.phase === "need-login") {
     return (
       <Alert severity="warning">
-        A Chrome window has opened — sign in with Roblox there. This is a one-time login;
-        the session is saved for next time.
+        A Chrome window has opened on the PC running the companion — sign in with Roblox
+        there. The login is saved for next time; the signed-in account is the one that
+        gets tracked.
       </Alert>
     );
   }
@@ -517,7 +526,7 @@ function RtBanner({
   const who = st.user ? `${st.user.displayName} (@${st.user.name})` : "you";
   if (!shift || !live) {
     return (
-      <Alert severity="success">
+      <Alert severity="success" action={changeBtn}>
         Connected — tracking {who}. Generate a shift and drive it in-game; each leg goes
         live as you take it. All times are UK (site) time.
       </Alert>
@@ -553,7 +562,7 @@ function RtBanner({
   const idleNote =
     lastAct?.state === "other-role" && live.idleDescription ? ` (currently: ${live.idleDescription})` : "";
   return (
-    <Alert severity="info">
+    <Alert severity="info" action={changeBtn}>
       Waiting for {who} to take leg {nextIdx + 1}: {nextLeg.route.code} from{" "}
       {nextLeg.from}. Times are estimates until the train is grabbed{idleNote}.
     </Alert>
@@ -721,13 +730,30 @@ export default function App() {
   const shiftRef = useRef<Shift | null>(null);
   shiftRef.current = shift;
 
+  // same-origin/configured companion (dev server, hosted companion) — a
+  // local one is only probed on the switch gesture, see onToggleRealtime
   useEffect(() => {
-    void rtAvailable().then(setRtOffered);
+    void rtAvailable().then((ok) => ok && setRtOffered(true));
   }, []);
+
+  // switched on before the companion was found — keep knocking until it's up
+  useEffect(() => {
+    if (!realtime || rtOffered) return;
+    let cancelled = false;
+    const iv = setInterval(() => {
+      void rtAvailable({ probeLocal: true }).then((ok) => {
+        if (ok && !cancelled) setRtOffered(true);
+      });
+    }, 5000);
+    return () => {
+      cancelled = true;
+      clearInterval(iv);
+    };
+  }, [realtime, rtOffered]);
 
   // poll the companion while real-time mode is on
   useEffect(() => {
-    if (!realtime) return;
+    if (!realtime || !rtOffered) return;
     let cancelled = false;
     setRtError(null);
     void rtStart().catch((e) => !cancelled && setRtError(String(e?.message ?? e)));
@@ -757,7 +783,7 @@ export default function App() {
       cancelled = true;
       clearInterval(iv);
     };
-  }, [realtime]);
+  }, [realtime, rtOffered]);
 
   // keep estimates fresh even without new activity
   useEffect(() => {
@@ -770,6 +796,18 @@ export default function App() {
     setRealtime(on);
     setRtError(null);
     setLive(on && shift ? initialLiveShift(shift) : null);
+    if (on && !rtOffered) {
+      // static deploy: the companion is a separate local server — go find it
+      void rtAvailable({ probeLocal: true }).then((ok) => ok && setRtOffered(true));
+    }
+  };
+
+  const onChangeAccount = () => {
+    setRtError(null);
+    setRtSt(null); // show the connecting banner until the next status poll
+    void rtChangeAccount().catch((e) =>
+      setRtError(String((e as Error)?.message ?? e)),
+    );
   };
 
   const randomOperator = operator === RANDOM_OPERATOR;
@@ -826,31 +864,31 @@ export default function App() {
       <Container maxWidth="md" sx={{ py: 4 }}>
         <Stack spacing={3}>
           <Paper sx={{ p: 3 }}>
-            {rtOffered && (
-              <Box sx={{ mb: 2 }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={realtime}
-                      onChange={(_, v) => onToggleRealtime(v)}
-                      color="success"
-                    />
-                  }
-                  label={
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-                      <SensorsIcon fontSize="small" color={realtime ? "success" : "disabled"} />
-                      <Typography>Real time</Typography>
-                    </Stack>
-                  }
-                />
-                <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
-                  Follows your actual driving on the SCR Hub site. On a live leg, green times
-                  are still to come, orange means running late, blue means already passed.
-                  Start time and turnaround come from reality, so those controls are disabled.
-                  Times shown in UK time.
-                </Typography>
-              </Box>
-            )}
+            <Box sx={{ mb: 2 }}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={realtime}
+                    onChange={(_, v) => onToggleRealtime(v)}
+                    color="success"
+                  />
+                }
+                label={
+                  <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+                    <SensorsIcon fontSize="small" color={realtime ? "success" : "disabled"} />
+                    <Typography>Real time</Typography>
+                  </Stack>
+                }
+              />
+              <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
+                Follows your actual driving on the SCR Hub site. On a live leg, green times
+                are still to come, orange means running late, blue means already passed.
+                Start time and turnaround come from reality, so those controls are disabled.
+                Times shown in UK time.
+                {!rtOffered &&
+                  " Needs the companion app running on this PC — flip the switch for instructions."}
+              </Typography>
+            </Box>
             <Typography variant="overline" color="text.secondary">
               Operator
             </Typography>
@@ -998,8 +1036,30 @@ export default function App() {
             </Button>
           </Paper>
 
-          {realtime && (
-            <RtBanner st={rtSt} error={rtError} shift={shift} live={live} lastAct={lastAct} />
+          {realtime && !rtOffered && (
+            <Alert severity="info">
+              Looking for the real-time companion… It's a small local app that reads the SCR
+              Hub site for you (a static page can't do that itself). On this PC, clone{" "}
+              <Link
+                href="https://github.com/maksimts-kool/scrshift2"
+                target="_blank"
+                rel="noreferrer"
+              >
+                the project
+              </Link>{" "}
+              and run <code>npm install &amp;&amp; npm run rt</code> — this page connects
+              automatically once it's up. Each player uses their own Roblox login.
+            </Alert>
+          )}
+          {realtime && rtOffered && (
+            <RtBanner
+              st={rtSt}
+              error={rtError}
+              shift={shift}
+              live={live}
+              lastAct={lastAct}
+              onChangeAccount={onChangeAccount}
+            />
           )}
 
           {shift ? (

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "rt": "node scripts/realtime/server.mjs",
     "build": "tsc -b && vite build",
     "scrape": "node scripts/scrape.mjs",
     "test": "node scripts/test-generator.mts && node scripts/test-realtime.mts",

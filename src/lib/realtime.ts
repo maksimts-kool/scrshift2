@@ -81,25 +81,54 @@ export type Activity = {
 // ---------- companion API client ----------
 
 /**
- * Companion origin when it isn't same-origin — e.g. static frontend on Vercel
- * with the companion running elsewhere (Docker). Unset = same origin (dev).
+ * Where the companion lives. Same origin under `npm run dev` (Vite plugin);
+ * on a static deploy (Vercel) it's the standalone local server (`npm run rt`)
+ * on the player's own PC, probed on localhost. VITE_RT_API_BASE (build time)
+ * adds a remotely hosted companion to the front of the probe list.
  */
+const RT_LOCAL_PORT = 8788;
 // optional chain: the test runner imports this file in plain Node, no Vite env
-const RT_BASE = (import.meta.env?.VITE_RT_API_BASE ?? "").replace(/\/+$/, "");
+const RT_CONFIGURED = (import.meta.env?.VITE_RT_API_BASE ?? "").replace(/\/+$/, "");
+
+let rtBase = RT_CONFIGURED; // switched by rtAvailable() to whichever base answered
 
 async function rtFetch(path: string, init?: RequestInit): Promise<Response> {
-  return await fetch(`${RT_BASE}/api/rt${path}`, init);
+  return await fetch(`${rtBase}/api/rt${path}`, init);
 }
 
-/** false on a static deployment (no companion). */
-export async function rtAvailable(): Promise<boolean> {
+async function probe(base: string): Promise<boolean> {
   try {
-    const res = await rtFetch("/status");
+    const res = await fetch(`${base}/api/rt/status`, {
+      signal: AbortSignal.timeout(3000),
+    });
     // content-type check: an SPA catch-all rewrite (Vercel) would 200 with HTML
     return res.ok && (res.headers.get("content-type") ?? "").includes("json");
   } catch {
     return false;
   }
+}
+
+/**
+ * Find a companion; false on a static deployment with none running. Checks
+ * the configured base and same origin; with `probeLocal` it also knocks on
+ * the local companion port — only do that on a user gesture, since Chrome
+ * may raise a local-network permission prompt for it.
+ */
+export async function rtAvailable(opts?: { probeLocal?: boolean }): Promise<boolean> {
+  const bases = [
+    ...(RT_CONFIGURED ? [RT_CONFIGURED] : []),
+    "",
+    ...(opts?.probeLocal
+      ? [`http://127.0.0.1:${RT_LOCAL_PORT}`, `http://localhost:${RT_LOCAL_PORT}`]
+      : []),
+  ];
+  for (const base of bases) {
+    if (await probe(base)) {
+      rtBase = base;
+      return true;
+    }
+  }
+  return false;
 }
 
 export async function rtStatus(): Promise<RtStatus> {
@@ -114,6 +143,18 @@ export async function rtStart(): Promise<void> {
 
 export async function rtStop(): Promise<void> {
   await rtFetch("/stop", { method: "POST" });
+}
+
+/**
+ * Log the companion out (Roblox + SCR cookies wiped) and reopen Chrome for a
+ * fresh sign-in; whoever logs in next becomes the tracked account.
+ */
+export async function rtChangeAccount(): Promise<void> {
+  const res = await rtFetch("/change-account", { method: "POST" });
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    throw new Error(body?.error ?? `change-account ${res.status}`);
+  }
 }
 
 export async function rtActivity(): Promise<Activity> {
