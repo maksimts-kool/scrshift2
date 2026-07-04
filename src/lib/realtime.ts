@@ -80,15 +80,23 @@ export type Activity = {
 
 // ---------- companion API client ----------
 
+/**
+ * Companion origin when it isn't same-origin — e.g. static frontend on Vercel
+ * with the companion running elsewhere (Docker). Unset = same origin (dev).
+ */
+// optional chain: the test runner imports this file in plain Node, no Vite env
+const RT_BASE = (import.meta.env?.VITE_RT_API_BASE ?? "").replace(/\/+$/, "");
+
 async function rtFetch(path: string, init?: RequestInit): Promise<Response> {
-  return await fetch(`/api/rt${path}`, init);
+  return await fetch(`${RT_BASE}/api/rt${path}`, init);
 }
 
-/** false on a static deployment (no dev-server companion). */
+/** false on a static deployment (no companion). */
 export async function rtAvailable(): Promise<boolean> {
   try {
     const res = await rtFetch("/status");
-    return res.ok;
+    // content-type check: an SPA catch-all rewrite (Vercel) would 200 with HTML
+    return res.ok && (res.headers.get("content-type") ?? "").includes("json");
   } catch {
     return false;
   }

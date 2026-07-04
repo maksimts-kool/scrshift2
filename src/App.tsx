@@ -205,7 +205,11 @@ interface LegRt {
   startMin: number;
 }
 
-/** One row of a live (site-fed) timeline: green actuals, orange estimates. */
+/**
+ * One row of a live (site-fed) timeline. Colour code: green = still to come
+ * (on time), orange = still to come but the site says late, blue = already
+ * passed (real recorded time — deliberately not the grey used on Est. legs).
+ */
 function LiveCallRow({
   service,
   index,
@@ -220,7 +224,7 @@ function LiveCallRow({
   const actual = fmtSite(c.departed ?? c.arrived);
   const shown = actual ?? c.estimated ?? c.scheduled ?? "—";
   const timeColor =
-    actual != null ? "success.main" : c.estimated != null ? "warning.main" : "text.secondary";
+    actual != null ? "info.main" : c.estimated != null ? "warning.main" : "success.main";
   const details: string[] = [];
   if (c.arrived) details.push(`arr ${fmtSite(c.arrived)}`);
   if (c.departed) details.push(`dep ${fmtSite(c.departed)}`);
@@ -284,18 +288,25 @@ function LegCard({
   const color = operatorColor(leg.route.operator);
   const live = rt?.service ?? null;
 
-  // header times: site data when the leg ran (green), UK estimates otherwise
+  // header times: on live/done legs each side gets the timeline colour code
+  // (blue = happened, green = still to come, orange = late estimate)
   let depart: string;
   let arrive: string;
-  let timesReal = false;
+  let departColor: string | undefined;
+  let arriveColor: string | undefined;
   if (rt) {
     const first = live?.calls[0];
     const last = live ? live.calls[live.calls.length - 1] : null;
     const dep = fmtSite(first?.departed ?? first?.arrived ?? null);
-    const arr = fmtSite(last?.arrived ?? null) ?? last?.estimated ?? last?.scheduled ?? null;
-    timesReal = dep != null;
+    const arrActual = fmtSite(last?.arrived ?? null);
+    const arr = arrActual ?? last?.estimated ?? last?.scheduled ?? null;
     depart = dep ?? ukFormat(rt.startMin);
     arrive = (live ? arr : null) ?? ukFormat(rt.startMin + leg.durationMin);
+    if (rt.status !== "pending") {
+      departColor = dep != null ? "info.main" : "success.main";
+      arriveColor =
+        arrActual != null ? "info.main" : last?.estimated != null ? "warning.main" : "success.main";
+    }
   } else {
     depart = clockAt(startTime, leg.departOffsetMin);
     arrive = clockAt(startTime, leg.departOffsetMin + leg.durationMin);
@@ -305,7 +316,7 @@ function LegCard({
     rt?.status === "live" ? (
       <Chip size="small" color="success" icon={<SensorsIcon />} label="LIVE" sx={{ fontWeight: 700 }} />
     ) : rt?.status === "done" ? (
-      <Chip size="small" color="success" variant="outlined" icon={<CheckCircleIcon />} label="Done" />
+      <Chip size="small" color="info" variant="outlined" icon={<CheckCircleIcon />} label="Done" />
     ) : rt ? (
       <Chip size="small" variant="outlined" label="Est." />
     ) : null;
@@ -329,11 +340,14 @@ function LegCard({
           <Typography variant="h6" component="span" sx={{ flexGrow: 1, fontWeight: 400 }}>
             {leg.from} → {leg.to}
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "monospace", ...(timesReal && { color: "success.main", fontWeight: 700 }) }}
-          >
-            {depart} → {arrive}
+          <Typography variant="body1" sx={{ fontFamily: "monospace" }}>
+            <Box component="span" sx={{ color: departColor, fontWeight: departColor ? 700 : 400 }}>
+              {depart}
+            </Box>
+            {" → "}
+            <Box component="span" sx={{ color: arriveColor, fontWeight: arriveColor ? 700 : 400 }}>
+              {arrive}
+            </Box>
           </Typography>
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
@@ -359,11 +373,15 @@ function LegCard({
           <AccordionDetails sx={{ px: 0, pt: 0 }}>
             {live ? (
               <Stack spacing={0.5}>
-                {live.notices.map((n) => (
-                  <Typography key={n} variant="caption" sx={{ color: "warning.main" }}>
-                    {n}
-                  </Typography>
-                ))}
+                {/* the "This service is running N minutes late" banner is dropped —
+                    the orange times + per-call "+N min" already say it */}
+                {live.notices
+                  .filter((n) => !/\brunning\b.*\blate\b|\blate by\b/i.test(n))
+                  .map((n) => (
+                    <Typography key={n} variant="caption" sx={{ color: "warning.main" }}>
+                      {n}
+                    </Typography>
+                  ))}
                 {live.calls.map((_, i) => (
                   <LiveCallRow key={i} service={live} index={i} accent={color} />
                 ))}
@@ -826,9 +844,10 @@ export default function App() {
                   }
                 />
                 <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
-                  Follows your actual driving on the SCR Hub site: legs turn live (green, real
-                  times) as you take them in-game. Start time and turnaround come from reality,
-                  so those controls are disabled. Times shown in UK time.
+                  Follows your actual driving on the SCR Hub site. On a live leg, green times
+                  are still to come, orange means running late, blue means already passed.
+                  Start time and turnaround come from reality, so those controls are disabled.
+                  Times shown in UK time.
                 </Typography>
               </Box>
             )}

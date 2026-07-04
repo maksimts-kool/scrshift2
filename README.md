@@ -29,9 +29,10 @@ Built with React + Vite + TypeScript + Material UI.
 The **Real time** switch follows your actual driving on the official
 [SCR Hub site](https://stepfordcountyrailway.co.uk) and overlays it on the
 generated shift: pending legs show chained estimates, and when you grab the
-planned route in-game the leg goes **live** — green actual times, platforms,
-delays and dispatchers straight from the site — then freezes as done at the
-terminus, one leg after the next. Driving something other than the planned leg
+planned route in-game the leg goes **live** — platforms, delays and dispatchers
+straight from the site (green = calls still to come, orange = running late,
+blue = already passed) — then freezes as done at the terminus, one leg after
+the next. Driving something other than the planned leg
 raises an *off-plan* warning while the plan keeps its estimates (strict
 matching by route code + direction). All real-time clocks are UK time, because
 that's what SCR runs on.
@@ -46,6 +47,11 @@ window for a one-time Roblox login; afterwards the SCR session is re-established
 silently (the site's cookie is session-scoped, but the saved Roblox session
 lets the OAuth redirect be clicked through headlessly). The switch only appears
 when the companion endpoints (`/api/rt/*`) exist, i.e. under `npm run dev`.
+
+On a static deploy (e.g. Vercel) there is no companion, so the switch hides
+itself. To offer real-time there anyway, host the companion separately (e.g.
+in Docker) and point the frontend at it with `VITE_RT_API_BASE=https://your-companion.example`
+at build time; the companion must then allow CORS from the frontend origin.
 
 ## Project layout
 
