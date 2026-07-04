@@ -190,6 +190,11 @@ export function createScrSession({ profileDir }) {
         }
         user = await whoami();
         if (!user) throw new Error("Logged in, but Roblox whoami still fails.");
+        // Login is saved to the on-disk profile now, so drop the visible
+        // window and finish the session headless — no Chrome box left on
+        // screen. gotoActivity() below re-does the silent OAuth as usual.
+        await close();
+        await launch(true);
       }
       trackedId = user.id;
       phase = "authorizing";
