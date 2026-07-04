@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Alert,
   AppBar,
   Autocomplete,
   Box,
@@ -10,13 +11,16 @@ import {
   Card,
   CardContent,
   Chip,
+  CircularProgress,
   Container,
   CssBaseline,
+  FormControlLabel,
   IconButton,
   Link,
   Paper,
   Slider,
   Stack,
+  Switch,
   TextField,
   ThemeProvider,
   ToggleButton,
@@ -33,9 +37,28 @@ import SwapVertIcon from "@mui/icons-material/SwapVert";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import SensorsIcon from "@mui/icons-material/Sensors";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import rawData from "./data/routes.json";
 import type { RoutesData, Shift, ShiftLeg, Train } from "./types";
 import { TURNAROUND_MIN, generateShift } from "./lib/generator";
+import {
+  RT_TURNAROUND_MIN,
+  advanceLiveShift,
+  estimateLegStarts,
+  initialLiveShift,
+  rtActivity,
+  rtAvailable,
+  rtStart,
+  rtStatus,
+  ukFormat,
+  ukNow,
+  type Activity,
+  type LegLiveStatus,
+  type LiveShift,
+  type RtStatus,
+  type SiteService,
+} from "./lib/realtime";
 
 const data = rawData as unknown as RoutesData;
 const RANDOM_OPERATOR = "__random__";
@@ -73,6 +96,12 @@ function clockAt(startHHMM: string, offsetMin: number): string {
 
 function fmtDuration(min: number): string {
   return min < 60 ? `${min} min` : `${Math.floor(min / 60)} h ${min % 60} min`;
+}
+
+/** "12:05:30" -> "12:05" (site actuals carry seconds) */
+function fmtSite(t: string | null): string | null {
+  const m = t?.match(/^\d{1,2}:\d{2}/);
+  return m ? m[0] : (t ?? null);
 }
 
 /** Colour + label per traction type, used for the roster dots and legend. */
@@ -168,66 +197,216 @@ function TrainRoster({
   );
 }
 
-function LegCard({ leg, index, startTime }: { leg: ShiftLeg; index: number; startTime: string }) {
-  const color = operatorColor(leg.route.operator);
-  const depart = clockAt(startTime, leg.departOffsetMin);
-  const arrive = clockAt(startTime, leg.departOffsetMin + leg.durationMin);
+/** Per-leg live payload handed down from the tracked shift state. */
+interface LegRt {
+  status: LegLiveStatus;
+  service: SiteService | null;
+  /** estimated/actual departure, minutes since UK midnight */
+  startMin: number;
+}
+
+/** One row of a live (site-fed) timeline: upcoming calls green, passed calls grey. */
+function LiveCallRow({
+  service,
+  index,
+  accent,
+}: {
+  service: SiteService;
+  index: number;
+  accent: string;
+}) {
+  const c = service.calls[index];
+  const isEnd = index === 0 || index === service.calls.length - 1;
+  const actual = fmtSite(c.departed ?? c.arrived);
+  const shown = actual ?? c.estimated ?? c.scheduled ?? "—";
+  // passed calls are history (grey); everything still to come is live (green),
+  // regardless of whether the time shown is an actual or an estimate.
+  const passed = c.state === "passed";
+  const timeColor = passed ? "text.secondary" : "success.main";
+  const details: string[] = [];
+  if (c.arrived) details.push(`arr ${fmtSite(c.arrived)}`);
+  if (c.departed) details.push(`dep ${fmtSite(c.departed)}`);
+  if (c.delayMin > 0) details.push(`+${c.delayMin} min`);
+  if (c.platform) details.push(`plat. ${c.platform}`);
+  if (c.dispatcher) details.push(`disp. ${c.dispatcher}`);
   return (
-    <Card variant="outlined" sx={{ borderLeft: `5px solid ${color}` }}>
+    <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
+      <Typography
+        variant="body2"
+        sx={{ fontFamily: "monospace", width: 48, color: timeColor, fontWeight: passed ? 400 : 700 }}
+      >
+        {shown}
+      </Typography>
+      <Box
+        sx={{
+          width: 10,
+          height: 10,
+          mt: "5px",
+          borderRadius: "50%",
+          border: `2px solid ${accent}`,
+          bgcolor: c.state !== "future" || isEnd ? accent : "transparent",
+          flexShrink: 0,
+          ...(c.state === "current" && { boxShadow: `0 0 6px 2px ${accent}` }),
+        }}
+      />
+      <Box sx={{ minWidth: 0 }}>
+        <Typography
+          variant="body2"
+          component="span"
+          sx={{ fontWeight: isEnd || c.state === "current" ? 600 : 400 }}
+        >
+          {c.station}
+        </Typography>
+        {details.length > 0 && (
+          <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
+            {details.join(" · ")}
+          </Typography>
+        )}
+        {c.notes.map((n) => (
+          <Typography key={n} variant="caption" sx={{ display: "block", color: "warning.main" }}>
+            {n}
+          </Typography>
+        ))}
+      </Box>
+    </Box>
+  );
+}
+
+function LegCard({
+  leg,
+  index,
+  startTime,
+  rt,
+}: {
+  leg: ShiftLeg;
+  index: number;
+  startTime: string;
+  rt?: LegRt;
+}) {
+  const color = operatorColor(leg.route.operator);
+  const live = rt?.service ?? null;
+
+  // header times: site data when the leg ran (green), UK estimates otherwise
+  let depart: string;
+  let arrive: string;
+  let timesReal = false;
+  if (rt) {
+    const first = live?.calls[0];
+    const last = live ? live.calls[live.calls.length - 1] : null;
+    const dep = fmtSite(first?.departed ?? first?.arrived ?? null);
+    const arr = fmtSite(last?.arrived ?? null) ?? last?.estimated ?? last?.scheduled ?? null;
+    timesReal = dep != null;
+    depart = dep ?? ukFormat(rt.startMin);
+    arrive = (live ? arr : null) ?? ukFormat(rt.startMin + leg.durationMin);
+  } else {
+    depart = clockAt(startTime, leg.departOffsetMin);
+    arrive = clockAt(startTime, leg.departOffsetMin + leg.durationMin);
+  }
+
+  const statusChip =
+    rt?.status === "live" ? (
+      <Chip size="small" color="success" icon={<SensorsIcon />} label="LIVE" sx={{ fontWeight: 700 }} />
+    ) : rt?.status === "done" ? (
+      <Chip size="small" color="success" variant="outlined" icon={<CheckCircleIcon />} label="Done" />
+    ) : rt ? (
+      <Chip size="small" variant="outlined" label="Est." />
+    ) : null;
+
+  return (
+    <Card
+      variant="outlined"
+      sx={{
+        borderLeft: `5px solid ${color}`,
+        ...(rt?.status === "live" && { borderColor: "success.main" }),
+      }}
+    >
       <CardContent sx={{ pb: 1, "&:last-child": { pb: 1 } }}>
         <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1.5 }}>
           <Chip size="small" label={`Leg ${index + 1}`} sx={{ bgcolor: color, color: "#fff", fontWeight: 600 }} />
+          {statusChip}
           <Typography variant="h6" component="span" sx={{ fontFamily: "monospace" }}>
+            {live?.headcode ? `${live.headcode} ` : ""}
             {leg.route.code}
           </Typography>
           <Typography variant="h6" component="span" sx={{ flexGrow: 1, fontWeight: 400 }}>
             {leg.from} → {leg.to}
           </Typography>
-          <Typography variant="body1" sx={{ fontFamily: "monospace" }}>
+          <Typography
+            variant="body1"
+            sx={{ fontFamily: "monospace", ...(timesReal && { color: "success.main", fontWeight: 700 }) }}
+          >
             {depart} → {arrive}
           </Typography>
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
           {fmtDuration(leg.durationMin)} · {leg.calls.length} calls · {leg.route.points} pts ·{" "}
           {leg.route.xp} XP{leg.reversed ? " · reverse direction" : ""}
+          {live?.unit ? ` · unit ${live.unit}` : ""}
         </Typography>
+        {rt?.status === "live" && live?.status && (
+          <Typography variant="body2" sx={{ mt: 0.5, color: "success.main", fontWeight: 600 }}>
+            {live.status}
+          </Typography>
+        )}
         <Accordion
+          key={rt?.status ?? "plain"}
           disableGutters
           elevation={0}
+          defaultExpanded={rt?.status === "live"}
           sx={{ bgcolor: "transparent", "&:before": { display: "none" }, mt: 0.5 }}
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ px: 0, minHeight: 36 }}>
             <Typography variant="body2">Calling points</Typography>
           </AccordionSummary>
           <AccordionDetails sx={{ px: 0, pt: 0 }}>
-            <Stack spacing={0.25}>
-              {leg.calls.map((call, i) => {
-                const isEnd = i === 0 || i === leg.calls.length - 1;
-                return (
-                  <Box key={`${call.name}-${i}`} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <Typography
-                      variant="body2"
-                      sx={{ fontFamily: "monospace", width: 48, color: "text.secondary" }}
-                    >
-                      {clockAt(startTime, leg.departOffsetMin + call.minutesIntoLeg)}
+            {live ? (
+              <Stack spacing={0.5}>
+                {live.notices
+                  // drop the site's running-late/on-time banner — per-call
+                  // "+N min" already carries the delay; this is just noise.
+                  .filter((n) => !/^this service is running/i.test(n))
+                  .map((n) => (
+                    <Typography key={n} variant="caption" sx={{ color: "warning.main" }}>
+                      {n}
                     </Typography>
-                    <Box
-                      sx={{
-                        width: 10,
-                        height: 10,
-                        borderRadius: "50%",
-                        border: `2px solid ${color}`,
-                        bgcolor: isEnd ? color : "transparent",
-                        flexShrink: 0,
-                      }}
-                    />
-                    <Typography variant="body2" sx={{ fontWeight: isEnd ? 600 : 400 }}>
-                      {call.name}
-                    </Typography>
-                  </Box>
-                );
-              })}
-            </Stack>
+                  ))}
+                {live.calls.map((_, i) => (
+                  <LiveCallRow key={i} service={live} index={i} accent={color} />
+                ))}
+              </Stack>
+            ) : (
+              <Stack spacing={0.25}>
+                {leg.calls.map((call, i) => {
+                  const isEnd = i === 0 || i === leg.calls.length - 1;
+                  const t = rt
+                    ? ukFormat(rt.startMin + call.minutesIntoLeg)
+                    : clockAt(startTime, leg.departOffsetMin + call.minutesIntoLeg);
+                  return (
+                    <Box key={`${call.name}-${i}`} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontFamily: "monospace", width: 48, color: "text.secondary" }}
+                      >
+                        {t}
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: 10,
+                          height: 10,
+                          borderRadius: "50%",
+                          border: `2px solid ${color}`,
+                          bgcolor: isEnd ? color : "transparent",
+                          flexShrink: 0,
+                        }}
+                      />
+                      <Typography variant="body2" sx={{ fontWeight: isEnd ? 600 : 400 }}>
+                        {call.name}
+                      </Typography>
+                    </Box>
+                  );
+                })}
+              </Stack>
+            )}
           </AccordionDetails>
         </Accordion>
       </CardContent>
@@ -279,6 +458,96 @@ function DelayControl({
   );
 }
 
+/** Status strip for real-time mode: session phase, waiting/live/off-plan. */
+function RtBanner({
+  st,
+  error,
+  shift,
+  live,
+  lastAct,
+}: {
+  st: RtStatus | null;
+  error: string | null;
+  shift: Shift | null;
+  live: LiveShift | null;
+  lastAct: Activity | null;
+}) {
+  if (error) {
+    return (
+      <Alert severity="error">
+        Real-time connection failed: {error}. Toggle Real time off and on to retry.
+      </Alert>
+    );
+  }
+  if (!st || st.phase === "stopped" || st.phase === "launching" || st.phase === "authorizing" || st.phase === "booting") {
+    return (
+      <Alert severity="info" icon={<CircularProgress size={18} />}>
+        Starting the SCR Hub session in Chrome… ({st?.phase ?? "connecting"})
+      </Alert>
+    );
+  }
+  if (st.phase === "need-login") {
+    return (
+      <Alert severity="warning">
+        A Chrome window has opened — sign in with Roblox there. This is a one-time login;
+        the session is saved for next time.
+      </Alert>
+    );
+  }
+  if (st.phase === "error") {
+    return (
+      <Alert severity="error">
+        SCR session error: {st.error ?? "unknown"}. Toggle Real time off and on to retry.
+      </Alert>
+    );
+  }
+  // ready
+  const who = st.user ? `${st.user.displayName} (@${st.user.name})` : "you";
+  if (!shift || !live) {
+    return (
+      <Alert severity="success">
+        Connected — tracking {who}. Generate a shift and drive it in-game; each leg goes
+        live as you take it. All times are UK (site) time.
+      </Alert>
+    );
+  }
+  if (live.offPlan) {
+    const s = live.offPlan;
+    const idx = live.legs.findIndex((l) => l.status !== "done");
+    const exp = idx >= 0 ? shift.legs[idx] : null;
+    return (
+      <Alert severity="warning">
+        Off-plan: you're driving {s.headcode} {s.routeCode} {s.origin} → {s.destination}
+        {exp ? `, but leg ${idx + 1} expects ${exp.route.code} ${exp.from} → ${exp.to}` : ""}.
+        The plan keeps estimated times until you run the planned route.
+      </Alert>
+    );
+  }
+  const liveIdx = live.legs.findIndex((l) => l.status === "live");
+  if (liveIdx >= 0) {
+    const s = live.legs[liveIdx].service;
+    return (
+      <Alert severity="success" icon={<SensorsIcon />}>
+        Live on leg {liveIdx + 1}: {s?.headcode} {s?.routeCode} {s?.origin} → {s?.destination}
+        {s?.status ? ` — ${s.status}` : ""}
+      </Alert>
+    );
+  }
+  const nextIdx = live.legs.findIndex((l) => l.status !== "done");
+  if (nextIdx < 0) {
+    return <Alert severity="success">Shift complete — every leg was driven. Nice one!</Alert>;
+  }
+  const nextLeg = shift.legs[nextIdx];
+  const idleNote =
+    lastAct?.state === "other-role" && live.idleDescription ? ` (currently: ${live.idleDescription})` : "";
+  return (
+    <Alert severity="info">
+      Waiting for {who} to take leg {nextIdx + 1}: {nextLeg.route.code} from{" "}
+      {nextLeg.from}. Times are estimates until the train is grabbed{idleNote}.
+    </Alert>
+  );
+}
+
 function ShiftView({
   shift,
   startTime,
@@ -287,6 +556,7 @@ function ShiftView({
   onDelayChange,
   selectedTrain,
   onSelectTrain,
+  rt,
 }: {
   shift: Shift;
   startTime: string;
@@ -295,6 +565,7 @@ function ShiftView({
   onDelayChange: (v: number) => void;
   selectedTrain: string | null;
   onSelectTrain: (name: string) => void;
+  rt?: { live: LiveShift; starts: number[] };
 }) {
   const color = operatorColor(shift.operator);
   const first = shift.legs[0];
@@ -305,6 +576,9 @@ function ShiftView({
     .map((n) => trainByName.get(n))
     .filter((t): t is Train => t != null)
     .sort((a, b) => classNum(a.name) - classNum(b.name) || a.name.localeCompare(b.name));
+  const rtEnd = rt
+    ? ukFormat(rt.starts[rt.starts.length - 1] + shift.legs[shift.legs.length - 1].durationMin)
+    : null;
   return (
     <Stack spacing={2}>
       <Paper sx={{ p: 3 }}>
@@ -317,27 +591,36 @@ function ShiftView({
           <Typography variant="h5" sx={{ flexGrow: 1 }}>
             {shift.operator} shift
           </Typography>
-          <DelayControl delayMin={delayMin} onDelayChange={onDelayChange} />
+          {!rt && <DelayControl delayMin={delayMin} onDelayChange={onDelayChange} />}
         </Stack>
         <Stack
           direction="row"
           spacing={1.5}
           sx={{ alignItems: "center", mb: 2, flexWrap: "wrap", gap: 1 }}
         >
-          <TextField
-            label="Start"
-            type="time"
-            size="small"
-            value={startTime}
-            onChange={(e) => onStartTimeChange(e.target.value)}
-            slotProps={{ inputLabel: { shrink: true } }}
-            sx={{ width: 130 }}
-          />
-          <Typography variant="body1" color="text.secondary">
-            → {clockAt(effectiveStart, shift.totalMin)} · sign on at <strong>{first.from}</strong>,
-            sign off at <strong>{last.to}</strong>
-            {delayMin !== 0 ? ` · ${delayLabel(delayMin)}` : ""}
-          </Typography>
+          {rt ? (
+            <Typography variant="body1" color="text.secondary">
+              {ukFormat(rt.starts[0])} → {rtEnd} · sign on at <strong>{first.from}</strong>,
+              sign off at <strong>{last.to}</strong> · UK time
+            </Typography>
+          ) : (
+            <>
+              <TextField
+                label="Start"
+                type="time"
+                size="small"
+                value={startTime}
+                onChange={(e) => onStartTimeChange(e.target.value)}
+                slotProps={{ inputLabel: { shrink: true } }}
+                sx={{ width: 130 }}
+              />
+              <Typography variant="body1" color="text.secondary">
+                → {clockAt(effectiveStart, shift.totalMin)} · sign on at <strong>{first.from}</strong>,
+                sign off at <strong>{last.to}</strong>
+                {delayMin !== 0 ? ` · ${delayLabel(delayMin)}` : ""}
+              </Typography>
+            </>
+          )}
         </Stack>
         <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1, mb: 2.5 }}>
           <Chip label={`${shift.legs.length} legs`} />
@@ -369,11 +652,24 @@ function ShiftView({
                 <SwapVertIcon fontSize="small" />
                 <Typography variant="body2">
                   Reverse at {leg.from}
-                  {shift.turnaroundMin > 0 ? ` · ${shift.turnaroundMin} min turnaround` : ""}
+                  {!rt && shift.turnaroundMin > 0 ? ` · ${shift.turnaroundMin} min turnaround` : ""}
                 </Typography>
               </Box>
             )}
-            <LegCard leg={leg} index={i} startTime={effectiveStart} />
+            <LegCard
+              leg={leg}
+              index={i}
+              startTime={effectiveStart}
+              rt={
+                rt
+                  ? {
+                      status: rt.live.legs[i].status,
+                      service: rt.live.legs[i].service,
+                      startMin: rt.starts[i],
+                    }
+                  : undefined
+              }
+            />
           </Box>
         ))}
       </Stack>
@@ -402,6 +698,68 @@ export default function App() {
   const [shift, setShift] = useState<Shift | null>(null);
   const [selectedTrain, setSelectedTrain] = useState<string | null>(null);
 
+  // ---- real-time mode ----
+  const [rtOffered, setRtOffered] = useState(false); // companion exists (dev server)
+  const [realtime, setRealtime] = useState(false);
+  const [rtSt, setRtSt] = useState<RtStatus | null>(null);
+  const [rtError, setRtError] = useState<string | null>(null);
+  const [live, setLive] = useState<LiveShift | null>(null);
+  const [lastAct, setLastAct] = useState<Activity | null>(null);
+  const [nowUk, setNowUk] = useState(() => ukNow());
+  const shiftRef = useRef<Shift | null>(null);
+  shiftRef.current = shift;
+
+  useEffect(() => {
+    void rtAvailable().then(setRtOffered);
+  }, []);
+
+  // poll the companion while real-time mode is on
+  useEffect(() => {
+    if (!realtime) return;
+    let cancelled = false;
+    setRtError(null);
+    void rtStart().catch((e) => !cancelled && setRtError(String(e?.message ?? e)));
+    const tick = async () => {
+      try {
+        const st = await rtStatus();
+        if (cancelled) return;
+        setRtSt(st);
+        setRtError(null);
+        if (st.phase === "ready") {
+          const act = await rtActivity();
+          if (cancelled) return;
+          setLastAct(act);
+          setNowUk(ukNow());
+          const cur = shiftRef.current;
+          if (cur) {
+            setLive((prev) => (prev ? advanceLiveShift(prev, cur, act) : prev));
+          }
+        }
+      } catch (e) {
+        if (!cancelled) setRtError(String((e as Error)?.message ?? e));
+      }
+    };
+    void tick();
+    const iv = setInterval(tick, 5000);
+    return () => {
+      cancelled = true;
+      clearInterval(iv);
+    };
+  }, [realtime]);
+
+  // keep estimates fresh even without new activity
+  useEffect(() => {
+    if (!realtime) return;
+    const iv = setInterval(() => setNowUk(ukNow()), 30_000);
+    return () => clearInterval(iv);
+  }, [realtime]);
+
+  const onToggleRealtime = (on: boolean) => {
+    setRealtime(on);
+    setRtError(null);
+    setLive(on && shift ? initialLiveShift(shift) : null);
+  };
+
   const randomOperator = operator === RANDOM_OPERATOR;
   const stationOptions = useMemo(() => stationsForOperator(operator), [operator]);
 
@@ -413,14 +771,21 @@ export default function App() {
       operator: op,
       mode,
       target: mode === "legs" ? legsTarget : minutesTarget,
-      turnaroundMin,
+      // SCR has no real turnaround; in real-time mode assume near-instant
+      turnaroundMin: realtime ? RT_TURNAROUND_MIN : turnaroundMin,
       // A specific sign-on station only makes sense with a specific operator.
       startStation: randomOperator ? null : startStation,
     });
     setDelayMin(0);
     setSelectedTrain(next?.train ?? null);
     setShift(next);
+    setLive(realtime && next ? initialLiveShift(next) : null);
   };
+
+  const starts = useMemo(
+    () => (realtime && shift && live ? estimateLegStarts(shift, live, nowUk) : null),
+    [realtime, shift, live, nowUk],
+  );
 
   const scraped = new Date(data.scrapedAt).toLocaleDateString(undefined, {
     day: "numeric",
@@ -449,6 +814,30 @@ export default function App() {
       <Container maxWidth="md" sx={{ py: 4 }}>
         <Stack spacing={3}>
           <Paper sx={{ p: 3 }}>
+            {rtOffered && (
+              <Box sx={{ mb: 2 }}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={realtime}
+                      onChange={(_, v) => onToggleRealtime(v)}
+                      color="success"
+                    />
+                  }
+                  label={
+                    <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+                      <SensorsIcon fontSize="small" color={realtime ? "success" : "disabled"} />
+                      <Typography>Real time</Typography>
+                    </Stack>
+                  }
+                />
+                <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
+                  Follows your actual driving on the SCR Hub site: legs turn live (green, real
+                  times) as you take them in-game. Start time and turnaround come from reality,
+                  so those controls are disabled. Times shown in UK time.
+                </Typography>
+              </Box>
+            )}
             <Typography variant="overline" color="text.secondary">
               Operator
             </Typography>
@@ -533,28 +922,36 @@ export default function App() {
                 />
               )}
             </Box>
-            <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
-              Turnaround at each terminus
-            </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
-              Layover added when changing ends. SCR has none — it's realism flavor.
-            </Typography>
-            <Box sx={{ px: 1, mb: 3 }}>
-              <Slider
-                value={turnaroundMin}
-                onChange={(_, v) => setTurnaroundMin(v as number)}
-                min={0}
-                max={10}
-                step={1}
-                valueLabelDisplay="auto"
-                valueLabelFormat={(v) => (v === 0 ? "none" : `${v} min`)}
-                marks={[
-                  { value: 0, label: "0" },
-                  { value: 4, label: "4" },
-                  { value: 10, label: "10" },
-                ]}
-              />
-            </Box>
+            {!realtime && (
+              <>
+                <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
+                  Turnaround at each terminus
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ display: "block", mb: 0.5 }}
+                >
+                  Layover added when changing ends. SCR has none — it's realism flavor.
+                </Typography>
+                <Box sx={{ px: 1, mb: 3 }}>
+                  <Slider
+                    value={turnaroundMin}
+                    onChange={(_, v) => setTurnaroundMin(v as number)}
+                    min={0}
+                    max={10}
+                    step={1}
+                    valueLabelDisplay="auto"
+                    valueLabelFormat={(v) => (v === 0 ? "none" : `${v} min`)}
+                    marks={[
+                      { value: 0, label: "0" },
+                      { value: 4, label: "4" },
+                      { value: 10, label: "10" },
+                    ]}
+                  />
+                </Box>
+              </>
+            )}
             <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
               Sign on at
             </Typography>
@@ -588,6 +985,10 @@ export default function App() {
             </Button>
           </Paper>
 
+          {realtime && (
+            <RtBanner st={rtSt} error={rtError} shift={shift} live={live} lastAct={lastAct} />
+          )}
+
           {shift ? (
             <ShiftView
               shift={shift}
@@ -597,6 +998,7 @@ export default function App() {
               onDelayChange={setDelayMin}
               selectedTrain={selectedTrain}
               onSelectTrain={setSelectedTrain}
+              rt={realtime && live && starts ? { live, starts } : undefined}
             />
           ) : (
             <Paper variant="outlined" sx={{ p: 6, textAlign: "center", color: "text.secondary" }}>
