@@ -10,6 +10,7 @@ Built with React + Vite + TypeScript + Material UI.
 | --- | --- |
 | `npm run dev` | Start the app at http://localhost:5173 (includes the real-time companion) |
 | `npm run rt` | Standalone real-time companion for the deployed site (see below) |
+| `npm run package:companion` | Build the portable companion zip for non-dev users |
 | `npm run build` | Type-check and build for production (`dist/`) |
 | `npm run scrape` | Refresh `src/data/routes.json` from the wiki (run after game updates) |
 | `npm test` | Simulate 1000 shifts + unit-test the real-time tracking logic |
@@ -63,6 +64,17 @@ The companion runs in two ways, sharing the same API ([scripts/realtime/api.mjs]
   costs you nothing. Cross-origin calls are only accepted from localhost and
   `*.vercel.app` (override with `RT_ALLOW_ORIGIN=https://your.domain`, e.g.
   when the site moves to a custom domain).
+
+**For players (no dev tools):** the same standalone companion ships as a
+portable zip — [SCR-Companion.zip](https://github.com/maksimts-kool/scrshift2/releases/latest/download/SCR-Companion.zip)
+(Windows) — with `node.exe`, the realtime scripts and Playwright inside.
+Download, unzip anywhere, double-click **Start Companion.bat**; the site's
+Real time banner links to it. It uses installed Chrome, or falls back to
+Edge (preinstalled on Windows), and keeps its profile in
+`%LOCALAPPDATA%\scrshift2-companion` (`RT_PROFILE` overrides). Rebuild it
+with `npm run package:companion` (output in `dist-companion/`) and upload it
+as a release asset **keeping the file name** — the site links
+`releases/latest/download/SCR-Companion.zip`.
 
 To host the companion somewhere else entirely (a home server, Docker box, VPS
 — anywhere Chrome can run), start it there with `RT_HOST=0.0.0.0` (plus

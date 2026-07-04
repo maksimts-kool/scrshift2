@@ -36,11 +36,23 @@ export function createScrSession({ profileDir }) {
   const activityUrl = (id) => `${SCR}/Players/${id}/CurrentActivity`;
 
   async function launch(headless) {
-    ctx = await chromium.launchPersistentContext(profileDir, {
-      channel: "chrome",
-      headless,
-      viewport: headless ? undefined : null,
-    });
+    // real Chrome first; fall back to Edge (preinstalled on every Windows
+    // box) so the packaged companion needs nothing installed at all
+    let lastErr = null;
+    for (const channel of ["chrome", "msedge"]) {
+      try {
+        ctx = await chromium.launchPersistentContext(profileDir, {
+          channel,
+          headless,
+          viewport: headless ? undefined : null,
+        });
+        lastErr = null;
+        break;
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+    if (lastErr) throw lastErr;
     headed = !headless;
     // keep loads light; the tracked page doesn't need images/fonts
     await ctx.route("**/*", (route) => {

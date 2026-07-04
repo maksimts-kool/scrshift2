@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+dist-companion
 *.local
 
 # persistent Chrome profile holding the SCR login session

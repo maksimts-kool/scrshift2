@@ -64,6 +64,10 @@ import {
 const data = rawData as unknown as RoutesData;
 const RANDOM_OPERATOR = "__random__";
 
+/** portable companion zip; `latest` tracks whatever release carries the asset */
+const COMPANION_DOWNLOAD_URL =
+  "https://github.com/maksimts-kool/scrshift2/releases/latest/download/SCR-Companion.zip";
+
 const trainByName = new Map(data.trains.map((t) => [t.name, t]));
 
 function operatorColor(name: string): string {
@@ -1037,18 +1041,32 @@ export default function App() {
           </Paper>
 
           {realtime && !rtOffered && (
-            <Alert severity="info">
-              Looking for the real-time companion… It's a small local app that reads the SCR
-              Hub site for you (a static page can't do that itself). On this PC, clone{" "}
+            <Alert
+              severity="info"
+              action={
+                <Button
+                  color="inherit"
+                  size="small"
+                  href={COMPANION_DOWNLOAD_URL}
+                  sx={{ whiteSpace: "nowrap" }}
+                >
+                  Download
+                </Button>
+              }
+            >
+              Real time needs a small free helper app on this PC — it reads your own driving
+              from the SCR Hub site, which a web page can't do by itself. <b>Download</b> it,
+              unzip anywhere, double-click <b>Start Companion</b>, and this page connects on
+              its own (allow the local-network permission if your browser asks). The first
+              run opens a sign-in with your own Roblox account. Windows only for now —{" "}
               <Link
                 href="https://github.com/maksimts-kool/scrshift2"
                 target="_blank"
                 rel="noreferrer"
               >
-                the project
-              </Link>{" "}
-              and run <code>npm install &amp;&amp; npm run rt</code> — this page connects
-              automatically once it's up. Each player uses their own Roblox login.
+                source code here
+              </Link>
+              .
             </Alert>
           )}
           {realtime && rtOffered && (
