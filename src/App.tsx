@@ -896,7 +896,8 @@ export default function App() {
     return () => clearInterval(iv);
   }, [realtime]);
 
-  // simulate: tick the local clock so stations arrive/pass on the minute
+  // simulate: tick the local clock so stations arrive/pass on the minute, and
+  // the activity line flips to "Approaching" on the 30s mark (1s resolution)
   useEffect(() => {
     if (tracking !== "sim") return;
     const tick = () => {
@@ -905,7 +906,7 @@ export default function App() {
       setNowSec(now.getSeconds());
     };
     tick();
-    const iv = setInterval(tick, 5000);
+    const iv = setInterval(tick, 1000);
     return () => clearInterval(iv);
   }, [tracking]);
 
