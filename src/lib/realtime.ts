@@ -189,7 +189,7 @@ export function ukNow(now = new Date()): number {
 }
 
 /** shortest signed distance a→b on the 24h clock (handles midnight wrap) */
-function clockDelta(a: number, b: number): number {
+export function clockDelta(a: number, b: number): number {
   return ((b - a + 720 + 1440) % 1440) - 720;
 }
 

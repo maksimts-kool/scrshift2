@@ -14,13 +14,11 @@ import {
   CircularProgress,
   Container,
   CssBaseline,
-  FormControlLabel,
   IconButton,
   Link,
   Paper,
   Slider,
   Stack,
-  Switch,
   TextField,
   ThemeProvider,
   ToggleButton,
@@ -38,6 +36,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import SensorsIcon from "@mui/icons-material/Sensors";
+import TimelapseIcon from "@mui/icons-material/Timelapse";
+import TuneIcon from "@mui/icons-material/Tune";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import rawData from "./data/routes.json";
 import type { RoutesData, Shift, ShiftLeg, Train } from "./types";
@@ -54,12 +54,23 @@ import {
   rtStatus,
   ukFormat,
   ukNow,
+  ukParse,
   type Activity,
   type LegLiveStatus,
   type LiveShift,
   type RtStatus,
   type SiteService,
 } from "./lib/realtime";
+import {
+  localNowMin,
+  simTotalDelay,
+  simulateShift,
+  type SimEvent,
+  type SimLeg,
+} from "./lib/simulate";
+
+/** Off = plain planner; sim = clock-driven replay; rt = companion-fed live. */
+type Tracking = "off" | "sim" | "rt";
 
 const data = rawData as unknown as RoutesData;
 const RANDOM_OPERATOR = "__random__";
@@ -208,31 +219,37 @@ interface LegRt {
   service: SiteService | null;
   /** estimated/actual departure, minutes since UK midnight */
   startMin: number;
+  /** simulate mode: nothing is really live, so upcoming stays grey not green */
+  sim?: boolean;
 }
 
 /**
  * One row of a live (site-fed) timeline. Colour code: green = still to come
  * (on time), orange = still to come but the site says late, blue = already
  * passed (real recorded time — deliberately not the grey used on Est. legs).
+ * Simulate mode swaps the green for grey via `upcomingColor`: those times
+ * are still nobody's reality.
  */
 function LiveCallRow({
   service,
   index,
   accent,
+  upcomingColor = "success.main",
 }: {
   service: SiteService;
   index: number;
   accent: string;
+  upcomingColor?: string;
 }) {
   const c = service.calls[index];
   const isEnd = index === 0 || index === service.calls.length - 1;
   const actual = fmtSite(c.departed ?? c.arrived);
   const shown = actual ?? c.estimated ?? c.scheduled ?? "—";
   const timeColor =
-    actual != null ? "info.main" : c.estimated != null ? "warning.main" : "success.main";
+    actual != null ? "info.main" : c.estimated != null ? "warning.main" : upcomingColor;
   const details: string[] = [];
-  if (c.arrived) details.push(`arr ${fmtSite(c.arrived)}`);
-  if (c.departed) details.push(`dep ${fmtSite(c.departed)}`);
+  if (c.arrived && fmtSite(c.arrived) !== shown) details.push(`arr ${fmtSite(c.arrived)}`);
+  if (c.departed && fmtSite(c.departed) !== shown) details.push(`dep ${fmtSite(c.departed)}`);
   if (c.delayMin > 0) details.push(`+${c.delayMin} min`);
   if (c.platform) details.push(`plat. ${c.platform}`);
   if (c.dispatcher) details.push(`disp. ${c.dispatcher}`);
@@ -292,9 +309,10 @@ function LegCard({
 }) {
   const color = operatorColor(leg.route.operator);
   const live = rt?.service ?? null;
+  const upcoming = rt?.sim ? "text.secondary" : "success.main";
 
   // header times: on live/done legs each side gets the timeline colour code
-  // (blue = happened, green = still to come, orange = late estimate)
+  // (blue = happened, green/grey = still to come, orange = late estimate)
   let depart: string;
   let arrive: string;
   let departColor: string | undefined;
@@ -308,9 +326,9 @@ function LegCard({
     depart = dep ?? ukFormat(rt.startMin);
     arrive = (live ? arr : null) ?? ukFormat(rt.startMin + leg.durationMin);
     if (rt.status !== "pending") {
-      departColor = dep != null ? "info.main" : "success.main";
+      departColor = dep != null ? "info.main" : upcoming;
       arriveColor =
-        arrActual != null ? "info.main" : last?.estimated != null ? "warning.main" : "success.main";
+        arrActual != null ? "info.main" : last?.estimated != null ? "warning.main" : upcoming;
     }
   } else {
     depart = clockAt(startTime, leg.departOffsetMin);
@@ -318,7 +336,9 @@ function LegCard({
   }
 
   const statusChip =
-    rt?.status === "live" ? (
+    rt?.status === "live" && rt.sim ? (
+      <Chip size="small" icon={<TimelapseIcon />} label="SIM" sx={{ fontWeight: 700 }} />
+    ) : rt?.status === "live" ? (
       <Chip size="small" color="success" icon={<SensorsIcon />} label="LIVE" sx={{ fontWeight: 700 }} />
     ) : rt?.status === "done" ? (
       <Chip size="small" color="info" variant="outlined" icon={<CheckCircleIcon />} label="Done" />
@@ -331,7 +351,7 @@ function LegCard({
       variant="outlined"
       sx={{
         borderLeft: `5px solid ${color}`,
-        ...(rt?.status === "live" && { borderColor: "success.main" }),
+        ...(rt?.status === "live" && !rt.sim && { borderColor: "success.main" }),
       }}
     >
       <CardContent sx={{ pb: 1, "&:last-child": { pb: 1 } }}>
@@ -388,7 +408,13 @@ function LegCard({
                     </Typography>
                   ))}
                 {live.calls.map((_, i) => (
-                  <LiveCallRow key={i} service={live} index={i} accent={color} />
+                  <LiveCallRow
+                    key={i}
+                    service={live}
+                    index={i}
+                    accent={color}
+                    upcomingColor={upcoming}
+                  />
                 ))}
               </Stack>
             ) : (
@@ -439,9 +465,12 @@ function delayLabel(min: number): string {
 function DelayControl({
   delayMin,
   onDelayChange,
+  min,
 }: {
   delayMin: number;
   onDelayChange: (v: number) => void;
+  /** floor for the minus button (simulate can't run early, so 0 there) */
+  min?: number;
 }) {
   const late = delayMin > 0;
   return (
@@ -452,6 +481,7 @@ function DelayControl({
       <IconButton
         size="small"
         aria-label="less delay"
+        disabled={min != null && delayMin <= min}
         onClick={() => onDelayChange(delayMin - 1)}
       >
         <RemoveIcon fontSize="small" />
@@ -483,6 +513,7 @@ function RtBanner({
   live,
   lastAct,
   onChangeAccount,
+  onSimulate,
 }: {
   st: RtStatus | null;
   error: string | null;
@@ -490,16 +521,23 @@ function RtBanner({
   live: LiveShift | null;
   lastAct: Activity | null;
   onChangeAccount: () => void;
+  onSimulate: () => void;
 }) {
   const changeBtn = (
     <Button color="inherit" size="small" onClick={onChangeAccount} sx={{ whiteSpace: "nowrap" }}>
       Change account
     </Button>
   );
+  const simBtn = (
+    <Button color="inherit" size="small" onClick={onSimulate} sx={{ whiteSpace: "nowrap" }}>
+      Simulate instead
+    </Button>
+  );
   if (error) {
     return (
-      <Alert severity="error">
-        Real-time connection failed: {error}. Toggle Real time off and on to retry.
+      <Alert severity="error" action={simBtn}>
+        Real-time connection failed: {error}. Toggle Real time off and on to retry, or
+        switch to Simulate mode.
       </Alert>
     );
   }
@@ -521,8 +559,9 @@ function RtBanner({
   }
   if (st.phase === "error") {
     return (
-      <Alert severity="error">
-        SCR session error: {st.error ?? "unknown"}. Toggle Real time off and on to retry.
+      <Alert severity="error" action={simBtn}>
+        SCR session error: {st.error ?? "unknown"}. Toggle Real time off and on to retry,
+        or switch to Simulate mode.
       </Alert>
     );
   }
@@ -573,6 +612,37 @@ function RtBanner({
   );
 }
 
+/** Status strip for simulate mode: where the replay stands right now. */
+function SimBanner({ shift, legs }: { shift: Shift; legs: SimLeg[] }) {
+  if (legs.every((l) => l.status === "done")) {
+    return (
+      <Alert severity="success" icon={<TimelapseIcon />}>
+        Simulation complete — the clock has run through every leg.
+      </Alert>
+    );
+  }
+  const liveIdx = legs.findIndex((l) => l.status === "live");
+  if (liveIdx >= 0) {
+    const leg = shift.legs[liveIdx];
+    const next = legs[liveIdx].service.nextStation;
+    return (
+      <Alert severity="info" icon={<TimelapseIcon />}>
+        Simulating leg {liveIdx + 1}: {leg.route.code} {leg.from} → {leg.to}
+        {next ? ` — next ${next}` : ""}. Nothing is read from the game — fell behind?
+        Add delay and only upcoming stations move.
+      </Alert>
+    );
+  }
+  const nextIdx = legs.findIndex((l) => l.status !== "done");
+  return (
+    <Alert severity="info" icon={<TimelapseIcon />}>
+      Simulating — leg {nextIdx + 1} departs at {ukFormat(legs[nextIdx].startMin)}. Each
+      station shows as arrived during its scheduled minute; use the delay buttons if
+      you're running behind.
+    </Alert>
+  );
+}
+
 function ShiftView({
   shift,
   startTime,
@@ -582,6 +652,7 @@ function ShiftView({
   selectedTrain,
   onSelectTrain,
   rt,
+  sim,
 }: {
   shift: Shift;
   startTime: string;
@@ -591,12 +662,14 @@ function ShiftView({
   selectedTrain: string | null;
   onSelectTrain: (name: string) => void;
   rt?: { live: LiveShift; starts: number[] };
+  sim?: { legs: SimLeg[]; delayMin: number; onDelayChange: (v: number) => void };
 }) {
   const color = operatorColor(shift.operator);
   const first = shift.legs[0];
   const last = shift.legs[shift.legs.length - 1];
-  // A running delay just shifts every clock time, so retime from a moved base.
-  const effectiveStart = clockAt(startTime, delayMin);
+  // Planner: a running delay just shifts every clock time, so retime from a
+  // moved base. Simulate: past times are frozen, delay lives in sim events.
+  const effectiveStart = sim ? startTime : clockAt(startTime, delayMin);
   const roster = shift.trainRoster
     .map((n) => trainByName.get(n))
     .filter((t): t is Train => t != null)
@@ -604,6 +677,13 @@ function ShiftView({
   const rtEnd = rt
     ? ukFormat(rt.starts[rt.starts.length - 1] + shift.legs[shift.legs.length - 1].durationMin)
     : null;
+  // simulate: the end is the last call's effective (delay-shifted) time
+  const lastSimCalls = sim ? sim.legs[sim.legs.length - 1].service.calls : null;
+  const lastSimCall = lastSimCalls ? lastSimCalls[lastSimCalls.length - 1] : null;
+  const simEnd = lastSimCall
+    ? (lastSimCall.arrived ?? lastSimCall.estimated ?? lastSimCall.scheduled)
+    : null;
+  const shownDelay = sim ? sim.delayMin : delayMin;
   return (
     <Stack spacing={2}>
       <Paper sx={{ p: 3 }}>
@@ -616,7 +696,13 @@ function ShiftView({
           <Typography variant="h5" sx={{ flexGrow: 1 }}>
             {shift.operator} shift
           </Typography>
-          {!rt && <DelayControl delayMin={delayMin} onDelayChange={onDelayChange} />}
+          {!rt && (
+            <DelayControl
+              delayMin={shownDelay}
+              onDelayChange={sim ? sim.onDelayChange : onDelayChange}
+              min={sim ? 0 : undefined}
+            />
+          )}
         </Stack>
         <Stack
           direction="row"
@@ -640,9 +726,9 @@ function ShiftView({
                 sx={{ width: 130 }}
               />
               <Typography variant="body1" color="text.secondary">
-                → {clockAt(effectiveStart, shift.totalMin)} · sign on at <strong>{first.from}</strong>,
-                sign off at <strong>{last.to}</strong>
-                {delayMin !== 0 ? ` · ${delayLabel(delayMin)}` : ""}
+                → {simEnd ?? clockAt(effectiveStart, shift.totalMin)} · sign on at{" "}
+                <strong>{first.from}</strong>, sign off at <strong>{last.to}</strong>
+                {shownDelay !== 0 ? ` · ${delayLabel(shownDelay)}` : ""}
               </Typography>
             </>
           )}
@@ -692,7 +778,14 @@ function ShiftView({
                       service: rt.live.legs[i].service,
                       startMin: rt.starts[i],
                     }
-                  : undefined
+                  : sim
+                    ? {
+                        status: sim.legs[i].status,
+                        service: sim.legs[i].service,
+                        startMin: sim.legs[i].startMin,
+                        sim: true,
+                      }
+                    : undefined
               }
             />
           </Box>
@@ -723,9 +816,16 @@ export default function App() {
   const [shift, setShift] = useState<Shift | null>(null);
   const [selectedTrain, setSelectedTrain] = useState<string | null>(null);
 
+  const [tracking, setTracking] = useState<Tracking>("off");
+
+  // ---- simulate mode ----
+  const [simEvents, setSimEvents] = useState<SimEvent[]>([]);
+  const [nowLocal, setNowLocal] = useState(() => localNowMin());
+  const [nowSec, setNowSec] = useState(() => new Date().getSeconds());
+
   // ---- real-time mode ----
   const [rtOffered, setRtOffered] = useState(false); // companion exists (dev server)
-  const [realtime, setRealtime] = useState(false);
+  const realtime = tracking === "rt";
   const [rtSt, setRtSt] = useState<RtStatus | null>(null);
   const [rtError, setRtError] = useState<string | null>(null);
   const [live, setLive] = useState<LiveShift | null>(null);
@@ -796,14 +896,38 @@ export default function App() {
     return () => clearInterval(iv);
   }, [realtime]);
 
-  const onToggleRealtime = (on: boolean) => {
-    setRealtime(on);
+  // simulate: tick the local clock so stations arrive/pass on the minute
+  useEffect(() => {
+    if (tracking !== "sim") return;
+    const tick = () => {
+      const now = new Date();
+      setNowLocal(localNowMin(now));
+      setNowSec(now.getSeconds());
+    };
+    tick();
+    const iv = setInterval(tick, 5000);
+    return () => clearInterval(iv);
+  }, [tracking]);
+
+  const onTrackingChange = (v: Tracking) => {
+    setTracking(v);
     setRtError(null);
-    setLive(on && shift ? initialLiveShift(shift) : null);
-    if (on && !rtOffered) {
+    setSimEvents([]); // a fresh simulation starts on time
+    setLive(v === "rt" && shift ? initialLiveShift(shift) : null);
+    if (v === "rt" && !rtOffered) {
       // static deploy: the companion is a separate local server — go find it
       void rtAvailable({ probeLocal: true }).then((ok) => ok && setRtOffered(true));
     }
+  };
+
+  const simDelay = simTotalDelay(simEvents);
+  const onSimDelayChange = (v: number) => {
+    // clamped at on time: the sim can fall behind but never run early
+    const delta = Math.max(0, v) - simDelay;
+    if (delta === 0) return;
+    const at = localNowMin();
+    setNowLocal(at);
+    setSimEvents((evts) => [...evts, { atMin: at, delta }]);
   };
 
   const onChangeAccount = () => {
@@ -831,6 +955,7 @@ export default function App() {
       startStation: randomOperator ? null : startStation,
     });
     setDelayMin(0);
+    setSimEvents([]);
     setSelectedTrain(next?.train ?? null);
     setShift(next);
     setLive(realtime && next ? initialLiveShift(next) : null);
@@ -839,6 +964,14 @@ export default function App() {
   const starts = useMemo(
     () => (realtime && shift && live ? estimateLegStarts(shift, live, nowUk) : null),
     [realtime, shift, live, nowUk],
+  );
+
+  const simLegs = useMemo(
+    () =>
+      tracking === "sim" && shift
+        ? simulateShift(shift, ukParse(startTime), nowLocal, simEvents, nowSec)
+        : null,
+    [tracking, shift, startTime, nowLocal, simEvents, nowSec],
   );
 
   const scraped = new Date(data.scrapedAt).toLocaleDateString(undefined, {
@@ -869,28 +1002,44 @@ export default function App() {
         <Stack spacing={3}>
           <Paper sx={{ p: 3 }}>
             <Box sx={{ mb: 2 }}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={realtime}
-                    onChange={(_, v) => onToggleRealtime(v)}
-                    color="success"
-                  />
-                }
-                label={
-                  <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-                    <SensorsIcon fontSize="small" color={realtime ? "success" : "disabled"} />
-                    <Typography>Real time</Typography>
-                  </Stack>
-                }
-              />
+              <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
+                Mode
+              </Typography>
+              <ToggleButtonGroup
+                exclusive
+                size="small"
+                value={tracking}
+                onChange={(_, v) => v !== null && onTrackingChange(v as Tracking)}
+                sx={{ mb: 0.5 }}
+              >
+                <ToggleButton value="off" sx={{ textTransform: "none" }}>
+                  <TuneIcon sx={{ fontSize: 16, mr: 1 }} />
+                  Planner
+                </ToggleButton>
+                <ToggleButton value="sim" sx={{ textTransform: "none" }}>
+                  <TimelapseIcon sx={{ fontSize: 16, mr: 1 }} />
+                  Simulate
+                </ToggleButton>
+                <ToggleButton value="rt" sx={{ textTransform: "none" }}>
+                  <SensorsIcon sx={{ fontSize: 16, mr: 1, color: realtime ? "success.main" : undefined }} />
+                  Real time
+                </ToggleButton>
+              </ToggleButtonGroup>
               <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
-                Follows your actual driving on the SCR Hub site. On a live leg, green times
-                are still to come, orange means running late, blue means already passed.
-                Start time and turnaround come from reality, so those controls are disabled.
-                Times shown in UK time.
-                {!rtOffered &&
-                  " Needs the companion app running on this PC — flip the switch for instructions."}
+                {tracking === "off" &&
+                  "A plain timetable: pick a start time and nudge the running delay by hand — every time shifts together."}
+                {tracking === "sim" &&
+                  "Replays the plan against the real clock from your start time — works on any device, no helper app, nothing read from the game. A station shows as arrived during its scheduled minute; grey times are upcoming (it isn't really live), blue already passed, orange running late. Adding delay moves upcoming stations only — never ones behind you."}
+                {tracking === "rt" && (
+                  <>
+                    Follows your actual driving on the SCR Hub site. On a live leg, green times
+                    are still to come, orange means running late, blue means already passed.
+                    Start time and turnaround come from reality, so those controls are disabled.
+                    Times shown in UK time.
+                    {!rtOffered &&
+                      " Needs the companion app running on this PC — see the instructions below."}
+                  </>
+                )}
               </Typography>
             </Box>
             <Typography variant="overline" color="text.secondary">
@@ -1044,27 +1193,39 @@ export default function App() {
             <Alert
               severity="info"
               action={
-                <Button
-                  color="inherit"
-                  size="small"
-                  href={COMPANION_DOWNLOAD_URL}
-                  sx={{ whiteSpace: "nowrap" }}
-                >
-                  Download
-                </Button>
+                <Stack direction="row" spacing={1}>
+                  <Button
+                    color="inherit"
+                    size="small"
+                    onClick={() => onTrackingChange("sim")}
+                    sx={{ whiteSpace: "nowrap" }}
+                  >
+                    Simulate instead
+                  </Button>
+                  <Button
+                    color="inherit"
+                    size="small"
+                    href={COMPANION_DOWNLOAD_URL}
+                    sx={{ whiteSpace: "nowrap" }}
+                  >
+                    Download
+                  </Button>
+                </Stack>
               }
             >
               Real time needs a small free helper app on this PC — it reads your own driving
               from the SCR Hub site, which a web page can't do by itself. <b>Download</b> it,
               unzip anywhere, double-click <b>Start Companion</b>, and this page connects on
               its own (allow the local-network permission if your browser asks). The first
-              run opens a sign-in with your own Roblox account. Windows only for now —{" "}
+              run opens a sign-in with your own Roblox account. Windows only for now — on
+              another device, or if it won't connect, <b>Simulate</b> gives you the same
+              ticking timetable without reading the game.{" "}
               <Link
                 href="https://github.com/maksimts-kool/scrshift2"
                 target="_blank"
                 rel="noreferrer"
               >
-                source code here
+                Source code here
               </Link>
               .
             </Alert>
@@ -1077,7 +1238,11 @@ export default function App() {
               live={live}
               lastAct={lastAct}
               onChangeAccount={onChangeAccount}
+              onSimulate={() => onTrackingChange("sim")}
             />
+          )}
+          {tracking === "sim" && shift && simLegs && (
+            <SimBanner shift={shift} legs={simLegs} />
           )}
 
           {shift ? (
@@ -1090,6 +1255,11 @@ export default function App() {
               selectedTrain={selectedTrain}
               onSelectTrain={setSelectedTrain}
               rt={realtime && live && starts ? { live, starts } : undefined}
+              sim={
+                simLegs
+                  ? { legs: simLegs, delayMin: simDelay, onDelayChange: onSimDelayChange }
+                  : undefined
+              }
             />
           ) : (
             <Paper variant="outlined" sx={{ p: 6, textAlign: "center", color: "text.secondary" }}>

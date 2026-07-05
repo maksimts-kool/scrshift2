@@ -13,8 +13,9 @@ Built with React + Vite + TypeScript + Material UI.
 | `npm run package:companion` | Build the portable companion zip for non-dev users |
 | `npm run build` | Type-check and build for production (`dist/`) |
 | `npm run scrape` | Refresh `src/data/routes.json` from the wiki (run after game updates) |
-| `npm test` | Simulate 1000 shifts + unit-test the real-time tracking logic |
+| `npm test` | Simulate 1000 shifts + unit-test the real-time and simulate logic |
 | `npm run test:rt` | Just the real-time matching/estimation tests |
+| `npm run test:sim` | Just the simulate-mode clock/delay tests |
 
 ## How shifts work
 
@@ -25,6 +26,21 @@ Built with React + Vite + TypeScript + Material UI.
 - **One train for the whole shift**: every leg is restricted to routes the running train is allowed on (parsed from each route's `rolling_stock` — some routes are exclusive to certain classes or bar longer/double variants). The driver signs off if no onward route fits the train.
 - **Turnaround** between legs is an adjustable layover (0–10 min). It's realism flavor, not a game rule — SCR has no enforced turnaround; drivers terminate and take up the next service almost immediately.
 - Each leg shows every calling point with clock times, taken from the wiki's per-station cumulative timings. The start time can be re-timed on the result without regenerating the route.
+
+## Simulate mode
+
+For anyone who can't run the real-time companion — not on Windows, or the Hub
+is down — the **Simulate** mode replays the generated shift against the real
+clock from the chosen start time, reading nothing from the game. A station
+shows as *arrived* during its scheduled minute and turns *passed* once that
+minute is over. Colours mirror real time except green: passed is blue,
+running late is orange, but upcoming stays **grey**, because nothing is
+actually live. The delay buttons are event-sourced
+([src/lib/simulate.ts](src/lib/simulate.ts)): each click is stamped with the
+minute it happened and only moves stations still in the future, so times
+behind you never rewrite, and the total is clamped at on-time (a sim can fall
+behind but never run early). Simulate runs on the player's local clock, same
+as the planner's Start field.
 
 ## Real-time mode
 
@@ -89,7 +105,8 @@ a visible Chrome window on that machine.
 - [`src/data/routes.json`](src/data/routes.json) — bundled route snapshot (generated; date shown in the app footer)
 - [`src/lib/generator.ts`](src/lib/generator.ts) — shift-chaining logic
 - [`src/lib/realtime.ts`](src/lib/realtime.ts) — real-time client, leg matching + estimation
+- [`src/lib/simulate.ts`](src/lib/simulate.ts) — simulate-mode clock states + event-sourced delay
 - [`src/App.tsx`](src/App.tsx) — the whole UI
-- [`scripts/test-generator.mts`](scripts/test-generator.mts), [`scripts/test-realtime.mts`](scripts/test-realtime.mts) — tests
+- [`scripts/test-generator.mts`](scripts/test-generator.mts), [`scripts/test-realtime.mts`](scripts/test-realtime.mts), [`scripts/test-simulate.mts`](scripts/test-simulate.mts) — tests
 
 Not affiliated with SCR or Roblox.
