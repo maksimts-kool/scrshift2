@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-07-03T21:22:12.410Z",
+  "scrapedAt": "2026-07-05T18:05:40.645Z",
   "source": "https://scr.fandom.com/wiki/List_of_Routes",
   "operators": [
     {
@@ -3931,7 +3931,7 @@
         },
         {
           "name": "Stepford East",
-          "fromOrigin": null,
+          "fromOrigin": 9,
           "fromDestination": 9
         },
         {
@@ -4733,33 +4733,39 @@
         },
         {
           "name": "Angel Pass",
-          "fromOrigin": null,
-          "fromDestination": 8
+          "fromOrigin": 8,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Bodin",
-          "fromOrigin": 2,
-          "fromDestination": 9
+          "fromOrigin": 9,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Coxly Newtown",
-          "fromOrigin": null,
-          "fromDestination": 11
+          "fromOrigin": 11,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "New Harrow",
-          "fromOrigin": 3,
-          "fromDestination": 4
+          "fromOrigin": null,
+          "fromDestination": 4,
+          "skipForward": true
         },
         {
           "name": "Elsemere Pond",
           "fromOrigin": null,
-          "fromDestination": 3
+          "fromDestination": 3,
+          "skipForward": true
         },
         {
           "name": "Elsemere Junction",
-          "fromOrigin": 2,
-          "fromDestination": 2
+          "fromOrigin": null,
+          "fromDestination": 2,
+          "skipForward": true
         },
         {
           "name": "Barton",
@@ -4834,33 +4840,39 @@
         },
         {
           "name": "Angel Pass",
-          "fromOrigin": null,
-          "fromDestination": 17
+          "fromOrigin": 17,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Bodin",
-          "fromOrigin": 2,
-          "fromDestination": 18
+          "fromOrigin": 18,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Coxly Newtown",
-          "fromOrigin": null,
-          "fromDestination": 20
+          "fromOrigin": 20,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "New Harrow",
-          "fromOrigin": 3,
-          "fromDestination": 4
+          "fromOrigin": null,
+          "fromDestination": 4,
+          "skipForward": true
         },
         {
           "name": "Elsemere Pond",
           "fromOrigin": null,
-          "fromDestination": 3
+          "fromDestination": 3,
+          "skipForward": true
         },
         {
           "name": "Elsemere Junction",
-          "fromOrigin": 2,
-          "fromDestination": 2
+          "fromOrigin": null,
+          "fromDestination": 2,
+          "skipForward": true
         },
         {
           "name": "Barton",
@@ -4895,33 +4907,39 @@
         },
         {
           "name": "Angel Pass",
-          "fromOrigin": null,
-          "fromDestination": 2
+          "fromOrigin": 2,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Bodin",
-          "fromOrigin": 2,
-          "fromDestination": 3
+          "fromOrigin": 3,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Coxly Newtown",
-          "fromOrigin": null,
-          "fromDestination": 5
+          "fromOrigin": 5,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "New Harrow",
-          "fromOrigin": 3,
-          "fromDestination": 4
+          "fromOrigin": null,
+          "fromDestination": 4,
+          "skipForward": true
         },
         {
           "name": "Elsemere Pond",
           "fromOrigin": null,
-          "fromDestination": 3
+          "fromDestination": 3,
+          "skipForward": true
         },
         {
           "name": "Elsemere Junction",
-          "fromOrigin": 2,
-          "fromDestination": 2
+          "fromOrigin": null,
+          "fromDestination": 2,
+          "skipForward": true
         },
         {
           "name": "Barton",
@@ -4986,33 +5004,39 @@
         },
         {
           "name": "New Harrow",
-          "fromOrigin": null,
-          "fromDestination": 12
+          "fromOrigin": 12,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Elsemere Pond",
-          "fromOrigin": null,
-          "fromDestination": 13
+          "fromOrigin": 13,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Elsemere Junction",
-          "fromOrigin": 2,
-          "fromDestination": 14
+          "fromOrigin": 14,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Angel Pass",
-          "fromOrigin": 3,
-          "fromDestination": 4
+          "fromOrigin": null,
+          "fromDestination": 4,
+          "skipForward": true
         },
         {
           "name": "Bodin",
-          "fromOrigin": 2,
-          "fromDestination": 3
+          "fromOrigin": null,
+          "fromDestination": 3,
+          "skipForward": true
         },
         {
           "name": "Coxly Newtown",
           "fromOrigin": null,
-          "fromDestination": 1
+          "fromDestination": 1,
+          "skipForward": true
         },
         {
           "name": "Barton",
@@ -5082,33 +5106,39 @@
         },
         {
           "name": "New Harrow",
-          "fromOrigin": null,
-          "fromDestination": 14
+          "fromOrigin": 14,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Elsemere Pond",
-          "fromOrigin": null,
-          "fromDestination": 15
+          "fromOrigin": 15,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Elsemere Junction",
-          "fromOrigin": 2,
-          "fromDestination": 16
+          "fromOrigin": 16,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Angel Pass",
-          "fromOrigin": 3,
-          "fromDestination": 4
+          "fromOrigin": null,
+          "fromDestination": 4,
+          "skipForward": true
         },
         {
           "name": "Bodin",
-          "fromOrigin": 2,
-          "fromDestination": 3
+          "fromOrigin": null,
+          "fromDestination": 3,
+          "skipForward": true
         },
         {
           "name": "Coxly Newtown",
           "fromOrigin": null,
-          "fromDestination": 1
+          "fromDestination": 1,
+          "skipForward": true
         },
         {
           "name": "Barton",
@@ -6399,8 +6429,9 @@
         },
         {
           "name": "Airport Terminal 1",
-          "fromOrigin": 3,
-          "fromDestination": 8
+          "fromOrigin": 8,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Airport Terminal 2",
@@ -6460,8 +6491,9 @@
         },
         {
           "name": "Airport Terminal 1",
-          "fromOrigin": 3,
-          "fromDestination": 11
+          "fromOrigin": 11,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Airport Terminal 2",
@@ -6506,8 +6538,9 @@
         },
         {
           "name": "Berrily",
-          "fromOrigin": null,
-          "fromDestination": 5
+          "fromOrigin": 5,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Stepford Airport Parkway",
@@ -6715,13 +6748,15 @@
         },
         {
           "name": "Airport Terminal 1",
-          "fromOrigin": null,
-          "fromDestination": 10
+          "fromOrigin": 10,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Airport Terminal 2",
-          "fromOrigin": 30,
-          "fromDestination": 3
+          "fromOrigin": null,
+          "fromDestination": 3,
+          "skipForward": true
         },
         {
           "name": "Airport Terminal 3",
@@ -6827,13 +6862,15 @@
         },
         {
           "name": "Airport Terminal 1",
-          "fromOrigin": null,
-          "fromDestination": 5
+          "fromOrigin": 5,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Airport Terminal 3",
-          "fromOrigin": null,
-          "fromDestination": 8
+          "fromOrigin": 8,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Airport Terminal 2",
@@ -6874,13 +6911,15 @@
         },
         {
           "name": "Airport Terminal 1",
-          "fromOrigin": 2,
-          "fromDestination": 7
+          "fromOrigin": 7,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Airport Terminal 3",
-          "fromOrigin": null,
-          "fromDestination": 10
+          "fromOrigin": 10,
+          "fromDestination": null,
+          "skipReversed": true
         },
         {
           "name": "Airport Terminal 2",

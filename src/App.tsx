@@ -1030,7 +1030,7 @@ export default function App() {
                 {tracking === "off" &&
                   "A plain timetable: pick a start time and nudge the running delay by hand — every time shifts together."}
                 {tracking === "sim" &&
-                  "Replays the plan against the real clock from your start time — works on any device, no helper app, nothing read from the game. A station shows as arrived during its scheduled minute; grey times are upcoming (it isn't really live), blue already passed, orange running late. Adding delay moves upcoming stations only — never ones behind you."}
+                  "Replays the plan against the real clock from your start time — works on any device, no helper app, nothing read from the game. Each time is a departure: a station lights up as you approach it and turns blue the minute it's due, when the next stop becomes the target. Grey times are upcoming (it isn't really live), blue already passed, orange running late. Adding delay moves upcoming stations only — never ones behind you."}
                 {tracking === "rt" && (
                   <>
                     Follows your actual driving on the SCR Hub site. On a live leg, green times

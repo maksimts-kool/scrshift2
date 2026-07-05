@@ -28,28 +28,102 @@ function intersect(set: Set<string>, list: string[]): Set<string> {
   return new Set([...set].filter((x) => other.has(x)));
 }
 
+/** net rise of a (possibly sparse) time column from its first to last value */
+function trend(times: (number | null)[]): number {
+  const known = times.filter((v): v is number => v != null);
+  return known.length < 2 ? -Infinity : known[known.length - 1] - known[0];
+}
+
 /**
- * Calling points in driving order with minutes into the leg. Wiki cumulative
- * times are used when present; gaps are filled by linear interpolation.
+ * Which interior wiki times to trust. The scraped cumulative minutes are
+ * noisy — a station sometimes carries a value that jumps out of order (e.g. a
+ * bogus late minute on a stop that's actually early in the run). Trusting them
+ * verbatim makes the monotonic clamp collapse a whole run onto one minute. So
+ * keep the longest non-decreasing subset of the interior values (those within
+ * the endpoint range) and treat the rest as gaps to re-interpolate. Endpoints
+ * are always kept. Returns a boolean "keep" mask, one per call.
+ */
+function trustedTimes(times: (number | null)[]): boolean[] {
+  const n = times.length;
+  const keep = new Array<boolean>(n).fill(false);
+  keep[0] = true;
+  keep[n - 1] = true;
+  const end = times[n - 1]!;
+  // interior anchors that at least sit within [0, end]
+  const cand: number[] = [];
+  for (let i = 1; i < n - 1; i++) {
+    const v = times[i];
+    if (v != null && v >= 0 && v <= end) cand.push(i);
+  }
+  if (cand.length === 0) return keep;
+  // longest non-decreasing subsequence over the candidate values (O(n²) DP;
+  // n is a handful of calls). Since every candidate lies in [0, end], the
+  // endpoints prepend/append cleanly to whatever subsequence we keep.
+  const len = cand.map(() => 1);
+  const prev = cand.map(() => -1);
+  let best = 0;
+  for (let a = 0; a < cand.length; a++) {
+    for (let b = 0; b < a; b++) {
+      if (times[cand[b]]! <= times[cand[a]]! && len[b] + 1 > len[a]) {
+        len[a] = len[b] + 1;
+        prev[a] = b;
+      }
+    }
+    if (len[a] > len[best]) best = a;
+  }
+  for (let a = best; a >= 0; a = prev[a]) keep[cand[a]] = true;
+  return keep;
+}
+
+/**
+ * Calling points in driving order with minutes into the leg. Trusted wiki
+ * cumulative times anchor the run; out-of-order values and gaps are filled by
+ * linear interpolation between the surrounding anchors.
  */
 function buildLegCalls(route: Route, reversed: boolean): LegCall[] {
-  const seq = reversed ? [...route.calls].reverse() : route.calls;
-  const times: (number | null)[] = seq.map((c) =>
-    reversed ? c.fromDestination : c.fromOrigin,
+  const ordered = reversed ? [...route.calls].reverse() : route.calls;
+  // stations the wiki marks "Service does not stop" in this direction are not
+  // calling points of the leg at all (termini always stay)
+  const seq = ordered.filter(
+    (c, i) =>
+      i === 0 ||
+      i === ordered.length - 1 ||
+      !(reversed ? c.skipReversed : c.skipForward),
   );
+  const n = seq.length;
+  // A leg's times should climb 0 → duration in driving order. Normally that's
+  // fromOrigin (forward) / fromDestination (reversed), but some routes are
+  // scraped with those columns swapped or the whole calling list inverted, so
+  // the "expected" column runs downhill. Fall back to the other column when it
+  // trends more strongly upward, keeping well-formed routes untouched.
+  const primary = seq.map((c) => (reversed ? c.fromDestination : c.fromOrigin));
+  const alt = seq.map((c) => (reversed ? c.fromOrigin : c.fromDestination));
+  const times: (number | null)[] = trend(alt) > trend(primary) ? alt : primary;
   const fallbackDuration = Math.round((route.timeMin + route.timeMax) / 2);
-  if (times[0] == null) times[0] = 0;
-  if (times[times.length - 1] == null) times[times.length - 1] = fallbackDuration;
-  for (let i = 1; i < times.length - 1; i++) {
+  // anchor the endpoints: the leg leaves at 0 and arrives at the terminus time
+  times[0] = 0;
+  if (times[n - 1] == null || times[n - 1]! <= 0) times[n - 1] = fallbackDuration;
+
+  // drop interior anchors the wiki got out of order, then fill every gap
+  const keep = trustedTimes(times);
+  for (let i = 1; i < n - 1; i++) if (!keep[i]) times[i] = null;
+  for (let i = 1; i < n - 1; i++) {
     if (times[i] != null) continue;
-    let next = i + 1;
-    while (times[next] == null) next++;
-    const prev = times[i - 1]!;
-    times[i] = Math.round(prev + ((times[next]! - prev) * 1) / (next - i + 1));
+    let hi = i + 1;
+    while (times[hi] == null) hi++;
+    const lo = i - 1;
+    const vLo = times[lo]!;
+    const vHi = times[hi]!;
+    // interpolate the whole null run from the fixed anchors (not step-by-step,
+    // so rounding can't drift a run onto one minute)
+    for (let j = i; j < hi; j++) {
+      times[j] = Math.round(vLo + ((vHi - vLo) * (j - lo)) / (hi - lo));
+    }
+    i = hi - 1;
   }
-  for (let i = 1; i < times.length; i++) {
-    times[i] = Math.max(times[i]!, times[i - 1]!);
-  }
+  // safety net: a rounding tie must never place a call before the previous one
+  for (let i = 1; i < n; i++) times[i] = Math.max(times[i]!, times[i - 1]!);
+
   return seq.map((c, i) => ({ name: c.name, minutesIntoLeg: times[i]! }));
 }
 

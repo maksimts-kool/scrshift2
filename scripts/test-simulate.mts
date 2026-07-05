@@ -97,17 +97,30 @@ const START = 600; // 10:00
   eq(ukFormat(legs[1].startMin), "10:41", "leg 2 departs 10:41");
 }
 
-// ---- the departure minute: arrived for that whole minute, then passed ----
+// ---- the departure minute: passed once its time arrives ----
 {
   let legs = simulateShift(shift, START, START, []);
   eq(legs[0].status, "live", "leg goes live on its first minute");
-  eq(legs[0].service.calls[0].state, "current", "origin shows arrived during its minute");
+  eq(legs[0].service.calls[0].state, "passed", "origin departed once its minute arrives");
   eq(legs[0].service.calls[0].arrived, "10:00", "origin arrival time frozen");
   eq(legs[0].service.nextStation, "Midpoint", "next station is the midpoint");
 
   legs = simulateShift(shift, START, START + 1, []);
-  eq(legs[0].service.calls[0].state, "passed", "origin passed once the minute is gone");
+  eq(legs[0].service.calls[0].state, "passed", "origin stays passed after its minute");
   eq(legs[0].service.calls[1].state, "future", "midpoint still future");
+}
+
+// ---- approach window: next stop → approaching → at → passed ----
+{
+  // midpoint departs 10:20; probe the minutes leading up to it (leg is live)
+  const at = (min: number, sec: number) => {
+    const legs = simulateShift(shift, START, START + min, [], sec);
+    return { status: legs[0].service.status, state: legs[0].service.calls[1].state };
+  };
+  eq(at(18, 50), { status: "Next stop Midpoint", state: "future" }, "10:18:50 (>1 min) → next stop");
+  eq(at(19, 0), { status: "Approaching Midpoint", state: "current" }, "10:19:00 (1 min) → approaching");
+  eq(at(19, 30), { status: "At Midpoint", state: "current" }, "10:19:30 (30s) → at");
+  eq(at(20, 0), { status: "Next stop Willowfield", state: "passed" }, "10:20:00 → departed, next target");
 }
 
 // ---- delay only moves calls still in the future when clicked ----
@@ -125,12 +138,12 @@ const START = 600; // 10:00
   eq(ukFormat(legs[1].startMin), "10:43", "leg 2 header departure pushed");
 }
 
-// ---- a click during a station's arrived minute leaves that station alone ----
+// ---- a click at a station's departure minute leaves that station alone ----
 {
-  // midpoint due 10:20; +3 clicked at exactly 10:20 while it shows arrived
+  // midpoint due 10:20; +3 clicked at exactly 10:20 as it departs
   const events: SimEvent[] = [{ atMin: START + 20, delta: 3 }];
   const legs = simulateShift(shift, START, START + 20, events);
-  eq(legs[0].service.calls[1].state, "current", "midpoint arrived during its minute");
+  eq(legs[0].service.calls[1].state, "passed", "midpoint departed at its minute");
   eq(legs[0].service.calls[1].arrived, "10:20", "midpoint keeps 10:20");
   eq(legs[0].service.calls[2].estimated, "10:43", "terminus pushed to 10:43");
 }
@@ -153,7 +166,7 @@ const START = 600; // 10:00
 {
   let legs = simulateShift(shift, START, START + 40, []);
   eq(legs[0].status, "done", "leg 1 done at terminus arrival minute");
-  eq(legs[0].service.calls[2].state, "current", "terminus shows arrived");
+  eq(legs[0].service.calls[2].state, "passed", "terminus reached");
   eq(legs[1].status, "pending", "leg 2 not started at 10:40");
 
   legs = simulateShift(shift, START, START + 41, []);

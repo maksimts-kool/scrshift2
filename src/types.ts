@@ -4,6 +4,10 @@ export interface Call {
   fromOrigin: number | null;
   /** cumulative minutes from the route's destination, if the wiki lists it */
   fromDestination: number | null;
+  /** wiki marks "Service does not stop" here driving origin -> destination */
+  skipForward?: boolean;
+  /** wiki marks "Service does not stop" here driving destination -> origin */
+  skipReversed?: boolean;
 }
 
 export interface Route {

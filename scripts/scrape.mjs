@@ -81,36 +81,98 @@ function parseRouteList(wikitext) {
   return routes;
 }
 
+// Expand a wikitable into a rectangular grid of cell texts, honouring
+// rowspan/colspan (the "Service does not stop" and terminus cells span rows,
+// which shifts every later column if rows are read positionally) and header
+// (`!`) cell syntax, which route tables use for the red-X cells.
+function wikitableGrid(tableText) {
+  const grid = []; // rows of {text, header} cells
+  const spans = []; // per column: {rowsLeft, cell} carried down from a rowspan
+  for (const chunk of tableText.replace(/\n\|\}\s*$/, "").split(/\n\|-[^\n]*/)) {
+    // collect this row's cells: lines starting with | or ! (not |+ caption),
+    // with || / !! separating cells inline; other lines continue the last cell
+    const cells = [];
+    for (const line of chunk.split("\n")) {
+      const m = line.match(/^\s*([|!])(?![-}+])([\s\S]*)$/);
+      if (!m) {
+        if (cells.length) cells[cells.length - 1].raw += "\n" + line;
+        continue;
+      }
+      for (const part of m[2].split(/\|\||!!/))
+        cells.push({ header: m[1] === "!", raw: part });
+    }
+    if (cells.length === 0) continue;
+    const row = [];
+    let col = 0;
+    const takeSpanned = () => {
+      while (spans[col]?.rowsLeft > 0) {
+        row[col] = spans[col].cell;
+        spans[col].rowsLeft--;
+        col++;
+      }
+    };
+    for (const { header, raw } of cells) {
+      // "attrs | content" — the first pipe splits them, but only if it comes
+      // before any [[link]]/{{template}} (whose inner pipes aren't separators)
+      let attrs = "";
+      let text = raw;
+      const pipe = raw.indexOf("|");
+      const bracket = raw.search(/\[\[|\{\{/);
+      if (pipe !== -1 && (bracket === -1 || pipe < bracket)) {
+        attrs = raw.slice(0, pipe);
+        text = raw.slice(pipe + 1);
+      }
+      const rowspan = Number(attrs.match(/rowspan\s*=\s*"?(\d+)/i)?.[1] ?? 1);
+      const colspan = Number(attrs.match(/colspan\s*=\s*"?(\d+)/i)?.[1] ?? 1);
+      const cell = { text, header };
+      takeSpanned();
+      for (let k = 0; k < colspan; k++) {
+        row[col] = cell;
+        if (rowspan > 1) spans[col] = { rowsLeft: rowspan - 1, cell };
+        col++;
+      }
+    }
+    takeSpanned(); // rowspans may also cover trailing columns
+    grid.push(row);
+  }
+  return grid;
+}
+
 // Parse the ==Route== section wikitable: one row per station with cumulative
-// travel times from each end. Returns [{name, fromOrigin, fromDestination}].
+// travel times from each end (last two columns). A red-X "Service does not
+// stop" time cell means the station is skipped driving in that direction.
 function parseCallsFromRouteTable(wikitext) {
   const section = wikitext.match(/==\s*Route\s*==([\s\S]*?)(\n==[^=]|$)/);
   if (!section) return null;
   const table = section[1].match(/\{\|[\s\S]*?\n\|\}/);
   if (!table) return null;
+  const grid = wikitableGrid(table[0]);
+  const width = Math.max(...grid.map((r) => r.length));
+  if (width < 3) return null;
+  const timeOf = (cell) => {
+    if (cell == null) return { time: null, skip: false };
+    if (/does not stop|RedX/i.test(cell)) return { time: null, skip: true };
+    if (/starting point/i.test(cell)) return { time: 0, skip: false };
+    const m =
+      cell.match(/(\d+)\s*(?:-\s*\d+\s*)?min/i) ??
+      (/\[\[/.test(cell) ? null : cell.match(/(\d+)/));
+    return { time: m ? Number(m[1]) : null, skip: false };
+  };
   const calls = [];
-  // strip the closing "|}" so it doesn't become a bogus trailing cell of the last row
-  const tableText = table[0].replace(/\n\|\}\s*$/, "");
-  for (const row of tableText.split(/\n\|-/)) {
-    const cells = row.split(/\n\|/).slice(1);
-    if (cells.length < 3) continue;
-    const first = cells[0]
-      .replace(/^\s*style="[^"]*"\s*\|\s*/, "")
-      .replace(/<\/?center>/g, "")
-      .trim();
+  for (const row of grid) {
+    if (!row[0] || row[0].header) continue; // title/heading rows
+    const first = row[0].text.replace(/<\/?center>/g, "").trim();
     if (!first.startsWith("[[")) continue;
     const name = linkText(first);
     if (!name) continue;
-    const timeOf = (cell) => {
-      if (!cell) return null;
-      if (/starting point/i.test(cell)) return 0;
-      const m = cell.match(/(\d+)\s*(?:-\s*\d+\s*)?min/i) ?? cell.match(/(\d+)/);
-      return m ? Number(m[1]) : null;
-    };
+    const out = timeOf(row[width - 2]?.text); // "To <destination>" column
+    const back = timeOf(row[width - 1]?.text); // "To <origin>" column
     calls.push({
       name,
-      fromOrigin: timeOf(cells[cells.length - 2]),
-      fromDestination: timeOf(cells[cells.length - 1]),
+      fromOrigin: out.time,
+      fromDestination: back.time,
+      ...(out.skip ? { skipForward: true } : {}),
+      ...(back.skip ? { skipReversed: true } : {}),
     });
   }
   return calls.length >= 2 ? calls : null;
@@ -328,7 +390,12 @@ for (const route of routes) {
       calls[calls.length - 1].name === route.origin
     ) {
       calls.reverse();
-      for (const c of calls) [c.fromOrigin, c.fromDestination] = [c.fromDestination, c.fromOrigin];
+      for (const c of calls) {
+        [c.fromOrigin, c.fromDestination] = [c.fromDestination, c.fromOrigin];
+        [c.skipForward, c.skipReversed] = [c.skipReversed, c.skipForward];
+        if (!c.skipForward) delete c.skipForward;
+        if (!c.skipReversed) delete c.skipReversed;
+      }
     }
     route.calls = calls;
     console.log(`  ${route.code}: ${calls.length} calls`);
