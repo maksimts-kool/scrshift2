@@ -40,6 +40,8 @@ import TimelapseIcon from "@mui/icons-material/Timelapse";
 import TuneIcon from "@mui/icons-material/Tune";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import rawData from "./data/routes.json";
+import { routeOverrides } from "./data/route-overrides";
+import { applyRouteOverrides } from "./lib/overrides";
 import type { RoutesData, Shift, ShiftLeg, Train } from "./types";
 import { TURNAROUND_MIN, generateShift } from "./lib/generator";
 import {
@@ -72,7 +74,7 @@ import {
 /** Off = plain planner; sim = clock-driven replay; rt = companion-fed live. */
 type Tracking = "off" | "sim" | "rt";
 
-const data = rawData as unknown as RoutesData;
+const data = applyRouteOverrides(rawData as unknown as RoutesData, routeOverrides);
 const RANDOM_OPERATOR = "__random__";
 
 /** portable companion zip; `latest` tracks whatever release carries the asset */
