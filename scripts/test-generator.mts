@@ -78,8 +78,30 @@ for (let i = 0; i < 1000; i++) {
   assert(clock === s.totalMin, `totalMin ${s.totalMin} != computed ${clock}`);
 }
 
+// A pinned train (opts.train) must be legal on every leg of the shift and stay
+// in the roster — the pre-generate "Your train" picker relies on this.
+let pinned = 0;
+let pinnedEmpty = 0;
+for (const t of data.trains) {
+  for (const opName of t.operators) {
+    const s = generateShift(data, { operator: opName, mode: "legs", target: 6, train: t.name });
+    if (!s) {
+      pinnedEmpty++;
+      continue;
+    }
+    pinned++;
+    assert(s.train === t.name, `${opName}/${t.name}: shift.train is ${s.train}`);
+    assert(s.trainRoster.includes(t.name), `${opName}/${t.name}: roster missing pinned train`);
+    assert(
+      s.legs.every((l) => l.route.allowedTrains.includes(t.name)),
+      `${opName}/${t.name}: a leg can't be worked by the pinned train`,
+    );
+  }
+}
+
 console.log(
   `1000 shifts, ${legsTotal} legs, ${fails} assertion failures, ` +
     `${backtracks} same-route-back legs (dead ends), ${signOffs} early sign-offs (one-train limit)`,
 );
+console.log(`pinned-train: ${pinned} shifts checked, ${pinnedEmpty} train/operator pairs with no route`);
 if (fails > 0) process.exit(1);

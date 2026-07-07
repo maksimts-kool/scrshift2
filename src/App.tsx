@@ -49,6 +49,8 @@ import {
   advanceLiveShift,
   estimateLegStarts,
   initialLiveShift,
+  liveTrainText,
+  matchRosterTrain,
   rtActivity,
   rtAvailable,
   rtChangeAccount,
@@ -135,6 +137,13 @@ function classNum(name: string): number {
   return m ? Number(m[0]) : 9999;
 }
 
+/** Trains this operator can run, sorted by class — for the pre-generate picker. */
+function trainsForOperator(operator: string): Train[] {
+  return data.trains
+    .filter((t) => operator === RANDOM_OPERATOR || t.operators.includes(operator))
+    .sort((a, b) => classNum(a.name) - classNum(b.name) || a.name.localeCompare(b.name));
+}
+
 /**
  * Every train legal on all legs of the shift, shown as tappable chips so the
  * driver can pick which one they'll actually run. This replaces the per-leg
@@ -145,11 +154,14 @@ function TrainRoster({
   selected,
   onSelect,
   accent,
+  locked = false,
 }: {
   roster: Train[];
   selected: string | null;
   onSelect: (name: string) => void;
   accent: string;
+  /** real-time: highlight the driven train and stop the driver re-picking */
+  locked?: boolean;
 }) {
   if (roster.length === 0) {
     return (
@@ -163,10 +175,22 @@ function TrainRoster({
   return (
     <Box>
       <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>
-        <TrainIcon fontSize="small" sx={{ color: "text.secondary" }} />
+        {locked ? (
+          <SensorsIcon fontSize="small" sx={{ color: "success.main" }} />
+        ) : (
+          <TrainIcon fontSize="small" sx={{ color: "text.secondary" }} />
+        )}
         <Typography variant="body2" color="text.secondary">
-          Any of these <strong>{roster.length}</strong> trains can work every leg — tap to
-          pick yours
+          {locked ? (
+            <>
+              Live — you're driving the <strong>{selected}</strong>, so it's locked in below.
+            </>
+          ) : (
+            <>
+              Any of these <strong>{roster.length}</strong> trains can work every leg — tap to
+              pick yours
+            </>
+          )}
         </Typography>
       </Stack>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
@@ -177,7 +201,7 @@ function TrainRoster({
               key={t.name}
               size="small"
               label={t.name}
-              onClick={() => onSelect(t.name)}
+              onClick={locked ? undefined : () => onSelect(t.name)}
               icon={
                 <Box
                   sx={{
@@ -191,8 +215,10 @@ function TrainRoster({
               }
               variant={on ? "filled" : "outlined"}
               sx={{
-                cursor: "pointer",
+                cursor: locked ? "default" : "pointer",
                 fontWeight: on ? 700 : 400,
+                // locked: fade the trains you're not in so the live one stands out
+                opacity: locked && !on ? 0.4 : 1,
                 ...(on && { bgcolor: accent, color: "#fff" }),
               }}
             />
@@ -653,6 +679,7 @@ function ShiftView({
   onDelayChange,
   selectedTrain,
   onSelectTrain,
+  liveTrain,
   rt,
   sim,
 }: {
@@ -663,6 +690,8 @@ function ShiftView({
   onDelayChange: (v: number) => void;
   selectedTrain: string | null;
   onSelectTrain: (name: string) => void;
+  /** real-time: raw SCR-site text for the train being driven, if any */
+  liveTrain?: string | null;
   rt?: { live: LiveShift; starts: number[] };
   sim?: { legs: SimLeg[]; delayMin: number; onDelayChange: (v: number) => void };
 }) {
@@ -676,6 +705,8 @@ function ShiftView({
     .map((n) => trainByName.get(n))
     .filter((t): t is Train => t != null)
     .sort((a, b) => classNum(a.name) - classNum(b.name) || a.name.localeCompare(b.name));
+  // real-time: pin the roster to whatever the site says you're driving
+  const lockedTrain = rt ? matchRosterTrain(liveTrain ?? null, roster) : null;
   const rtEnd = rt
     ? ukFormat(rt.starts[rt.starts.length - 1] + shift.legs[shift.legs.length - 1].durationMin)
     : null;
@@ -743,9 +774,10 @@ function ShiftView({
         </Stack>
         <TrainRoster
           roster={roster}
-          selected={selectedTrain}
+          selected={lockedTrain ?? selectedTrain}
           onSelect={onSelectTrain}
           accent={color}
+          locked={lockedTrain != null}
         />
       </Paper>
       <Stack spacing={0}>
@@ -813,6 +845,7 @@ export default function App() {
   const [minutesTarget, setMinutesTarget] = useState(90);
   const [turnaroundMin, setTurnaroundMin] = useState(TURNAROUND_MIN);
   const [startStation, setStartStation] = useState<string | null>(null);
+  const [desiredTrain, setDesiredTrain] = useState<string | null>(null);
   const [startTime, setStartTime] = useState(defaultStartTime);
   const [delayMin, setDelayMin] = useState(0);
   const [shift, setShift] = useState<Shift | null>(null);
@@ -943,11 +976,18 @@ export default function App() {
 
   const randomOperator = operator === RANDOM_OPERATOR;
   const stationOptions = useMemo(() => stationsForOperator(operator), [operator]);
+  const trainOptions = useMemo(() => trainsForOperator(operator), [operator]);
 
   const onGenerate = () => {
-    const op = randomOperator
-      ? data.operators[Math.floor(Math.random() * data.operators.length)].name
-      : operator;
+    // Random operator: if a train is pinned, roll only among operators that
+    // actually run it, so the choice can't fight the random draw.
+    let op = operator;
+    if (randomOperator) {
+      const t = desiredTrain ? trainByName.get(desiredTrain) : null;
+      const ops = t ? data.operators.filter((o) => t.operators.includes(o.name)) : data.operators;
+      const from = ops.length > 0 ? ops : data.operators;
+      op = from[Math.floor(Math.random() * from.length)].name;
+    }
     const next = generateShift(data, {
       operator: op,
       mode,
@@ -956,6 +996,7 @@ export default function App() {
       turnaroundMin: realtime ? RT_TURNAROUND_MIN : turnaroundMin,
       // A specific sign-on station only makes sense with a specific operator.
       startStation: randomOperator ? null : startStation,
+      train: desiredTrain,
     });
     setDelayMin(0);
     setSimEvents([]);
@@ -1055,6 +1096,7 @@ export default function App() {
                 if (v === null) return;
                 setOperator(v);
                 setStartStation(null); // stations differ per operator
+                setDesiredTrain(null); // and so does the rolling stock
               }}
               sx={{ display: "flex", flexWrap: "wrap", mb: 2 }}
             >
@@ -1181,6 +1223,46 @@ export default function App() {
                 />
               )}
             />
+            <Typography variant="overline" color="text.secondary" sx={{ display: "block" }}>
+              Your train
+            </Typography>
+            <Autocomplete
+              options={trainOptions}
+              value={trainOptions.find((t) => t.name === desiredTrain) ?? null}
+              onChange={(_, v) => setDesiredTrain(v?.name ?? null)}
+              getOptionLabel={(t) => t.name}
+              isOptionEqualToValue={(a, b) => a.name === b.name}
+              size="small"
+              sx={{ mb: 3, maxWidth: 360 }}
+              renderOption={({ key, ...props }, t) => (
+                <Box
+                  component="li"
+                  key={key}
+                  {...props}
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  <Box
+                    sx={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: "50%",
+                      bgcolor: TRACTION[t.traction].color,
+                    }}
+                  />
+                  {t.name}
+                  <Typography variant="caption" color="text.secondary" sx={{ ml: "auto" }}>
+                    {TRACTION[t.traction].label}
+                  </Typography>
+                </Box>
+              )}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Any suitable train"
+                  helperText="Leave empty for any stock, or pick one to build a shift it can run every leg"
+                />
+              )}
+            />
             <Button
               variant="contained"
               size="large"
@@ -1257,6 +1339,7 @@ export default function App() {
               onDelayChange={setDelayMin}
               selectedTrain={selectedTrain}
               onSelectTrain={setSelectedTrain}
+              liveTrain={realtime && live ? liveTrainText(live) : null}
               rt={realtime && live && starts ? { live, starts } : undefined}
               sim={
                 simLegs

@@ -1,4 +1,4 @@
-import type { Shift } from "../types";
+import type { Shift, Train } from "../types";
 
 /**
  * Client + pure logic for real-time mode. The dev server hosts a companion
@@ -298,6 +298,50 @@ export function advanceLiveShift(
     offPlan = s; // strict mode: warn, keep the plan
   }
   return { legs, offPlan, idleState, idleDescription };
+}
+
+/**
+ * Raw SCR-site rolling-stock text for the stock the player is currently (or
+ * was most recently) driving — the live leg first, then an off-plan service,
+ * then the last leg that recorded one. Null when nothing has been driven yet.
+ * The caller matches this against the shift roster to lock the train chip.
+ */
+export function liveTrainText(live: LiveShift): string | null {
+  const liveLeg = live.legs.find((l) => l.status === "live");
+  if (liveLeg?.service?.train) return liveLeg.service.train;
+  if (live.offPlan?.train) return live.offPlan.train;
+  for (let i = live.legs.length - 1; i >= 0; i--) {
+    const t = live.legs[i].service?.train;
+    if (t) return t;
+  }
+  return null;
+}
+
+const classDigits = (s: string): string | null => s.match(/\d+/)?.[0] ?? null;
+
+/**
+ * Match the SCR-site rolling-stock text (e.g. "Class 350") to a roster
+ * Train.name so real-time mode can lock the chip to the train being driven.
+ * Prefers an exact name, then the class number; single/double variants only
+ * resolve when the site text names one — otherwise there's nothing to pin, so
+ * null (the roster stays tappable rather than guessing the wrong variant).
+ */
+export function matchRosterTrain(siteTrain: string | null, roster: Train[]): string | null {
+  if (!siteTrain) return null;
+  const lower = siteTrain.toLowerCase();
+  const exact = roster.find((t) => t.name.toLowerCase() === lower);
+  if (exact) return exact.name;
+  const num = classDigits(siteTrain);
+  if (!num) return null;
+  const sameClass = roster.filter((t) => classDigits(t.class) === num);
+  if (sameClass.length === 1) return sameClass[0].name;
+  if (sameClass.length > 1) {
+    if (/\b(double|2x|two)\b/i.test(siteTrain))
+      return sameClass.find((t) => t.variant === "double")?.name ?? null;
+    if (/\b(single|1x|one)\b/i.test(siteTrain))
+      return sameClass.find((t) => t.variant === "single")?.name ?? null;
+  }
+  return null;
 }
 
 // ---------- estimation for pending legs ----------

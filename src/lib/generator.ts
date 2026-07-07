@@ -17,6 +17,8 @@ export interface ShiftOptions {
   turnaroundMin?: number;
   /** force the shift to sign on at this station; null/undefined = anywhere */
   startStation?: string | null;
+  /** require every leg to be legal for this train (Train.name); null = any */
+  train?: string | null;
 }
 
 function pick<T>(arr: T[]): T {
@@ -139,7 +141,12 @@ function buildLegCalls(route: Route, reversed: boolean): LegCall[] {
  * off (the shift ends) even if the leg/duration target isn't reached.
  */
 export function generateShift(data: RoutesData, opts: ShiftOptions): Shift | null {
-  const pool = data.routes.filter((r) => r.operator === opts.operator);
+  const wantTrain = opts.train ?? null;
+  const pool = data.routes.filter(
+    (r) =>
+      r.operator === opts.operator &&
+      (wantTrain == null || r.allowedTrains.includes(wantTrain)),
+  );
   if (pool.length === 0) return null;
 
   const turnaroundMin = opts.turnaroundMin ?? TURNAROUND_MIN;
@@ -174,8 +181,14 @@ export function generateShift(data: RoutesData, opts: ShiftOptions): Shift | nul
       const here = pool.filter(
         (r) => r.origin === station || r.destination === station,
       );
-      // Keep the running train legal: only routes it can still work.
-      const compat = here.filter((r) => intersect(trains, r.allowedTrains).size > 0);
+      // Keep the running train legal: only routes it can still work. With a
+      // requested train, insist every onward route allows it specifically, so
+      // it survives in the intersection (the roster stays the full common set).
+      const compat = here.filter((r) =>
+        wantTrain != null
+          ? r.allowedTrains.includes(wantTrain)
+          : intersect(trains, r.allowedTrains).size > 0,
+      );
       if (compat.length === 0) break; // sign off — no onward route for this train
       const fresh = compat.filter((r) => r.code !== prevCode);
       route = pick(fresh.length > 0 ? fresh : compat);
@@ -208,7 +221,8 @@ export function generateShift(data: RoutesData, opts: ShiftOptions): Shift | nul
   const roster = [...trains];
   return {
     operator: opts.operator,
-    train: roster.length > 0 ? pick(roster) : null,
+    // the picked train if one was requested, else any that works every leg
+    train: wantTrain ?? (roster.length > 0 ? pick(roster) : null),
     trainOptions: roster.length,
     trainRoster: roster,
     legs,

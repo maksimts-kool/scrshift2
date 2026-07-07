@@ -5,15 +5,18 @@ import {
   advanceLiveShift,
   estimateLegStarts,
   initialLiveShift,
+  liveTrainText,
+  matchRosterTrain,
   ukFormat,
   ukParse,
   RT_SIGNON_LEAD_MIN,
   RT_TURNAROUND_MIN,
   type Activity,
+  type LiveShift,
   type SiteCall,
   type SiteService,
 } from "../src/lib/realtime.ts";
-import type { Route, Shift, ShiftLeg } from "../src/types.ts";
+import type { Route, Shift, ShiftLeg, Train } from "../src/types.ts";
 
 let fails = 0;
 const assert = (cond: boolean, msg: string) => {
@@ -242,6 +245,57 @@ const offline: Activity = {
   const live4 = initialLiveShift(shift);
   const starts4 = estimateLegStarts(shift, live4, ukParse("23:59"));
   eq(ukFormat(starts4[0]), ukFormat((23 * 60 + 59 + RT_SIGNON_LEAD_MIN) % 1440), "midnight wrap ok");
+}
+
+// ---- roster locking (real-time train match) ----
+
+{
+  const t = (name: string, cls: string, variant: Train["variant"]): Train => ({
+    name,
+    class: cls,
+    variant,
+    operators: ["Stepford Connect"],
+    traction: "electric",
+  });
+  const single = t("Class 350 (single)", "Class 350", "single");
+  const double = t("Class 350 (double)", "Class 350", "double");
+  const c68 = t("Class 68", "Class 68", null);
+  const roster = [c68, single, double];
+
+  eq(matchRosterTrain("Class 68", roster), "Class 68", "exact single-class match");
+  eq(matchRosterTrain("Class 350 (double)", roster), "Class 350 (double)", "exact variant name");
+  eq(matchRosterTrain("Class 350 double", roster), "Class 350 (double)", "variant keyword resolves");
+  eq(matchRosterTrain("Class 350 single", roster), "Class 350 (single)", "single keyword resolves");
+  eq(matchRosterTrain("Class 350", roster), null, "ambiguous class won't guess a variant");
+  eq(matchRosterTrain("Class 700", roster), null, "train not in roster");
+  eq(matchRosterTrain(null, roster), null, "null site text");
+
+  // liveTrainText prefers the live leg, then off-plan, then the last recorded
+  const svc = (train: string | null): SiteService =>
+    ({ ...mkService("R035", "A", "B", []), train }) as SiteService;
+  const base: LiveShift = { legs: [], offPlan: null, idleState: null, idleDescription: null };
+  eq(
+    liveTrainText({ ...base, legs: [{ status: "live", service: svc("Class 68") }] }),
+    "Class 68",
+    "live leg's train wins",
+  );
+  eq(
+    liveTrainText({ ...base, legs: [{ status: "pending", service: null }], offPlan: svc("Class 91") }),
+    "Class 91",
+    "off-plan train when no live leg",
+  );
+  eq(
+    liveTrainText({
+      ...base,
+      legs: [
+        { status: "done", service: svc("Class 43") },
+        { status: "pending", service: null },
+      ],
+    }),
+    "Class 43",
+    "falls back to the last recorded train",
+  );
+  eq(liveTrainText(base), null, "nothing driven yet");
 }
 
 if (fails === 0) {
