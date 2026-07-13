@@ -6,10 +6,9 @@
   "scripts": {
     "dev": "vite",
     "rt": "node scripts/realtime/server.mjs",
-    "package:companion": "node scripts/package-companion.mjs",
     "build": "tsc -b && vite build",
     "scrape": "node scripts/scrape.mjs",
-    "test": "node scripts/test-generator.mts && node scripts/test-realtime.mts && node scripts/test-simulate.mts",
+    "test": "node scripts/test-generator.mts && node scripts/test-realtime.mts && node scripts/test-rt-api.mjs && node scripts/test-simulate.mts",
     "test:rt": "node scripts/test-realtime.mts",
     "test:sim": "node scripts/test-simulate.mts",
     "lint": "oxlint",

@@ -29,6 +29,7 @@ export type RtPhase =
   | "error";
 
 export interface RtStatus {
+  mode: "local" | "hosted";
   phase: RtPhase;
   user: RtUser | null;
   trackedId: number | null;
@@ -81,14 +82,15 @@ export type Activity = {
 // ---------- companion API client ----------
 
 /**
- * Where the companion lives. Same origin under `npm run dev` (Vite plugin);
- * on a static deploy (Vercel) it's the standalone local server (`npm run rt`)
- * on the player's own PC, probed on localhost. VITE_RT_API_BASE (build time)
- * adds a remotely hosted companion to the front of the probe list.
+ * Where the real-time service lives. Same origin under `npm run dev` (Vite
+ * plugin); production points at the persistent hosted service with
+ * VITE_RT_API_BASE. The frontend itself can remain a static Vercel deploy.
  */
-const RT_LOCAL_PORT = 8788;
 // optional chain: the test runner imports this file in plain Node, no Vite env
 const RT_CONFIGURED = (import.meta.env?.VITE_RT_API_BASE ?? "").replace(/\/+$/, "");
+
+/** True in a production build configured to use the hosted real-time service. */
+export const RT_REMOTE_CONFIGURED = RT_CONFIGURED.length > 0;
 
 let rtBase = RT_CONFIGURED; // switched by rtAvailable() to whichever base answered
 
@@ -109,19 +111,11 @@ async function probe(base: string): Promise<boolean> {
 }
 
 /**
- * Find a companion; false on a static deployment with none running. Checks
- * the configured base and same origin; with `probeLocal` it also knocks on
- * the local companion port — only do that on a user gesture, since Chrome
- * may raise a local-network permission prompt for it.
+ * Find the service; false on a static deployment with no hosted API configured.
+ * Local development still uses the same-origin Vite plugin.
  */
-export async function rtAvailable(opts?: { probeLocal?: boolean }): Promise<boolean> {
-  const bases = [
-    ...(RT_CONFIGURED ? [RT_CONFIGURED] : []),
-    "",
-    ...(opts?.probeLocal
-      ? [`http://127.0.0.1:${RT_LOCAL_PORT}`, `http://localhost:${RT_LOCAL_PORT}`]
-      : []),
-  ];
+export async function rtAvailable(): Promise<boolean> {
+  const bases = [...(RT_CONFIGURED ? [RT_CONFIGURED] : []), ""];
   for (const base of bases) {
     if (await probe(base)) {
       rtBase = base;
@@ -157,8 +151,9 @@ export async function rtChangeAccount(): Promise<void> {
   }
 }
 
-export async function rtActivity(): Promise<Activity> {
-  const res = await rtFetch("/activity");
+export async function rtActivity(username?: string): Promise<Activity> {
+  const query = username ? `?username=${encodeURIComponent(username)}` : "";
+  const res = await rtFetch(`/activity${query}`);
   const body = await res.json();
   if (!res.ok) throw new Error(body?.error ?? `activity ${res.status}`);
   return body.activity;

@@ -1,0 +1,6 @@
+.git
+.scr-session
+.vercel
+dist
+node_modules
+npm-debug.log*

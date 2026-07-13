@@ -12,6 +12,7 @@ export function scrRealtimePlugin() {
     configureServer(server) {
       const api = createRtApi({
         profileDir: path.resolve(server.config.root, ".scr-session"),
+        mode: "local",
       });
 
       server.middlewares.use((req, res, next) => {

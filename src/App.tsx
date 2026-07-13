@@ -46,6 +46,7 @@ import type { RoutesData, Shift, ShiftLeg, Train } from "./types";
 import { TURNAROUND_MIN, generateShift } from "./lib/generator";
 import {
   RT_TURNAROUND_MIN,
+  RT_REMOTE_CONFIGURED,
   advanceLiveShift,
   estimateLegStarts,
   initialLiveShift,
@@ -78,10 +79,7 @@ type Tracking = "off" | "sim" | "rt";
 
 const data = applyRouteOverrides(rawData as unknown as RoutesData, routeOverrides);
 const RANDOM_OPERATOR = "__random__";
-
-/** portable companion zip; `latest` tracks whatever release carries the asset */
-const COMPANION_DOWNLOAD_URL =
-  "https://github.com/maksimts-kool/scrshift2/releases/latest/download/SCR-Companion.zip";
+const ROBLOX_USERNAME = /^[A-Za-z0-9_]{3,20}$/;
 
 const trainByName = new Map(data.trains.map((t) => [t.name, t]));
 
@@ -540,6 +538,7 @@ function RtBanner({
   shift,
   live,
   lastAct,
+  username,
   onChangeAccount,
   onSimulate,
 }: {
@@ -548,14 +547,15 @@ function RtBanner({
   shift: Shift | null;
   live: LiveShift | null;
   lastAct: Activity | null;
+  username: string;
   onChangeAccount: () => void;
   onSimulate: () => void;
 }) {
-  const changeBtn = (
+  const changeBtn = st?.mode !== "hosted" ? (
     <Button color="inherit" size="small" onClick={onChangeAccount} sx={{ whiteSpace: "nowrap" }}>
       Change account
     </Button>
-  );
+  ) : undefined;
   const simBtn = (
     <Button color="inherit" size="small" onClick={onSimulate} sx={{ whiteSpace: "nowrap" }}>
       Simulate instead
@@ -594,7 +594,20 @@ function RtBanner({
     );
   }
   // ready
-  const who = st.user ? `${st.user.displayName} (@${st.user.name})` : "you";
+  if (st.mode === "hosted" && !ROBLOX_USERNAME.test(username.trim())) {
+    return (
+      <Alert severity="info">
+        Enter your Roblox username above. The server reads your public SCR Hub activity; your
+        Roblox password and cookies never leave your device.
+      </Alert>
+    );
+  }
+  const who =
+    st.mode === "hosted"
+      ? lastAct?.player ?? `@${username}`
+      : st.user
+        ? `${st.user.displayName} (@${st.user.name})`
+        : "you";
   if (!shift || !live) {
     return (
       <Alert severity="success" action={changeBtn}>
@@ -852,6 +865,7 @@ export default function App() {
   const [selectedTrain, setSelectedTrain] = useState<string | null>(null);
 
   const [tracking, setTracking] = useState<Tracking>("off");
+  const [rtUsername, setRtUsername] = useState(() => localStorage.getItem("scr-rt-username") ?? "");
 
   // ---- simulate mode ----
   const [simEvents, setSimEvents] = useState<SimEvent[]>([]);
@@ -859,7 +873,7 @@ export default function App() {
   const [nowSec, setNowSec] = useState(() => new Date().getSeconds());
 
   // ---- real-time mode ----
-  const [rtOffered, setRtOffered] = useState(false); // companion exists (dev server)
+  const [rtOffered, setRtOffered] = useState(false); // real-time API exists
   const realtime = tracking === "rt";
   const [rtSt, setRtSt] = useState<RtStatus | null>(null);
   const [rtError, setRtError] = useState<string | null>(null);
@@ -872,7 +886,7 @@ export default function App() {
   // same-origin/configured companion (dev server, hosted companion) — a
   // local one is only probed on the switch gesture, see onToggleRealtime
   useEffect(() => {
-    void rtAvailable().then((ok) => ok && setRtOffered(true));
+    void rtAvailable().then((ok) => setRtOffered(ok));
   }, []);
 
   // switched on before the companion was found — keep knocking until it's up
@@ -880,7 +894,7 @@ export default function App() {
     if (!realtime || rtOffered) return;
     let cancelled = false;
     const iv = setInterval(() => {
-      void rtAvailable({ probeLocal: true }).then((ok) => {
+      void rtAvailable().then((ok) => {
         if (ok && !cancelled) setRtOffered(true);
       });
     }, 5000);
@@ -902,8 +916,8 @@ export default function App() {
         if (cancelled) return;
         setRtSt(st);
         setRtError(null);
-        if (st.phase === "ready") {
-          const act = await rtActivity();
+        if (st.phase === "ready" && (st.mode !== "hosted" || ROBLOX_USERNAME.test(rtUsername.trim()))) {
+          const act = await rtActivity(st.mode === "hosted" ? rtUsername.trim() : undefined);
           if (cancelled) return;
           setLastAct(act);
           setNowUk(ukNow());
@@ -922,7 +936,7 @@ export default function App() {
       cancelled = true;
       clearInterval(iv);
     };
-  }, [realtime, rtOffered]);
+  }, [realtime, rtOffered, rtUsername]);
 
   // keep estimates fresh even without new activity
   useEffect(() => {
@@ -951,9 +965,17 @@ export default function App() {
     setSimEvents([]); // a fresh simulation starts on time
     setLive(v === "rt" && shift ? initialLiveShift(shift) : null);
     if (v === "rt" && !rtOffered) {
-      // static deploy: the companion is a separate local server — go find it
-      void rtAvailable({ probeLocal: true }).then((ok) => ok && setRtOffered(true));
+      void rtAvailable().then((ok) => ok && setRtOffered(true));
     }
+  };
+
+  const onRtUsernameChange = (value: string) => {
+    setRtUsername(value);
+    setRtError(null);
+    setLastAct(null);
+    setLive(shift ? initialLiveShift(shift) : null);
+    if (value.trim()) localStorage.setItem("scr-rt-username", value.trim());
+    else localStorage.removeItem("scr-rt-username");
   };
 
   const simDelay = simTotalDelay(simEvents);
@@ -1080,12 +1102,27 @@ export default function App() {
                     are still to come, orange means running late, blue means already passed.
                     Start time and turnaround come from reality, so those controls are disabled.
                     Times shown in UK time.
-                    {!rtOffered &&
-                      " Needs the companion app running on this PC — see the instructions below."}
+                    {RT_REMOTE_CONFIGURED
+                      ? " Nothing to download — a hosted service reads the Hub activity for the Roblox username you enter."
+                      : !rtOffered
+                        ? " The local development real-time service is not available."
+                        : " Local development uses the built-in companion."}
                   </>
                 )}
               </Typography>
             </Box>
+            {realtime && RT_REMOTE_CONFIGURED && (
+              <TextField
+                label="Roblox username"
+                value={rtUsername}
+                onChange={(e) => onRtUsernameChange(e.target.value)}
+                error={rtUsername.length > 0 && !ROBLOX_USERNAME.test(rtUsername.trim())}
+                helperText="Used only to find your public SCR Hub activity — never enter your password"
+                autoComplete="username"
+                fullWidth
+                sx={{ mb: 2 }}
+              />
+            )}
             <Typography variant="overline" color="text.secondary">
               Operator
             </Typography>
@@ -1276,43 +1313,21 @@ export default function App() {
 
           {realtime && !rtOffered && (
             <Alert
-              severity="info"
+              severity="warning"
               action={
-                <Stack direction="row" spacing={1}>
-                  <Button
-                    color="inherit"
-                    size="small"
-                    onClick={() => onTrackingChange("sim")}
-                    sx={{ whiteSpace: "nowrap" }}
-                  >
-                    Simulate instead
-                  </Button>
-                  <Button
-                    color="inherit"
-                    size="small"
-                    href={COMPANION_DOWNLOAD_URL}
-                    sx={{ whiteSpace: "nowrap" }}
-                  >
-                    Download
-                  </Button>
-                </Stack>
+                <Button
+                  color="inherit"
+                  size="small"
+                  onClick={() => onTrackingChange("sim")}
+                  sx={{ whiteSpace: "nowrap" }}
+                >
+                  Simulate instead
+                </Button>
               }
             >
-              Real time needs a small free helper app on this PC — it reads your own driving
-              from the SCR Hub site, which a web page can't do by itself. <b>Download</b> it,
-              unzip anywhere, double-click <b>Start Companion</b>, and this page connects on
-              its own (allow the local-network permission if your browser asks). The first
-              run opens a sign-in with your own Roblox account. Windows only for now — on
-              another device, or if it won't connect, <b>Simulate</b> gives you the same
-              ticking timetable without reading the game.{" "}
-              <Link
-                href="https://github.com/maksimts-kool/scrshift2"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Source code here
-              </Link>
-              .
+              {RT_REMOTE_CONFIGURED
+                ? "The hosted real-time service is unavailable right now. Try again shortly, or use Simulate mode."
+                : "No real-time service is configured for this deployment. Set VITE_RT_API_BASE to the hosted backend URL, or use Simulate mode."}
             </Alert>
           )}
           {realtime && rtOffered && (
@@ -1322,6 +1337,7 @@ export default function App() {
               shift={shift}
               live={live}
               lastAct={lastAct}
+              username={rtUsername}
               onChangeAccount={onChangeAccount}
               onSimulate={() => onTrackingChange("sim")}
             />

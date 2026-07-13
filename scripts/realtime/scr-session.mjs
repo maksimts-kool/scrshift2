@@ -18,7 +18,7 @@ const SCR = "https://stepfordcountyrailway.co.uk";
 
 /** @typedef {"stopped"|"launching"|"authorizing"|"need-login"|"booting"|"ready"|"error"} Phase */
 
-export function createScrSession({ profileDir }) {
+export function createScrSession({ profileDir, multiPlayer = false, robloxSecurity }) {
   /** @type {import("playwright").BrowserContext | null} */
   let ctx = null;
   /** @type {import("playwright").Page | null} */
@@ -31,7 +31,10 @@ export function createScrSession({ profileDir }) {
   let trackedId = null;
   let starting = null; // in-flight start() promise
   let expectClose = false; // suppress the "window closed" error on our own close()
-  let lastReloadAt = 0; // throttle self-healing reloads
+  let lastReloadAt = 0; // throttle self-healing reloads (single-player mode)
+  const playerPages = new Map(); // player id -> { page, lastUsed, inFlight }
+  const MAX_PLAYER_PAGES = 20;
+  const PLAYER_PAGE_IDLE_MS = 2 * 60_000;
 
   const activityUrl = (id) => `${SCR}/Players/${id}/CurrentActivity`;
 
@@ -39,10 +42,10 @@ export function createScrSession({ profileDir }) {
     // real Chrome first; fall back to Edge (preinstalled on every Windows
     // box) so the packaged companion needs nothing installed at all
     let lastErr = null;
-    for (const channel of ["chrome", "msedge"]) {
+    for (const channel of ["chrome", "msedge", null]) {
       try {
         ctx = await chromium.launchPersistentContext(profileDir, {
-          channel,
+          ...(channel ? { channel } : {}),
           headless,
           viewport: headless ? undefined : null,
         });
@@ -76,25 +79,26 @@ export function createScrSession({ profileDir }) {
     expectClose = true;
     ctx = null;
     page = null;
+    playerPages.clear();
     if (c) await c.close().catch(() => {});
     expectClose = false;
   }
 
   /** Click through the silent OAuth steps; true when back on the SCR site. */
-  async function clickThroughOAuth() {
+  async function clickThroughOAuth(targetPage = page) {
     for (let i = 0; i < 6; i++) {
       // the redirect chain hops through roblox.com interstitials — let it
       // settle on either the SCR site or the authorize page before judging,
       // otherwise a mid-redirect URL reads as "needs real login"
-      await page
+      await targetPage
         .waitForURL((u) => `${u}`.startsWith(SCR) || `${u}`.includes("authorize.roblox.com"), {
           timeout: 15_000,
         })
         .catch(() => {});
-      const url = page.url();
+      const url = targetPage.url();
       if (url.startsWith(SCR)) return true;
       if (!url.includes("authorize.roblox.com")) return false; // needs real login
-      const btn = page
+      const btn = targetPage
         .locator("button:visible")
         .filter({ hasText: /^continue$|confirm and give access/i })
         .first();
@@ -103,12 +107,12 @@ export function createScrSession({ profileDir }) {
         await btn.click();
       } catch {
         // no button showed — the page may have auto-redirected meanwhile
-        return page.url().startsWith(SCR);
+        return targetPage.url().startsWith(SCR);
       }
-      await page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => {});
-      await page.waitForTimeout(1500);
+      await targetPage.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => {});
+      await targetPage.waitForTimeout(1500);
     }
-    return page.url().startsWith(SCR);
+    return targetPage.url().startsWith(SCR);
   }
 
   /** Who is logged in to Roblox in this profile (works even if SCR session died). */
@@ -121,15 +125,15 @@ export function createScrSession({ profileDir }) {
   }
 
   /** Navigate to the tracked player's activity page, re-authing as needed. */
-  async function gotoActivity(id) {
-    await page.goto(activityUrl(id), { waitUntil: "load", timeout: 60_000 });
-    if (page.url().startsWith(SCR)) return true;
-    phase = "authorizing";
-    if (await clickThroughOAuth()) {
-      if (!page.url().includes("/CurrentActivity")) {
-        await page.goto(activityUrl(id), { waitUntil: "load", timeout: 60_000 });
+  async function gotoActivity(id, targetPage = page) {
+    await targetPage.goto(activityUrl(id), { waitUntil: "load", timeout: 60_000 });
+    if (targetPage.url().startsWith(SCR)) return true;
+    if (targetPage === page) phase = "authorizing";
+    if (await clickThroughOAuth(targetPage)) {
+      if (!targetPage.url().includes("/CurrentActivity")) {
+        await targetPage.goto(activityUrl(id), { waitUntil: "load", timeout: 60_000 });
       }
-      return page.url().startsWith(SCR);
+      return targetPage.url().startsWith(SCR);
     }
     return false;
   }
@@ -140,8 +144,8 @@ export function createScrSession({ profileDir }) {
    * seconds AFTER the timeline itself, so waiting for the timeline text is
    * not enough — wait for a station link with actual text in it.
    */
-  async function waitForComponent() {
-    await page
+  async function waitForComponent(targetPage = page) {
+    await targetPage
       .waitForFunction(
         () => {
           const t = document.body.innerText;
@@ -173,7 +177,26 @@ export function createScrSession({ profileDir }) {
       phase = "launching";
       if (!ctx) await launch(true);
       user = await whoami();
+      if (!user && robloxSecurity) {
+        await ctx.addCookies([
+          {
+            name: ".ROBLOSECURITY",
+            value: robloxSecurity,
+            domain: ".roblox.com",
+            path: "/",
+            httpOnly: true,
+            secure: true,
+            sameSite: "Lax",
+          },
+        ]);
+        user = await whoami();
+      }
       if (!user) {
+        if (multiPlayer) {
+          throw new Error(
+            "Hosted Roblox session is not configured. Set RT_ROBLOSECURITY and restart the service.",
+          );
+        }
         // Roblox session is dead — need a visible window for a real login.
         phase = "need-login";
         await close();
@@ -267,6 +290,7 @@ export function createScrSession({ profileDir }) {
       if (phase !== "ready" || !ctx) {
         throw new Error(`Session not ready (phase: ${phase}${error ? `, ${error}` : ""})`);
       }
+      if (multiPlayer && playerId != null) return await getPooledActivity(playerId);
       // default to the logged-in account; ?player= overrides are per-request
       // and must not change what the app follows afterwards
       const id = playerId ?? user?.id ?? trackedId;
@@ -311,6 +335,74 @@ export function createScrSession({ profileDir }) {
       });
     },
   };
+
+  async function getPooledActivity(playerId) {
+    if (!Number.isSafeInteger(playerId) || playerId <= 0) throw new Error("Invalid Roblox player id.");
+    const now = Date.now();
+    for (const [id, candidate] of playerPages) {
+      if (!candidate.inFlight && now - candidate.lastUsed > PLAYER_PAGE_IDLE_MS) {
+        playerPages.delete(id);
+        void candidate.page?.close().catch(() => {});
+      }
+    }
+
+    let entry = playerPages.get(playerId);
+    if (!entry) {
+      if (playerPages.size >= MAX_PLAYER_PAGES) {
+        const oldest = [...playerPages.entries()]
+          .filter(([, candidate]) => !candidate.inFlight)
+          .sort((a, b) => a[1].lastUsed - b[1].lastUsed)[0];
+        if (!oldest) throw new Error("The real-time service is busy. Try again shortly.");
+        playerPages.delete(oldest[0]);
+        void oldest[1].page?.close().catch(() => {});
+      }
+      entry = {
+        page: null,
+        lastUsed: now,
+        lastReloadAt: 0,
+        inFlight: null,
+      };
+      playerPages.set(playerId, entry);
+    }
+    entry.lastUsed = now;
+    if (entry.inFlight) return await entry.inFlight;
+    entry.inFlight = (async () => {
+      try {
+        if (!entry.page || entry.page.isClosed()) {
+          entry.page = await ctx.newPage();
+          entry.page.on("close", () => {
+            if (playerPages.get(playerId) === entry) playerPages.delete(playerId);
+          });
+          if (!(await gotoActivity(playerId, entry.page))) {
+            throw new Error(`Could not open the SCR Hub activity for player ${playerId}.`);
+          }
+          await waitForComponent(entry.page);
+        }
+        let parsed = await entry.page.evaluate(parseActivityDom);
+        if (isHollow(parsed) && Date.now() - entry.lastReloadAt > 20_000) {
+          entry.lastReloadAt = Date.now();
+          await entry.page.reload({ waitUntil: "load", timeout: 60_000 }).catch(() => {});
+          await waitForComponent(entry.page);
+          parsed = await entry.page.evaluate(parseActivityDom);
+        }
+        return {
+          ...parsed,
+          playerId,
+          capturedAt: new Date().toISOString(),
+        };
+      } catch (e) {
+        const failedPage = entry.page;
+        entry.page = null;
+        playerPages.delete(playerId);
+        await failedPage?.close().catch(() => {});
+        throw e;
+      }
+    })().finally(() => {
+      entry.inFlight = null;
+      entry.lastUsed = Date.now();
+    });
+    return await entry.inFlight;
+  }
 }
 
 /**
