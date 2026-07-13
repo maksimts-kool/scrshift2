@@ -28,3 +28,4 @@ dist-companion
 *.sw?
 
 .vercel
+.env
